@@ -1,0 +1,9 @@
+Usage:
+    $ cd ~
+    $ ln -s ~/exz_conf/tmux/tmux.conf ~/.tmux.conf
+    $ tmux
+    
+
+
+
+
