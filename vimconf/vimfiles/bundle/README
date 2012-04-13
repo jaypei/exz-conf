@@ -1,0 +1,5 @@
+vimfiles下有如下文件：
+
+autoload: pathogen.vim
+after: plugin/snipMate.vim
+

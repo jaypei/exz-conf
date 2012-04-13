@@ -1,0 +1,29 @@
+/**********************************
+ * my gvim config files.
+ * auto: jaypei
+ * date: 2011-5-12
+ **********************************/
+
+Linux使用方法：
+    假设vimconf.git放在~/work/vimconf.git，则执行如下命令:
+
+    $ cd ~
+    $ ln -s ~/exz_conf/vimconf/_vimrc .vimrc
+    $ ln -s ~/exz_conf/vimconf/_gvimrc .gvimrc
+    $ ln -s ~/exz_conf/vimconf/vimfiles .vim
+
+    $ cd ~/exz_conf/vimconf/
+    $ cp vim_profile.vim.simple vim_profile.vim
+    $ vim vim_profile.vim
+    # 在此处修改本地的变量，如Vimwiki的路径。
+
+    $ gvim &
+    
+
+
+CHANGE LOG:
+    2012-03-03  to github
+    2012-03-03  增加powerline,及部分plugins更新
+    2011-6-7    增加Linux下的vim_profile.vim判断
+                增加.gitignore中排除vimfiles/vim_profile.vim
+

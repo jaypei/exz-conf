@@ -1,0 +1,182 @@
+" Jaypei gVim config
+"
+"
+"
+" Plugins :
+"   Tlist    : http://www.vim.org/scripts/script.php?script_id=273
+"   NERDTree : http://www.vim.org/scripts/script.php?script_id=1658
+"   snipMate : http://www.vim.org/scripts/script.php?script_id=2540
+"   A : http://www.vim.org/scripts/script.php?script_id=31
+"   genutils : http://www.vim.org/scripts/script.php?script_id=197
+"   look up files : http://www.vim.org/scripts/script.php?script_id=1581
+"   Pathogen : http://www.vim.org/scripts/script.php?script_id=2332
+"   Vimwiki : http://code.google.com/p/vimwiki/
+"
+" Colors :
+"   ego : http://www.vim.org/scripts/script.php?script_id=3077
+"   railscasts : http://www.vim.org/scripts/script.php?script_id=1995
+"   cobalt : http://www.vim.org/scripts/script.php?script_id=2828
+"
+" Syntex :
+"   python  : http://www.vim.org/scripts/script.php?script_id=790
+"
+" Indent :
+"   web-indent  : http://www.vim.org/scripts/script.php?script_id=3081
+"
+" ====================================
+ 
+
+ 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Auto load _gvimrc
+if has("win32")
+    autocmd! bufwritepost _gvimrc source %
+elseif has("unix")
+    autocmd! bufwritepost .gvimrc source %
+endif
+ 
+ 
+set runtimepath+=$VIM/vimfiles/plugin
+ 
+" Toolbars
+set guioptions=
+set guioptions+=mrb
+ 
+ 
+ 
+ 
+"""""""""""""""""""""""""""""
+" Utils
+"""""""""""""""""""""""""""""
+function! JBufferClear()
+    let s:n = bufnr("$")
+    let s:out_info = ""
+ 
+    for i in range(1, s:n)
+        if bufwinnr(i) == -1
+            let s:out_info = printf("delete buffer [%d] %s", i, bufname(i))
+            try
+                exec "bd " . i
+                let s:out_info .= " SUCCESSED!"
+            catch
+                let s:out_info .= " IGNORED!"
+            endtry
+            echo s:out_info
+ 
+        endif
+    endfor
+ 
+endfunction
+ 
+function! JPython(py_fname)
+    let w:fname = g:JPYTHON_PATH . '/' . a:py_fname
+    echo bufname(".")
+    let w:cmd  = 'fp = open(r"' . bufname(".") . '", "rb");'
+    let w:cmd .= 'g_text = fp.readlines();'
+    let w:cmd .= 'fp.close(); del fp;'
+    let w:cmd .= 'execfile("' . w:fname . '");'
+    exec '%!python -c "' . escape(w:cmd, "'\"") . '"'
+    " 发现输出后会有^M，进行替换用
+    if has('windows')
+        try
+            exec '%s/\r//g'
+        catch
+        endtry
+    endif
+ 
+endfunction
+
+function! J_hosts()
+    if has("win32")
+        exec "e c:/windows/system32/drivers/etc/hosts"
+    elseif has("linux")
+        :e /etc/hosts
+    endif
+endfunction
+ 
+let g:JPYTHON_PATH = "E:/work/files/scripts/vim"
+
+" {{{ Win平台下窗口全屏组件 gvimfullscreen.dll
+" Alt + Enter 全屏切换
+" Shift + t 降低窗口透明度
+" Shift + y 加大窗口透明度
+" Shift + r 切换Vim是否总在最前面显示
+if has('gui_running') && has('gui_win32') && has('libcall')
+    let g:MyVimLib = 'gvimfullscreen.dll'
+    function! ToggleFullScreen()
+        "let s:IsFullScreen = libcallnr("gvimfullscreen.dll", 'ToggleFullScreen', 0)
+        "let s:IsFullScreen = libcallnr("gvimfullscreen.dll", 'ToggleFullScreen', 27 + 29*256 + 30*256*256)
+        call libcall(g:MyVimLib, 'ToggleFullScreen', 27 + 29*256 + 30*256*256)
+    endfunction
+
+    let g:VimAlpha = 245
+    function! SetAlpha(alpha)
+        let g:VimAlpha = g:VimAlpha + a:alpha
+        if g:VimAlpha < 180
+            let g:VimAlpha = 180
+        endif
+        if g:VimAlpha > 255
+            let g:VimAlpha = 255
+        endif
+        call libcall(g:MyVimLib, 'SetAlpha', g:VimAlpha)
+    endfunction
+
+    let g:VimTopMost = 0
+    function! SwitchVimTopMostMode()
+        if g:VimTopMost == 0
+            let g:VimTopMost = 1
+        else
+            let g:VimTopMost = 0
+        endif
+        call libcall(g:MyVimLib, 'EnableTopMost', g:VimTopMost)
+    endfunction
+    "映射 Alt+Enter 切换全屏vim
+    map <a-enter> <esc>:call ToggleFullScreen()<cr>
+    "切换Vim是否在最前面显示
+    nmap <s-r> <esc>:call SwitchVimTopMostMode()<cr>
+    "增加Vim窗体的不透明度
+    nmap <s-t> <esc>:call SetAlpha(10)<cr>
+    "增加Vim窗体的透明度
+    nmap <s-y> <esc>:call SetAlpha(-10)<cr>
+    "Vim启动的时候自动调用InitVim 以去除Vim的白色边框
+    autocmd GUIEnter * call libcallnr(g:MyVimLib, 'InitVim', 0)
+    " 默认设置透明
+    autocmd GUIEnter * call libcallnr(g:MyVimLib, 'SetAlpha', g:VimAlpha)
+endif
+
+" }}}
+
+ 
+""""""""""""""""""""""""""""""
+" Visual
+""""""""""""""""""""""""""""""
+" From an idea by Michael Naumann
+function! VisualSearch(direction) range
+  let l:saved_reg = @"
+  execute "normal! vgvy"
+  let l:pattern = escape(@", '\\/.*$^~[]')
+  let l:pattern = substitute(l:pattern, "\n$", "", "")
+  if a:direction == 'b'
+    execute "normal ?" . l:pattern . "^M"
+  else
+    execute "normal /" . l:pattern . "^M"
+  endif
+  let @/ = l:pattern
+  let @" = l:saved_reg
+endfunction
+ 
+"Basically you press * or # to search for the current selection !! Really useful
+vnoremap <silent> * :call VisualSearch('f')<CR>
+vnoremap <silent> # :call VisualSearch('b')<CR>
+ 
+""""""""""""""""""""""""""""""
+" output HTML config
+""""""""""""""""""""""""""""""
+let html_no_css = 1
+let html_use_css = 1
+ 
+ 
+
+

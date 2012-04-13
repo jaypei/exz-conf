@@ -1,0 +1,10 @@
+# Erlang snippets
+
+# (c) holds no legal value ;)
+snippet header
+	-module(`substitute(expand("%:t"), "\.erl$", "", "g")`).
+	-export([${1}/1]).
+	% -compile(export_all).
+
+	${2}
+
