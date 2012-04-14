@@ -3,6 +3,7 @@ Usage:
     # 要用绝对路径
     $ ln -s /home/jaypei/exz_conf/archlinux/bash.bashrc /etc/bash.bashrc
     $ ln -s /home/jaypei/exz_conf/archlinux/motd /etc/motd
+    $ ln -s /home/jaypei/exz_conf/archlinux/xinitrc ~/.xinitrc
 
 
 
