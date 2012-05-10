@@ -226,7 +226,7 @@ if has("gui_running")
     elseif has("unix")
         "set guifont=YaHei\ Consolas\ Hybrid\ 10
         "set guifont=Monospace\ 10
-        set guifont=Monaco\ for\ Powerline\ 11
+        set guifont=Monaco\ for\ Powerline\ 14
     endif
 endif
 
