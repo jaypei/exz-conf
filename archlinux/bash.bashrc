@@ -28,6 +28,7 @@ export LC_MESSAGES="en_US.UTF-8"
 
 alias grep="grep --color"
 alias ls="/usr/bin/vendor_perl/ls++ --color --potsf"
+export EDITOR=vim
 export SVN_EDITOR=vim
 # default
 #PS1='[\u@\h \W]\$ '

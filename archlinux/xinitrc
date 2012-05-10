@@ -16,21 +16,22 @@ fi
 # exec startxfce4
 # ...or the Window Manager of your choice
 
-#export LANG="zh_CN.UTF-8"
-#export LC_ALL="zh_CN.UTF-8"
-#export LC_CTYPE="zh_CN.UTF-8"
-
-
-xinput set-int-prop 12 "Device Enabled" 8 0
 
 # ibus
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
+#export GTK_IM_MODULE=ibus
+#export XMODIFIERS=@im=ibus
+#export QT_IM_MODULE=ibus
 
+# scim
+export XMODIFIERS=@im=SCIM
+export GTK_IM_MODULE="scim"
+export QT_IM_MODULE="scim"
+scim -d
 
+# start xfce
 exec ck-launch-session dbus-launch --exit-with-session startxfce4
-xinput set-int-prop 12 "Device Enabled" 8 0
 
+# disable touchpad
+#xinput set-int-prop 12 "Device Enabled" 8 0
 
 
