@@ -12,11 +12,6 @@ source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
 behave mswin
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" deffexpr
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set diffexpr=MyDiff()
-
 if (has("gui_running"))
     " 图形界面下不折叠代码
     set nowrap
@@ -27,30 +22,6 @@ else
     colo ron
 endif
 
-
-function MyDiff()
-    let opt = '-a --binary '
-    if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-    if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-    let arg1 = v:fname_in
-    if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-    let arg2 = v:fname_new
-    if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-    let arg3 = v:fname_out
-    if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-    let eq = ''
-    if $VIMRUNTIME =~ ' '
-        if &sh =~ '\<cmd'
-            let cmd = '""' . $VIMRUNTIME . '\diff"'
-            let eq = '"'
-        else
-            let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-        endif
-    else
-        let cmd = $VIMRUNTIME . '\diff'
-    endif
-    silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -82,8 +53,8 @@ set lbr       "不在单词中间断行
 set fo+=mB    "打开断行模块对亚洲语言支持
 
 " color
-"color molokai
-color eclipse
+color molokai
+"color eclipse
 
 " Search
 set ignorecase smartcase
@@ -226,7 +197,8 @@ if has("gui_running")
     elseif has("unix")
         "set guifont=YaHei\ Consolas\ Hybrid\ 10
         "set guifont=Monospace\ 10
-        set guifont=Monaco\ for\ Powerline\ 14
+        "set guifont=Monaco\ for\ Powerline\ 13
+        set guifont=Consolas\ 14
     endif
 endif
 
