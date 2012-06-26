@@ -195,10 +195,10 @@ if has("gui_running")
         set guifont=Consolas:w8:h14
         "set guifont=Monaco:w5:h10
     elseif has("unix")
-        "set guifont=YaHei\ Consolas\ Hybrid\ 10
         "set guifont=Monospace\ 10
         "set guifont=Monaco\ for\ Powerline\ 13
-        set guifont=Consolas\ 14
+        "set guifont=Consolas\ 14
+        set guifont=Inconsolata\ Medium\ 16
     endif
 endif
 
