@@ -24,13 +24,14 @@ esac
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 
 # customize
-alias ls="ls --color"
 export LC_MESSAGES="en_US.UTF-8"
+alias ls="ls --color"
+#alias ls="/usr/bin/vendor_perl/ls++ --color"
 
 alias grep="grep --color"
-alias ls="/usr/bin/vendor_perl/ls++ --color --potsf"
 export EDITOR=vim
 export SVN_EDITOR=vim
+
 # user
 PS1='\[\e[0;35m\]\u\[\e[0;34m\] \w \$ \[\e[m\]'
 
