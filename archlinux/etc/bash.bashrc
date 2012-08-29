@@ -10,6 +10,7 @@ PS2='> '
 PS3='> '
 PS4='+ '
 
+
 case ${TERM} in
   xterm*|rxvt*|Eterm|aterm|kterm|gnome*)
     PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
@@ -22,22 +23,14 @@ esac
 
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 
-
-# customer
+# customize
+alias ls="ls --color"
 export LC_MESSAGES="en_US.UTF-8"
 
 alias grep="grep --color"
 alias ls="/usr/bin/vendor_perl/ls++ --color --potsf"
 export EDITOR=vim
 export SVN_EDITOR=vim
-# default
-#PS1='[\u@\h \W]\$ '
-# root
-#PS1='\[\e[4;31m\]\u\[\e[0;34m\]$ \[\e[0m\]'
 # user
-export PS1='\[\e[0;35m\]\u\[\e[0;34m\] \w \$ \[\e[m\]'
-cat /etc/motd
-
-
-
+PS1='\[\e[0;35m\]\u\[\e[0;34m\] \w \$ \[\e[m\]'
 
