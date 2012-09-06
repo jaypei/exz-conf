@@ -33,5 +33,5 @@ export EDITOR=vim
 export SVN_EDITOR=vim
 
 # user
-PS1='\[\e[0;35m\]\u\[\e[0;34m\] \w \$ \[\e[m\]'
+PS1='\[\e[0;35m\]\u@\h\[\e[0;34m\] \w \$ \[\e[m\]'
 
