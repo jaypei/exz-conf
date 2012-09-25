@@ -1,0 +1,4 @@
+#!/bin/bash
+
+python2 /Volumes/data/yunio/wiki/wikiserver.py
+

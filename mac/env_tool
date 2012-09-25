@@ -1,0 +1,46 @@
+#!/bin/bash
+
+PYTHON=""
+VIRTUALENV="/usr/local/share/python/virtualenv-2.7"
+ENV_WORKSPACE="$HOME/.exzenv"
+
+function usage() {
+    echo "Usage: source $0 [set env_name | list]"
+}
+
+
+function do_set() {
+    if [ ! -d $ENV_WORKSPACE/$1 ]; then
+        mkdir -p $ENV_WORKSPACE/$1
+            $PYTHON $VIRTUALENV $ENV_WORKSPACE/$1
+            fi
+            source $ENV_WORKSPACE/$1/bin/activate
+            echo use command \"deactivate\" to exit env
+
+}
+
+function do_list() {
+    ls $ENV_WORKSPACE
+}
+
+if [ $# < 1 ]; then
+    usage
+    return
+fi
+
+case "$1" in
+    "set")
+        if [ $# < 2 ]; then
+            usage
+            return
+        fi
+        do_set $2
+        ;;
+    "list")
+        do_list
+        ;;
+    *)
+        usage
+        ;;
+esac
+
