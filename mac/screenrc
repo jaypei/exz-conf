@@ -1,0 +1,1 @@
+hardstatus alwayslastline "%{=b}%{-b}%{R}[%{=b B}%-w%{=b BK}%>%n %t%{-}%+w%{-b}%< %=%{R}][%{-b}%{M}%m-%d %D %{G}%c%{R}]"

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+SAE_PROJECT_PATH="/Users/jaypei/work/saepythondevguide"
+
+python $SAE_PROJECT_PATH/dev_server/dev_server.py --port 7778 --mysql=root:donotevil@localhost:3306
+
+
