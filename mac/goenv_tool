@@ -1,0 +1,14 @@
+#!/bin/bash
+
+PWD=$(pwd)
+GO="go"
+
+if [ -x $GOPATH ]; then
+    export GOPATH=$PWD
+else
+    export GOPATH=$GOPATH:$PWD
+fi
+
+$GO env
+echo done.
+
