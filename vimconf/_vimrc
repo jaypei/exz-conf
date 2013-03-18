@@ -127,6 +127,10 @@ set hlsearch
  
 " Set to auto read when a file is changed from the outside
 set autoread
+
+" avoid the <hit enter to continue> prompt
+"set shortmess+=T
+set cmdheight=2
  
 """"""""""""""""""""""""""""""
 " maps
