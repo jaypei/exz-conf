@@ -269,6 +269,8 @@ let g:Powerline_symbols = 'fancy'
     "autocmd FileType vimwiki set wrap
     map <C-F9> :VimwikiIndex<Return>
     map <Leader>T :VimwikiTable<Return>
+    " CONFIG
+    let g:vimwiki_dir = "/Volumes/data/yunio/vimwiki"
 
  
     """"""""""""""""""""""""""""""
