@@ -12,16 +12,9 @@ Linux使用方法：
     $ ln -s ~/exz_conf/vimconf/_gvimrc .gvimrc
     $ ln -s ~/exz_conf/vimconf/vimfiles .vim
 
-    $ cd ~/exz_conf/vimconf/
-    $ cp vim_profile.vim.simple vim_profile.vim
-    $ vim vim_profile.vim
-    # 在此处修改本地的变量，如Vimwiki的路径。
-
-    $ gvim &
-    
-
 
 CHANGE LOG:
+    2013-03-25  new python indent / remove vim_profile.vim
     2012-03-03  to github
     2012-03-03  增加powerline,及部分plugins更新
     2011-6-7    增加Linux下的vim_profile.vim判断
