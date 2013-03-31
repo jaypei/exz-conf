@@ -1,32 +1,45 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" jaypei vim config
+"
+"
+" Plugins :
+"   Tlist    : http://www.vim.org/scripts/script.php?script_id=273
+"   NERDTree : http://www.vim.org/scripts/script.php?script_id=1658
+"   snipMate : http://www.vim.org/scripts/script.php?script_id=2540
+"   A : http://www.vim.org/scripts/script.php?script_id=31
+"   genutils : http://www.vim.org/scripts/script.php?script_id=197
+"   look up files : http://www.vim.org/scripts/script.php?script_id=1581
+"   Pathogen : http://www.vim.org/scripts/script.php?script_id=2332
+"   Vimwiki : http://code.google.com/p/vimwiki/
+"
+" Colors :
+"   ego : http://www.vim.org/scripts/script.php?script_id=3077
+"   railscasts : http://www.vim.org/scripts/script.php?script_id=1995
+"   cobalt : http://www.vim.org/scripts/script.php?script_id=2828
+"
+" Syntex :
+"   python  : http://www.vim.org/scripts/script.php?script_id=790
+"
+" Indent :
+"   web-indent  : http://www.vim.org/scripts/script.php?script_id=3081
+"
+
+"""""""""""""""""""""""""""""""
 " start pathogen 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""
 call pathogen#runtime_append_all_bundles() 
 
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" original
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-source $VIMRUNTIME/vimrc_example.vim
+"""""""""""""""""""""""""""""""
+" default
+"""""""""""""""""""""""""""""""
+"source $VIMRUNTIME/vimrc_example.vim
 "source $VIMRUNTIME/mswin.vim
-behave mswin
-
-if (has("gui_running"))
-    " 图形界面下不折叠代码
-    set nowrap
-    set guioptions+=b
-else
-    " vim下折叠代码，配色选为ron
-    set wrap
-    colo ron
-endif
+"behave mswin
 
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""
 " VIM userinterface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""
 syntax on
 filetype plugin on
 filetype indent on
@@ -53,8 +66,7 @@ set lbr       "不在单词中间断行
 set fo+=mB    "打开断行模块对亚洲语言支持
 
 " color
-color molokai
-"color eclipse
+color candy
 
 " Search
 set ignorecase smartcase
@@ -130,20 +142,21 @@ set autoread
 
 " avoid the <hit enter to continue> prompt
 "set shortmess+=T
-set cmdheight=2
+set cmdheight=1
  
-""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""
 " maps
-""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""
 " fix insert mode Ctrl+X and BackSpace problem
 map <C-X> <S-Del>i
 map <BS> d
 
-" gvimrc autoload
+" vimrc autoload
 if has("win32")
-        map <C-F12> :e $VIM/_gvimrc<Return>
-    elseif has("unix")
-        map <C-F12> :e ~/.gvimrc<Return>
+    map <C-F12> :e $VIM/_vimrc<Return>
+elseif has("unix")
+    map <C-F12> :e ~/.vimrc<Return>
 endif
 
 map <Return> :
@@ -167,9 +180,10 @@ map <C-w><C-d> <C-w>_
 map <F12> :NERDTree<Return>
 map <F4> :A<Return>
 
-""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""
 " autocmd
-""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""
 autocmd FileType python map <F9> :!python "%"<Return>
 autocmd FileType perl map <F9> :!perl -w "%"<Return>
 " erlang cmd type
@@ -189,27 +203,9 @@ autocmd FileType vim map <buffer> <leader><space> :w!<cr>:source %<cr>
 autocmd FileType vim map <F9> :source %<Return>
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" gui font
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 字体
-if has("gui_running")
-    "set guifont=Monaco:h10
-    if has("win32")
-        set guifont=Consolas:w8:h14
-        "set guifont=Monaco:w5:h10
-    elseif has("unix")
-        "set guifont=Monospace\ 10
-        "set guifont=Monaco\ for\ Powerline\ 13
-        "set guifont=Consolas\ 14
-        set guifont=Inconsolata\ Medium\ 14
-    endif
-endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""
 " status line
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+"""""""""""""""""""""""""""""""
 "Always hide the statusline
 set laststatus=2
 
@@ -224,13 +220,12 @@ endfunction
 let g:Powerline_symbols = 'fancy'
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""
 " Plugin configuration
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
- 
-    """""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""
+    """""""""""""""""""""""""""
     " Mini Buf Explorer
-    """""""""""""""""""""""""""""
+    """""""""""""""""""""""""""
     let g:miniBufExplMapWindowNavVim = 1
     "let g:miniBufExplMapWindowNavArrows = 1
     "let g:miniBufExplMapCTabSwitchBufs = 1
@@ -246,10 +241,11 @@ let g:Powerline_symbols = 'fancy'
  
     autocmd BufRead,BufNew :call UMiniBufExplorer
     map <C-F10> :MiniBufExplorer<Return>
-    """"""""""""""""""""""""""""""
+
+
+    """""""""""""""""""""""""""
     " VimWiki
-    """"""""""""""""""""""""""""""
-    " CONFIG
+    """""""""""""""""""""""""""
     let g:vimwiki_dir = "/Volumes/data/yunio/vimwiki"
     let s:vimwiki_path_base = g:vimwiki_dir " in vim_profile.vim 
     let g:vimwiki_list = [{'path': s:vimwiki_path_base . '/wiki', 
@@ -262,13 +258,13 @@ let g:Powerline_symbols = 'fancy'
     let g:vimwiki_ext2syntax = { '.md_wiki': 'markdown' }
     autocmd FileType vimwiki map <leader>x i★<Esc>
     "autocmd FileType vimwiki set wrap
-    map <C-F9> :VimwikiIndex<Return>
+    map <S-F9> :VimwikiIndex<Return>
     map <Leader>T :VimwikiTable<Return>
 
  
-    """"""""""""""""""""""""""""""
+    """""""""""""""""""""""""""
     " TagList
-    """"""""""""""""""""""""""""""
+    """""""""""""""""""""""""""
     if has("unix")
         let Tlist_Ctags_Cmd="/usr/bin/ctags"
     elseif has("win32 ")
@@ -292,9 +288,9 @@ let g:Powerline_symbols = 'fancy'
     endfunction
 
 
-    """"""""""""""""""""""""""""""
+    """""""""""""""""""""""""""
     " python
-    """"""""""""""""""""""""""""""
+    """""""""""""""""""""""""""
     let g:python_highlight_all = 1
     let g:python_highlight_builtin_funcs = 1
     let g:python_highlight_exceptions = 1
