@@ -32,7 +32,7 @@ call pathogen#runtime_append_all_bundles()
 """""""""""""""""""""""""""""""
 " default
 """""""""""""""""""""""""""""""
-"source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/vimrc_example.vim
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
 
