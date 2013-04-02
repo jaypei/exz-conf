@@ -67,7 +67,7 @@ set lbr       "不在单词中间断行
 set fo+=mB    "打开断行模块对亚洲语言支持
 
 " color
-color candy
+color darkZ
 
 " Search
 set ignorecase smartcase
