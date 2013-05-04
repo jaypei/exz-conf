@@ -33,8 +33,6 @@ call pathogen#runtime_append_all_bundles()
 " default
 """""""""""""""""""""""""""""""
 source $VIMRUNTIME/vimrc_example.vim
-"source $VIMRUNTIME/mswin.vim
-"behave mswin
 
 
 """""""""""""""""""""""""""""""
@@ -71,10 +69,6 @@ color darkZ
 
 " Search
 set ignorecase smartcase
-"set smartcase
-set incsearch
-set hlsearch
-
 
 "Set backspace
 set backspace=eol,start,indent
@@ -178,7 +172,7 @@ map <F11> 0:vertical resize 70<Return>
 map <S-F11> :vertical resize 30<Return>
 map <C-w><C-d> <C-w>_
 
-map <F12> :NERDTree<Return>
+map <F12> :NERDTree %<Return>
 map <F4> :A<Return>
 
 
@@ -210,15 +204,12 @@ autocmd FileType vim map <F9> :source %<Return>
 "Always hide the statusline
 set laststatus=2
 
-function! CurDir()
-    let curdir = substitute(getcwd(), '/Users/amir/', "~/", "g")
-    return curdir
-endfunction
-
-"Format the statusline
-"set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
-"let g:Powerline_symbols = 'unicode'
+" set powerline
+let g:Powerline_cache_enabled = 0
 let g:Powerline_symbols = 'fancy'
+if has('win32')
+    let g:Powerline_symbols = 'compatible'
+endif
 
 
 """""""""""""""""""""""""""""""

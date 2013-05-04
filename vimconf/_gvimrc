@@ -9,18 +9,24 @@ if has("win32")
 elseif has("unix")
     autocmd! bufwritepost .gvimrc source %
 endif
+
+" default
+if has("win32")
+    source $VIMRUNTIME/mswin.vim
+    behave mswin
+endif
+
  
 " color
 color candycode
  
 " Toolbars
 set guioptions=
-set guioptions+=mrb
+"set guioptions+=mrb
  
 " font
 if has("win32")
-    set guifont=Consolas:w8:h14
-    "set guifont=Monaco:w5:h10
+    set guifont=Inconsolata\ for\ Powerline:w7:h12
 elseif has("gui_macvim")
     set guifont=Monaco:h14
 elseif has("unix")
