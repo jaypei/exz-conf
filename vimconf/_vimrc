@@ -18,6 +18,7 @@
 "
 " Syntex :
 "   python  : http://www.vim.org/scripts/script.php?script_id=790
+"   qml     : https://github.com/peterhoeg/vim-qml
 "
 " Indent :
 "   web-indent  : http://www.vim.org/scripts/script.php?script_id=3081
@@ -165,8 +166,8 @@ map <C-Tab> :bn<CR>
 map <S-Tab> :bp<CR>
 
 " window resizing
-map <F11> 0:vertical resize 70<Return>
-map <S-F11> :vertical resize 30<Return>
+map <F2> 0:vertical resize 70<Return>
+map <C-F2> :vertical resize 30<Return>
 map <C-w><C-d> <C-w>_
 
 map <F12> :NERDTree %<Return>
@@ -240,8 +241,14 @@ endif
     """""""""""""""""""""""""""
     " VimWiki
     """""""""""""""""""""""""""
-    let g:vimwiki_dir = "/Volumes/data/yunio/vimwiki"
-    let s:vimwiki_path_base = g:vimwiki_dir " in vim_profile.vim 
+    if has("win32")
+        let g:vimwiki_dir = "D:/data/yunio/vimwiki"
+    elseif has("osx")
+        let g:vimwiki_dir = "/Volumes/data/yunio/vimwiki"
+    else
+        let g:vimwiki_dir = "/tmp/vimwiki"
+    endif
+    let s:vimwiki_path_base = g:vimwiki_dir
     let g:vimwiki_list = [{'path': s:vimwiki_path_base . '/wiki', 
                 \ 'path_thml': s:vimwiki_path_base . '/html',
                 \ 'html_header': s:vimwiki_path_base . '/html_header.tpl'}]    
@@ -252,7 +259,7 @@ endif
     let g:vimwiki_ext2syntax = { '.md_wiki': 'markdown' }
     autocmd FileType vimwiki map <leader>x i★<Esc>
     "autocmd FileType vimwiki set wrap
-    map <S-F9> :VimwikiIndex<Return>
+    map <C-F11> :VimwikiIndex<Return>
     map <Leader>T :VimwikiTable<Return>
 
  
