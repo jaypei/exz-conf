@@ -154,10 +154,7 @@ elseif has("unix")
     map <C-F12> :e ~/.vimrc<Return>
 endif
 
-map <Return> :
-map Q :q<Return>
-map <C-s> :w<Return>
-
+" dump
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
@@ -173,7 +170,12 @@ map <S-F11> :vertical resize 30<Return>
 map <C-w><C-d> <C-w>_
 
 map <F12> :NERDTree %<Return>
+" shortcuts
 map <F4> :A<Return>
+map <Return> :
+map Q :q<Return>
+map <F10> :set paste<Return>
+map <S-F10> :set nopaste<Return>
 
 
 """""""""""""""""""""""""""""""
