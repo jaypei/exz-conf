@@ -243,8 +243,8 @@ endif
     """""""""""""""""""""""""""
     if has("win32")
         let g:vimwiki_dir = "D:/data/yunio/vimwiki"
-    elseif has("osx")
-        let g:vimwiki_dir = "/Volumes/data/yunio/vimwiki"
+    elseif has("mac")
+        let g:vimwiki_dir = "/Users/jaypei/work/vimwiki"
     else
         let g:vimwiki_dir = "/tmp/vimwiki"
     endif
@@ -258,6 +258,7 @@ endif
     let g:vimwiki_camel_case = 0
     let g:vimwiki_ext2syntax = { '.md_wiki': 'markdown' }
     autocmd FileType vimwiki map <leader>x i★<Esc>
+    autocmd FileType vimwiki set wrap
     "autocmd FileType vimwiki set wrap
     map <C-F11> :VimwikiIndex<Return>
     map <Leader>T :VimwikiTable<Return>
