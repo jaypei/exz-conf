@@ -50,11 +50,13 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 
-EDITOR=vim
+export EDITOR=vim
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export PATH=$PATH:~/bin
 
 autoload -Uz compinit
 compinit
 
 alias ls='ls --color'
-cat /etc/motd
 

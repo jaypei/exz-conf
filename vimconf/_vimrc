@@ -75,15 +75,17 @@ set ignorecase smartcase
 set backspace=eol,start,indent
  
 " 编码
-"set fileencodings=utf-8,gbk,ucs-bom,cp936
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
 set langmenu=zh_CN.UTF-8
-language messages C
 set helplang=cn
 if has("win32")
     set encoding=chinese
     set fileencoding=chinese
+    language messages zh_CN.UTF-8
+else
+    set encoding=utf-8
+    language messages C
 endif
 
 
@@ -246,7 +248,7 @@ endif
     elseif has("osx")
         let g:vimwiki_dir = "/Volumes/data/yunio/vimwiki"
     else
-        let g:vimwiki_dir = "/tmp/vimwiki"
+        let g:vimwiki_dir = "/home/jaypei/work/vimwiki"
     endif
     let s:vimwiki_path_base = g:vimwiki_dir
     let g:vimwiki_list = [{'path': s:vimwiki_path_base . '/wiki', 
@@ -260,6 +262,7 @@ endif
     autocmd FileType vimwiki map <leader>x i★<Esc>
     "autocmd FileType vimwiki set wrap
     map <C-F11> :VimwikiIndex<Return>
+    map <S-F11> :VimwikiIndex<Return>
     map <Leader>T :VimwikiTable<Return>
 
  
