@@ -10,11 +10,11 @@ GET CODE
     $ git submodule update
 
 
-INSTALL - vim
-=============
+VIM CONFIG
+==========
 
-first install
-
+install
+-------
 .. code-block:: sh
 
     $ ln -s /path/to/work/exz_conf/vimconf/_vimrc ~/.vimrc
@@ -22,22 +22,35 @@ first install
     $ ln -s /path/to/work/exz_conf/vimconf/vimfiles ~/.vim
 
 updating
-
+--------
 .. code-block:: sh
 
     $ cd ~/.vim
     $ git pull --rebase; git submodule update
     $ cd -
 
+usage
+-----
 
-INSTALL - archlinux
-===================
+leader key 相关。
 
+tip: leader key 改为`,`.
+
+- `,j` 当前行下移 (normal)
+- `,k` 当前行上移 (normal)
+
+
+ARCHLINUX
+=========
+
+install
+-------
 .. code-block:: sh
 
     $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/zshrc ~/.zshrc
     $ ln -s /path/to/work/exz_conf/oh-my-zsh ~/.oh-my-zsh
     $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/Xdefaults ~/.Xdefaults
     $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/xinitrc ~/.xinitrc
+
 
 
