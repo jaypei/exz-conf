@@ -9,6 +9,8 @@
 "   A - http://www.vim.org/scripts/script.php?script_id=31
 "   tagbar - http://www.vim.org/scripts/script.php?script_id=3465
 "   mark - http://www.vim.org/scripts/script.php?script_id=2666
+"   powerline - https://github.com/Lokaltog/vim-powerline
+"   ack - https://github.com/mileszs/ack.vim
 "
 " Syntax :
 "   python - http://www.vim.org/scripts/script.php?script_id=790
