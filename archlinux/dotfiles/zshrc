@@ -15,7 +15,7 @@ export ZSH_THEME="clean"
 # CASE_SENSITIVE="true"
 
 # Comment this out to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment to change how often before auto-updates occur? (in days)
 # export UPDATE_ZSH_DAYS=13
@@ -27,7 +27,7 @@ export ZSH_THEME="clean"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment following line if you want to disable command autocorrection
-# DISABLE_CORRECTION="true"
+DISABLE_CORRECTION="true"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
@@ -45,6 +45,10 @@ plugins=(gitfast archlinux python ssh-agent)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
+
+autoload -Uz compinit
+compinit
+
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -54,11 +58,9 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export PATH=$PATH:~/bin
 
-autoload -Uz compinit
-compinit
-
 alias ls='ls --color'
 alias ack='/usr/bin/vendor_perl/ack'
+alias gd='git diff --color'
 
 mkdir -p /tmp/ssh
 
