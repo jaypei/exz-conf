@@ -39,10 +39,11 @@ source $VIMRUNTIME/vimrc_example.vim
 """""""""""""""""""""""""""""""
 " VIM userinterface
 """""""""""""""""""""""""""""""
-filetype off
-syntax on
+" Enable filetype plugins
+filetype on
 filetype plugin on
 filetype indent on
+syntax on
 
 set nocompatible
 set nowrap

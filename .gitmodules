@@ -1,0 +1,3 @@
+[submodule "vimconf/vimfiles/bundle/tagbar"]
+	path = vimconf/vimfiles/bundle/tagbar
+	url = git://github.com/majutsushi/tagbar
