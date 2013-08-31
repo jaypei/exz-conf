@@ -39,11 +39,19 @@ usage
 - ``F11`` or ``Shift+F11`` tag list (tagbar)
 - ``F12`` or ``Shift+F12`` 目录树 (NERDTree)
 
-leader key 改为 ``,`` .
+- ``Ctrl+h`` 光标移进 ``左`` 侧分割窗
+- ``Ctrl+l`` 光标移进 ``右`` 侧分割窗
+- ``Ctrl+j`` 光标移进 ``下`` 侧分割窗
+- ``Ctrl+k`` 光标移进 ``上`` 侧分割窗
+
+默认 leader key 已设置为 ``,`` 。
 
 - ``,j`` 当前行下移 (normal)
 - ``,k`` 当前行上移 (normal)
 - ``,pp`` 切换paste和nopaste模式
+- ``,m`` 设置当前位置单词高亮
+- ``,n`` 取消当前位置单词高亮
+- ``,c`` 清除所有高亮
 
 
 ARCHLINUX

@@ -175,6 +175,9 @@ nmap <leader>k mz:m-2<cr>`z
 vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
 vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
 
+" Clear search highlight
+map <silent> <leader>c :let @/=""<CR>:MarkClear<CR>:echo "Cleared search register."<CR>
+
 " others
 set pastetoggle=<leader>pp
 map <CR> :
