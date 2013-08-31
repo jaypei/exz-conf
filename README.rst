@@ -1,7 +1,5 @@
-INSTALL - vim
-==========
-
-get code
+GET CODE
+========
 
 .. code-block:: sh
 
@@ -10,6 +8,10 @@ get code
     $ cd exz_conf
     $ git submodule init
     $ git submodule update
+
+
+INSTALL - vim
+=============
 
 first install
 
@@ -26,4 +28,12 @@ updating
     $ cd ~/.vim
     $ git pull --rebase; git submodule update
     $ cd -
+
+
+INSTALL - archlinux
+===================
+
+.. code-block:: sh
+
+    $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/zshrc ~/.zshrc
 
