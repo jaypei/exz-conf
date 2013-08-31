@@ -36,4 +36,8 @@ INSTALL - archlinux
 .. code-block:: sh
 
     $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/zshrc ~/.zshrc
+    $ ln -s /path/to/work/exz_conf/oh-my-zsh ~/.oh-my-zsh
+    $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/Xdefaults ~/.Xdefaults
+    $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/xinitrc ~/.xinitrc
+
 
