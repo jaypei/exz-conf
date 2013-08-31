@@ -69,6 +69,8 @@ function! s:setup_buffer_leave() "{{{
     echom "  Setup_buffer_leave g:curr_idx=".g:vimwiki_current_idx." b:curr_idx=".s:vimwiki_idx().""
   endif
 
+  let &autowriteall = s:vimwiki_autowriteall
+
   " Set up menu
   if g:vimwiki_menu != ""
     exe 'nmenu disable '.g:vimwiki_menu.'.Table'
@@ -195,9 +197,16 @@ function! s:setup_buffer_enter() "{{{
   " Settings foldmethod, foldexpr and foldtext are local to window. Thus in a
   " new tab with the same buffer folding is reset to vim defaults. So we
   " insist vimwiki folding here.
-  if g:vimwiki_folding == 1 && &fdm != 'expr'
+  if g:vimwiki_folding == 'expr'
     setlocal fdm=expr
     setlocal foldexpr=VimwikiFoldLevel(v:lnum)
+    setlocal foldtext=VimwikiFoldText()
+  elseif g:vimwiki_folding == 'list' || g:vimwiki_folding == 'lists'
+    setlocal fdm=expr
+    setlocal foldexpr=VimwikiFoldListLevel(v:lnum)
+    setlocal foldtext=VimwikiFoldText()
+  elseif g:vimwiki_folding == 'syntax'
+    setlocal fdm=syntax
     setlocal foldtext=VimwikiFoldText()
   endif
 
@@ -225,6 +234,10 @@ function! s:setup_buffer_reenter() "{{{
   if g:vimwiki_debug ==3
     echom "  Setup_buffer_reenter g:curr_idx=".g:vimwiki_current_idx." b:curr_idx=".s:vimwiki_idx().""
   endif
+  if !exists("s:vimwiki_autowriteall")
+    let s:vimwiki_autowriteall = &autowriteall
+  endif
+  let &autowriteall = g:vimwiki_autowriteall
 endfunction "}}}
 
 function! s:setup_cleared_syntax() "{{{ highlight groups that get cleared
@@ -296,6 +309,19 @@ function! VimwikiSet(option, value, ...) "{{{
   endif
 
 endfunction "}}}
+
+" Clear option for current wiki or if third parameter exists for
+"   wiki with a given index.
+" Currently, only works if option was previously saved in the buffer local
+"   dictionary, that acts as a cache.
+function! VimwikiClear(option, ...) "{{{
+  let idx = a:0 == 0 ? g:vimwiki_current_idx : a:1
+
+  if exists('b:vimwiki_list') && has_key(b:vimwiki_list, a:option)
+    call remove(b:vimwiki_list, a:option)
+  endif
+
+endfunction "}}}
 " }}}
 
 " }}}
@@ -356,12 +382,10 @@ let s:vimwiki_defaults.list_margin = -1
 call s:default('list', [s:vimwiki_defaults])
 call s:default('auto_checkbox', 1)
 call s:default('use_mouse', 0)
-call s:default('folding', 0)
-call s:default('fold_trailing_empty_lines', 0)
-call s:default('fold_lists', 0)
+call s:default('folding', '')
 call s:default('menu', 'Vimwiki')
 call s:default('global_ext', 1)
-call s:default('ext2syntax', {'.md': 'markdown'}) " syntax map keyed on extension
+call s:default('ext2syntax', {}) " syntax map keyed on extension
 call s:default('hl_headers', 0)
 call s:default('hl_cb_checked', 0)
 call s:default('list_ignore_newline', 1)
@@ -374,11 +398,11 @@ call s:default('CJK_length', 0)
 call s:default('dir_link', '')
 call s:default('valid_html_tags', 'b,i,s,u,sub,sup,kbd,br,hr,div,center,strong,em')
 call s:default('user_htmls', '')
+call s:default('autowriteall', 1)
 
 call s:default('html_header_numbering', 0)
 call s:default('html_header_numbering_sym', '')
 call s:default('conceallevel', 2)
-call s:default('url_mingain', 12)
 call s:default('url_maxsave', 15)
 call s:default('debug', 0)
 
@@ -415,19 +439,7 @@ call s:default('rxSchemeUrlMatchUrl', rxSchemes.':\zs.*\ze')
 "}}}
 
 " AUTOCOMMANDS for all known wiki extensions {{{
-" Getting all extensions that different wikis could have
-let extensions = {}
-for wiki in g:vimwiki_list
-  if has_key(wiki, 'ext')
-    let extensions[wiki.ext] = 1
-  else
-    let extensions['.wiki'] = 1
-  endif
-endfor
-" append map g:vimwiki_ext2syntax
-for ext in keys(g:vimwiki_ext2syntax)
-  let extensions[ext] = 1
-endfor
+let extensions = vimwiki#base#get_known_extensions()
 
 augroup filetypedetect
   " clear FlexWiki's stuff
@@ -436,7 +448,7 @@ augroup end
 
 augroup vimwiki
   autocmd!
-  for ext in keys(extensions)
+  for ext in extensions
     exe 'autocmd BufEnter *'.ext.' call s:setup_buffer_reenter()'
     exe 'autocmd BufWinEnter *'.ext.' call s:setup_buffer_enter()'
     exe 'autocmd BufLeave,BufHidden *'.ext.' call s:setup_buffer_leave()'
