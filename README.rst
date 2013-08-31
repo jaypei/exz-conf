@@ -1,7 +1,7 @@
 INSTALL - vim
-==
+==========
 
-get
+get code
 
 .. code-block:: sh
 
@@ -11,7 +11,7 @@ get
     $ git submodule init
     $ git submodule update
 
-setup
+first install
 
 .. code-block:: sh
 
