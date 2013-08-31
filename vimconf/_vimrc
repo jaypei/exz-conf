@@ -2,26 +2,21 @@
 "
 "
 " Plugins :
-"   Tlist    : http://www.vim.org/scripts/script.php?script_id=273
-"   NERDTree : http://www.vim.org/scripts/script.php?script_id=1658
-"   snipMate : http://www.vim.org/scripts/script.php?script_id=2540
-"   A : http://www.vim.org/scripts/script.php?script_id=31
-"   genutils : http://www.vim.org/scripts/script.php?script_id=197
-"   look up files : http://www.vim.org/scripts/script.php?script_id=1581
-"   Pathogen : http://www.vim.org/scripts/script.php?script_id=2332
-"   Vimwiki : http://code.google.com/p/vimwiki/
+"   Pathogen - http://www.vim.org/scripts/script.php?script_id=2332
+"   NERDTree - http://www.vim.org/scripts/script.php?script_id=1658
+"   snipMate - http://www.vim.org/scripts/script.php?script_id=2540
+"   Vimwiki - http://code.google.com/p/vimwiki/
+"   A - http://www.vim.org/scripts/script.php?script_id=31
+"   genutils - http://www.vim.org/scripts/script.php?script_id=197
+"   look up files - http://www.vim.org/scripts/script.php?script_id=1581
 "
-" Colors :
-"   ego : http://www.vim.org/scripts/script.php?script_id=3077
-"   railscasts : http://www.vim.org/scripts/script.php?script_id=1995
-"   cobalt : http://www.vim.org/scripts/script.php?script_id=2828
-"
-" Syntex :
-"   python  : http://www.vim.org/scripts/script.php?script_id=790
-"   qml     : https://github.com/peterhoeg/vim-qml
+" Syntax :
+"   python - http://www.vim.org/scripts/script.php?script_id=790
+"   qml - https://github.com/peterhoeg/vim-qml
 "
 " Indent :
-"   web-indent  : http://www.vim.org/scripts/script.php?script_id=3081
+"   web-indent - http://www.vim.org/scripts/script.php?script_id=3081
+"   python - http://www.vim.org/scripts/script.php?script_id=3461
 "
 
 """""""""""""""""""""""""""""""
@@ -66,7 +61,12 @@ set lbr       "不在单词中间断行
 set fo+=mB    "打开断行模块对亚洲语言支持
 
 " color
-color darkZ
+if has("gui_running")
+    color darkZ
+else
+    set t_Co=256
+    color candycode
+endif
 
 " Search
 set ignorecase smartcase
@@ -150,9 +150,9 @@ map <BS> d
 
 " vimrc autoload
 if has("win32")
-    map <C-F12> :e $VIM/_vimrc<Return>
+    map <C-F12> :e $VIM/_vimrc<CR>
 elseif has("unix")
-    map <C-F12> :e ~/.vimrc<Return>
+    map <C-F12> :e ~/.vimrc<CR>
 endif
 
 " switch buffers with Tab
@@ -164,40 +164,40 @@ map <C-Tab> :bn<CR>
 map <S-Tab> :bp<CR>
 
 " window resizing
-map <F2> 0:vertical resize 70<Return>
-map <C-F2> :vertical resize 30<Return>
+map <F2> 0:vertical resize 70<CR>
+map <C-F2> :vertical resize 30<CR>
 map <C-w><C-d> <C-w>_
 
 " shortcuts
-map <F4> :A<Return>
-map <Return> :
-map Q :q<Return>
-map <F10> :set paste<Return>
-map <S-F10> :set nopaste<Return>
-map <F11> :VimwikiIndex<Return>
-map <F12> :NERDTree %<Return>
+set pastetoggle=<leader>p
+map <CR> :
+map Q :q<CR>
+map <F4> :A<CR>
+map <S-F8> :VimwikiIndex<CR>
+map <F8> :VimwikiIndex<CR>
+map <S-F11> :TagbarToggle <CR>
+map <F11> :TagbarToggle <CR>
+map <S-F12> :NERDTreeToggle %<CR>
+map <F12> :NERDTreeToggle %<CR>
 
-
-"""""""""""""""""""""""""""""""
-" autocmd
-"""""""""""""""""""""""""""""""
-autocmd FileType python map <F9> :!python "%"<Return>
-autocmd FileType perl map <F9> :!perl -w "%"<Return>
-" erlang cmd type
-autocmd FileType erlang map <F10> :!erlc "%"<Return>
+" python
+autocmd FileType python     map <F9> :!python "%"<CR>
+" perl
+autocmd FileType perl       map <F9> :!perl -w "%"<CR>
+" lua
+autocmd FileType lua        map <F9> :!lua "%"<CR>
+" shell
+autocmd FileType sh         map <F9> :!bash "%"<CR>
+" erlang
+autocmd FileType erlang     map <F10> :!erlc "%"<CR>
 if has("win32")
-    autocmd FileType erlang map <F9> :!escript.exe "%"<Return>
+    autocmd FileType erlang map <F9> :!escript.exe "%"<CR>
 else
-    autocmd FileType erlang map <F9> :!"%"<Return>
+    autocmd FileType erlang map <F9> :!"%"<CR>
 endif
-
-autocmd FileType lua map <F9> :!lua "%"<Return>
-autocmd FileType sh map <F9> :!bash "%"<Return>
-au BufRead,BufNewFile *.thrift set filetype=thrift
-
-" vim type
-autocmd FileType vim map <buffer> <leader><space> :w!<cr>:source %<cr>
-autocmd FileType vim map <F9> :source %<Return>
+" vim
+autocmd FileType vim        map <buffer> <leader><space> :w<CR>:source %<CR>
+autocmd FileType vim        map <F9> :source %<CR>
 
 
 """""""""""""""""""""""""""""""
@@ -268,27 +268,18 @@ endfunction
 
 "{{{ python
 
-let g:python_highlight_all = 1
-let g:python_highlight_builtin_funcs = 1
-let g:python_highlight_exceptions = 1
-let g:python_highlight_builtin_objs = 1
-let g:python_highlight_string_formatting = 1
+let python_version_2 = 1
+let python_highlight_all = 1
+let python_print_as_function = 0
 
 "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 set completeopt+=longest
- 
-"离开插入模式后自动关闭预览窗口
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
- 
-"回车即选中当前项
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
- 
-"上下左右键的行为
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 "}}}
 
+"{{{ thrift
 
+autocmd BufRead,BufNewFile *.thrift set filetype=thrift
+
+"}}}
+"
