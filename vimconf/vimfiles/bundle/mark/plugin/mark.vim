@@ -1,43 +1,192 @@
 " Script Name: mark.vim
-" Version:     1.1.8 (global version)
-" Last Change: April 25, 2008
-" Author:      Yuheng Xie <elephant@linux.net.cn>
-" Contributor: Luc Hermitte
+" Description: Highlight several words in different colors simultaneously.
 "
-" Description: a little script to highlight several words in different colors
-"              simultaneously
+" Copyright:   (C) 2005-2008 Yuheng Xie
+"              (C) 2008-2013 Ingo Karkat
+"   The VIM LICENSE applies to this script; see ':help copyright'.
 "
-" Usage:       :Mark regexp   to mark a regular expression
-"              :Mark regexp   with exactly the same regexp to unmark it
-"              :Mark          to clear all marks
+" Maintainer:  Ingo Karkat <ingo@karkat.de>
+" Orig Author: Yuheng Xie <elephant@linux.net.cn>
+" Contributors:Luc Hermitte, Ingo Karkat
 "
-"              You may map keys for the call in your vimrc file for
-"              convenience. The default keys is:
-"              Highlighting:
-"                Normal \m  mark or unmark the word under or before the cursor
-"                       \r  manually input a regular expression
-"                       \n  clear current mark (i.e. the mark under the cursor),
-"                           or clear all marks
-"                Visual \m  mark or unmark a visual selection
-"                       \r  manually input a regular expression
-"              Searching:
-"                Normal \*  jump to the next occurrence of current mark
-"                       \#  jump to the previous occurrence of current mark
-"                       \/  jump to the next occurrence of ANY mark
-"                       \?  jump to the previous occurrence of ANY mark
-"                        *  behaviors vary, please refer to the table on
-"                        #  line 123
-"                combined with VIM's / and ? etc.
+" Dependencies:
+"  - Requires Vim 7.1 with "matchadd()", or Vim 7.2 or higher.
+"  - mark.vim autoload script
+"  - mark/palettes.vim autoload script for additional palettes
 "
-"              The default colors/groups setting is for marking six
-"              different words in different colors. You may define your own
-"              colors in your vimrc file. That is to define highlight group
-"              names as "MarkWordN", where N is a number. An example could be
-"              found below.
-"
-" Bugs:        some colored words could not be highlighted
-"
+" Version:     2.8.0
 " Changes:
+" 31-May-2013, Ingo Karkat
+" - Define default mappings for keys 1-9 on the numerical keypad to jump to a
+"   particular group (backwards with <C-kN>). Their definition is controlled by
+"   the new g:mwDirectGroupJumpMappingNum variable.
+" - ENH: Allow to store an arbitrary number of marks via named slots that can
+"   optionally be passed to :MarkLoad / :MarkSave. If the slot is all-uppercase,
+"   the marks will also be persisted across Vim invocations.
+"
+" 31-Jan-2013, Ingo Karkat
+" - Also allow a [count] for <Leader>r to select (or query for) a mark group, as
+"   with <Leader>m.
+" - CHG: Also set the current mark to the used mark group when a mark was set
+"   via <Leader>r and :Mark so that it is easier to determine whether the
+"   entered pattern actually matches anywhere. Thanks to Xiaopan Zhang for
+"   notifying me about this problem.
+" - Add <Plug>MarkSearchGroupNext / <Plug>MarkSearchGroupPrev to enable
+"   searching for particular mark groups. Thanks to Xiaopan Zhang for the
+"   suggestion.
+"
+" 13-Sep-2012, Ingo Karkat
+" - Enable alternative * / # mappings that do not remember the last search type
+"   through new <Plug>MarkSearchOrCurNext, <Plug>MarkSearchOrCurPrev,
+"   <Plug>MarkSearchOrAnyNext, <Plug>MarkSearchOrAnyPrev mappings.
+"
+" 04-Jul-2012, Ingo Karkat
+" - Introduce g:mwPalettes instead of hard-coding them in
+"   s:DefaultHighlightings(), which got s:DefineHighlightings() extracted and
+"   the rest renamed to s:GetPalette().
+" - Allow overriding of existing mark highlighting via a:isOverride argument to
+"   s:DefineHighlightings().
+" - Add "maximum" palette contributed by rockybalboa4 and move it and the
+"   "extended" palette to a separate mark/palettes.vim autoload script.
+" - ENH: Implement :MarkPalette command to switch mark highlighting on-the-fly
+"   during runtime.
+"
+" 24-Jun-2012, Ingo Karkat
+" - Don't define the default <Leader>m and <Leader>r mappings in select mode,
+"   just visual mode. Thanks to rockybalboa4 for pointing this out.
+"
+" 27-Mar-2012, Ingo Karkat
+" - ENH: Allow choosing of palette and limiting of default mark highlight groups
+"   via g:mwDefaultHighlightingPalette and g:mwDefaultHighlightingNum.
+" - ENH: Offer an extended color palette in addition to the original 6-color one.
+"
+" 23-Mar-2012, Ingo Karkat
+" - ENH: Add :Marks command that prints all mark highlight groups and their
+"   search patterns, plus information about the current search mark, next mark
+"   group, and whether marks are disabled.
+" - FIX: When the cursor is positioned on the current mark, [N]<Leader>n /
+"   <Plug>MarkClear with [N] appended the pattern for the current mark (again
+"   and again) instead of clearing it. Must not pass current mark pattern when
+"   [N] is given.
+"
+" 22-Mar-2012, Ingo Karkat
+" - ENH: Allow [count] for <Leader>m and :Mark to add / subtract match to / from
+"   highlight group [count], and use [count]<Leader>n to clear only highlight
+"   group [count]. This was also requested by Philipp Marek.
+"
+" 02-Mar-2012, Philipp Marek
+" - BUG: Version check mistakenly excluded Vim 7.1 versions that do have the
+"   matchadd() function.
+"
+" 06-May-2011, Ingo Karkat
+" - By default, enable g:mwAutoSaveMarks, so that marks are always persisted,
+"   but disable g:mwAutoLoadMarks, so that persisted marks have to be explicitly
+"   loaded, if that is desired. I often wondered why I got unexpected mark
+"   highlightings in a new Vim session until I realized that I had used marks in
+"   a previous session and forgot to clear them.
+"
+" 21-Apr-2011, Ingo Karkat
+" - Expose toggling of mark display (keeping the mark patterns) via new
+"   <Plug>MarkToggle mapping. Offer :MarkClear command as a replacement for the
+"   old argumentless :Mark command, which now just disables, but not clears all
+"   marks.
+" - Implement lazy-loading of disabled persistent marks via g:mwDoDeferredLoad
+"   flag passing to autoload/mark.vim.
+"
+" 19-Apr-2011, Ingo Karkat
+" - ENH: Add explicit mark persistence via :MarkLoad and :MarkSave commands and
+"   automatic persistence via the g:mwAutoLoadMarks and g:mwAutoSaveMarks
+"   configuration flags.
+"
+" 15-Apr-2011, Ingo Karkat
+" - Avoid losing the mark highlightings on :syn on or :colorscheme commands.
+"   Thanks to Zhou YiChao for alerting me to this issue and suggesting a fix.
+"
+" 17-Nov-2009, Ingo Karkat
+" - Replaced the (overly) generic mark#GetVisualSelectionEscaped() with
+"   mark#GetVisualSelectionAsRegexp() and
+"   mark#GetVisualSelectionAsLiteralPattern().
+"
+" 04-Jul-2009, Ingo Karkat
+" - A [count] before any mapping either caused "No range allowed" error or just
+"   repeated the :call [count] times, resulting in the current search pattern
+"   echoed [count] times and a hit-enter prompt. Now suppressing [count] via
+"   <C-u> and handling it inside the implementation.
+" - Now passing isBackward (0/1) instead of optional 'b' flag into functions.
+"   Also passing empty regexp to mark#MarkRegex() to avoid any optional
+"   arguments.
+"
+" 02-Jul-2009, Ingo Karkat
+" - Split off functions into autoload script.
+" - Removed g:force_reload_mark.
+" - Initialization of global variables and autocommands is now done lazily on
+"   the first use, not during loading of the plugin. This reduces Vim startup
+"   time and footprint as long as the functionality isn't yet used.
+"
+" 6-Jun-2009, Ingo Karkat
+"  1. Somehow s:WrapMessage() needs a redraw before the :echo to avoid that a
+"     later Vim redraw clears the wrap message. This happened when there's no
+"     statusline and thus :echo'ing into the ruler.
+"  2. Removed line-continuations and ':set cpo=...'. Upper-cased <SID> and <CR>.
+"  3. Added default highlighting for the special search type.
+"
+" 2-Jun-2009, Ingo Karkat
+"  1. Replaced highlighting via :syntax with matchadd() / matchdelete(). This
+"     requires Vim 7.2 / 7.1 with patches. This method is faster, there are no
+"     more clashes with syntax highlighting (:match always has preference), and
+"     the background highlighting does not disappear under 'cursorline'.
+"  2. Factored :windo application out into s:MarkScope().
+"  3. Using winrestcmd() to fix effects of :windo: By entering a window, its
+"     height is potentially increased from 0 to 1.
+"  4. Handling multiple tabs by calling s:UpdateScope() on the TabEnter event.
+"
+" 1-Jun-2009, Ingo Karkat
+"  1. Now using Vim List for g:mwWord and thus requiring Vim 7. g:mwCycle is now
+"     zero-based, but the syntax groups "MarkWordx" are still one-based.
+"  2. Added missing setter for re-inclusion guard.
+"  3. Factored :syntax operations out of s:DoMark() and s:UpdateMark() so that
+"     they can all be done in a single :windo.
+"  4. Normal mode <Plug>MarkSet now has the same semantics as its visual mode
+"     cousin: If the cursor is on an existing mark, the mark is removed.
+"     Beforehand, one could only remove a visually selected mark via again
+"     selecting it. Now, one simply can invoke the mapping when on such a mark.
+"  5. Highlighting can now actually be overridden in the vimrc (anywhere
+"     _before_ sourcing this script) by using ':hi def'.
+"
+" 31-May-2009, Ingo Karkat
+"  1. Refactored s:Search() to optionally take advantage of SearchSpecial.vim
+"     autoload functionality for echoing of search pattern, wrap and error
+"     messages.
+"  2. Now prepending search type ("any-mark", "same-mark", "new-mark") for
+"     better identification.
+"  3. Retired the algorithm in s:PrevWord in favor of simply using <cword>,
+"     which makes mark.vim work like the * command. At the end of a line,
+"     non-keyword characters may now be marked; the previous algorithm prefered
+"     any preceding word.
+"  4. BF: If 'iskeyword' contains characters that have a special meaning in a
+"     regex (e.g. [.*]), these are now escaped properly.
+"
+" 01-Sep-2008, Ingo Karkat: bugfixes and enhancements
+"  1. Added <Plug>MarkAllClear (without a default mapping), which clears all
+"     marks, even when the cursor is on a mark.
+"  2. Added <Plug>... mappings for hard-coded \*, \#, \/, \?, * and #, to allow
+"     re-mapping and disabling. Beforehand, there were some <Plug>... mappings
+"     and hard-coded ones; now, everything can be customized.
+"  3. Bugfix: Using :autocmd without <bang> to avoid removing _all_ autocmds for
+"     the BufWinEnter event. (Using a custom :augroup would be even better.)
+"  4. Bugfix: Explicitly defining s:current_mark_position; some execution paths
+"     left it undefined, causing errors.
+"  5. Refactoring: Instead of calling s:InitMarkVariables() at the beginning of
+"     several functions, just calling it once when sourcing the script.
+"  6. Refactoring: Moved multiple 'let lastwinnr = winnr()' to a single one at the
+"     top of DoMark().
+"  7. ENH: Make the match according to the 'ignorecase' setting, like the star
+"     command.
+"  8. The jumps to the next/prev occurrence now print 'search hit BOTTOM,
+"     continuing at TOP" and "Pattern not found:..." messages, like the * and
+"     n/N Vim search commands.
+"  9. Jumps now open folds if the occurrence is inside a closed fold, just like n/N
+"     do.
 "
 " 10th Mar 2006, Yuheng Xie: jump to ANY mark
 " (*) added \* \# \/ \? for the ability of jumping to ANY mark, even when the
@@ -48,7 +197,7 @@
 " (*) added GetVisualSelectionEscaped for multi-lines visual selection and
 "     visual selection contains ^, $, etc.
 " (*) changed the name ThisMark to CurrentMark
-" (*) added SearchCurrentMark and re-used raw map (instead of VIM function) to
+" (*) added SearchCurrentMark and re-used raw map (instead of Vim function) to
 "     implement * and #
 "
 " 14th Sep 2005, Luc Hermitte: modifications done on v1.1.4
@@ -58,434 +207,258 @@
 " (*) Script-local functions
 " (*) Default keybindings
 " (*) \r for visual mode
-" (*) uses <leader> instead of "\"
+" (*) uses <Leader> instead of "\"
 " (*) do not mess with global variable g:w
 " (*) regex simplified -> double quotes changed into simple quotes.
 " (*) strpart(str, idx, 1) -> str[idx]
 " (*) command :Mark
 "     -> e.g. :Mark Mark.\{-}\ze(
 
-" default colors/groups
-" you may define your own colors in you vimrc file, in the form as below:
-hi MarkWord1  ctermbg=Cyan     ctermfg=Black  guibg=#8CCBEA    guifg=Black
-hi MarkWord2  ctermbg=Green    ctermfg=Black  guibg=#A4E57E    guifg=Black
-hi MarkWord3  ctermbg=Yellow   ctermfg=Black  guibg=#FFDB72    guifg=Black
-hi MarkWord4  ctermbg=Red      ctermfg=Black  guibg=#FF7272    guifg=Black
-hi MarkWord5  ctermbg=Magenta  ctermfg=Black  guibg=#FFB3FF    guifg=Black
-hi MarkWord6  ctermbg=Blue     ctermfg=Black  guibg=#9999FF    guifg=Black
-
-" Anti reinclusion guards
-if exists('g:loaded_mark') && !exists('g:force_reload_mark')
+" Avoid installing twice or when in unsupported Vim version.
+if exists('g:loaded_mark') || (v:version == 701 && ! exists('*matchadd')) || (v:version < 701)
 	finish
 endif
-
-" Support for |line-continuation|
+let g:loaded_mark = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-" Default bindings
+"- configuration --------------------------------------------------------------
+
+if ! exists('g:mwHistAdd')
+	let g:mwHistAdd = '/@'
+endif
+
+if ! exists('g:mwAutoLoadMarks')
+	let g:mwAutoLoadMarks = 0
+endif
+
+if ! exists('g:mwAutoSaveMarks')
+	let g:mwAutoSaveMarks = 1
+endif
+
+if ! exists('g:mwDefaultHighlightingNum')
+	let g:mwDefaultHighlightingNum = -1
+endif
+if ! exists('g:mwDefaultHighlightingPalette')
+	let g:mwDefaultHighlightingPalette = 'original'
+endif
+if ! exists('g:mwPalettes')
+	let g:mwPalettes = {
+	\	'original': [
+		\   { 'ctermbg':'Cyan',       'ctermfg':'Black', 'guibg':'#8CCBEA', 'guifg':'Black' },
+		\   { 'ctermbg':'Green',      'ctermfg':'Black', 'guibg':'#A4E57E', 'guifg':'Black' },
+		\   { 'ctermbg':'Yellow',     'ctermfg':'Black', 'guibg':'#FFDB72', 'guifg':'Black' },
+		\   { 'ctermbg':'Red',        'ctermfg':'Black', 'guibg':'#FF7272', 'guifg':'Black' },
+		\   { 'ctermbg':'Magenta',    'ctermfg':'Black', 'guibg':'#FFB3FF', 'guifg':'Black' },
+		\   { 'ctermbg':'Blue',       'ctermfg':'Black', 'guibg':'#9999FF', 'guifg':'Black' },
+		\],
+	\	'extended': function('mark#palettes#Extended'),
+	\	'maximum': function('mark#palettes#Maximum')
+	\}
+endif
+
+if ! exists('g:mwDirectGroupJumpMappingNum')
+	let g:mwDirectGroupJumpMappingNum = 9
+endif
+
+
+"- default highlightings ------------------------------------------------------
+
+function! s:GetPalette()
+	let l:palette = []
+	if type(g:mwDefaultHighlightingPalette) == type([])
+		" There are custom color definitions, not a named built-in palette.
+		return g:mwDefaultHighlightingPalette
+	endif
+	if ! has_key(g:mwPalettes, g:mwDefaultHighlightingPalette)
+		if ! empty(g:mwDefaultHighlightingPalette)
+			let v:warningmsg = 'Mark: Unknown value for g:mwDefaultHighlightingPalette: ' . g:mwDefaultHighlightingPalette
+			echohl WarningMsg
+			echomsg v:warningmsg
+			echohl None
+		endif
+
+		return []
+	endif
+
+	if type(g:mwPalettes[g:mwDefaultHighlightingPalette]) == type([])
+		return g:mwPalettes[g:mwDefaultHighlightingPalette]
+	elseif type(g:mwPalettes[g:mwDefaultHighlightingPalette]) == type(function('tr'))
+		return call(g:mwPalettes[g:mwDefaultHighlightingPalette], [])
+	else
+		let v:errmsg = printf('Mark: Invalid value type for g:mwPalettes[%s]', g:mwDefaultHighlightingPalette)
+		echohl ErrorMsg
+		echomsg v:errmsg
+		echohl None
+		return []
+	endif
+endfunction
+function! s:DefineHighlightings( palette, isOverride )
+	let l:command = (a:isOverride ? 'highlight' : 'highlight def')
+	let l:highlightingNum = (g:mwDefaultHighlightingNum == -1 ? len(a:palette) : g:mwDefaultHighlightingNum)
+	for i in range(1, l:highlightingNum)
+		execute l:command 'MarkWord' . i join(map(items(a:palette[i - 1]), 'join(v:val, "=")'))
+	endfor
+	return l:highlightingNum
+endfunction
+call s:DefineHighlightings(s:GetPalette(), 0)
+autocmd ColorScheme * call <SID>DefineHighlightings(<SID>GetPalette(), 0)
+
+" Default highlighting for the special search type.
+" You can override this by defining / linking the 'SearchSpecialSearchType'
+" highlight group before this script is sourced.
+highlight def link SearchSpecialSearchType MoreMsg
+
+
+
+"- mappings -------------------------------------------------------------------
+
+nnoremap <silent> <Plug>MarkSet      :<C-u>if !mark#MarkCurrentWord(v:count)<Bar>execute "normal! \<lt>C-\>\<lt>C-n>\<lt>Esc>"<Bar>endif<CR>
+vnoremap <silent> <Plug>MarkSet      :<C-u>if !mark#DoMark(v:count, mark#GetVisualSelectionAsLiteralPattern())[0]<Bar>execute "normal! \<lt>C-\>\<lt>C-n>\<lt>Esc>"<Bar>endif<CR>
+nnoremap <silent> <Plug>MarkRegex    :<C-u>if !mark#MarkRegex(v:count, '')<Bar>execute "normal! \<lt>C-\>\<lt>C-n>\<lt>Esc>"<Bar>endif<CR>
+vnoremap <silent> <Plug>MarkRegex    :<C-u>if !mark#MarkRegex(v:count, mark#GetVisualSelectionAsRegexp())<Bar>execute "normal! \<lt>C-\>\<lt>C-n>\<lt>Esc>"<Bar>endif<CR>
+nnoremap <silent> <Plug>MarkClear    :<C-u>if !mark#DoMark(v:count, (v:count ? '' : mark#CurrentMark()[0]))[0]<Bar>execute "normal! \<lt>C-\>\<lt>C-n>\<lt>Esc>"<Bar>endif<CR>
+nnoremap <silent> <Plug>MarkAllClear :<C-u>call mark#ClearAll()<CR>
+nnoremap <silent> <Plug>MarkToggle   :<C-u>call mark#Toggle()<CR>
+
+nnoremap <silent> <Plug>MarkSearchCurrentNext :<C-u>call mark#SearchCurrentMark(0)<CR>
+nnoremap <silent> <Plug>MarkSearchCurrentPrev :<C-u>call mark#SearchCurrentMark(1)<CR>
+nnoremap <silent> <Plug>MarkSearchAnyNext     :<C-u>call mark#SearchAnyMark(0)<CR>
+nnoremap <silent> <Plug>MarkSearchAnyPrev     :<C-u>call mark#SearchAnyMark(1)<CR>
+" When typed, [*#nN] open the fold at the search result, but inside a mapping or
+" :normal this must be done explicitly via 'zv'.
+nnoremap <silent> <Plug>MarkSearchNext        :<C-u>if !mark#SearchNext(0)<Bar>execute 'normal! *zv'<Bar>endif<CR>
+nnoremap <silent> <Plug>MarkSearchPrev        :<C-u>if !mark#SearchNext(1)<Bar>execute 'normal! #zv'<Bar>endif<CR>
+nnoremap <silent> <Plug>MarkSearchOrCurNext   :<C-u>if !mark#SearchNext(0,'mark#SearchCurrentMark')<Bar>execute 'normal! *zv'<Bar>endif<CR>
+nnoremap <silent> <Plug>MarkSearchOrCurPrev   :<C-u>if !mark#SearchNext(1,'mark#SearchCurrentMark')<Bar>execute 'normal! #zv'<Bar>endif<CR>
+nnoremap <silent> <Plug>MarkSearchOrAnyNext   :<C-u>if !mark#SearchNext(0,'mark#SearchAnyMark')<Bar>execute 'normal! *zv'<Bar>endif<CR>
+nnoremap <silent> <Plug>MarkSearchOrAnyPrev   :<C-u>if !mark#SearchNext(1,'mark#SearchAnyMark')<Bar>execute 'normal! #zv'<Bar>endif<CR>
+nnoremap <silent> <Plug>MarkSearchGroupNext   :<C-u>call mark#SearchGroupMark(v:count, 1, 0, 1)<CR>
+nnoremap <silent> <Plug>MarkSearchGroupPrev   :<C-u>call mark#SearchGroupMark(v:count, 1, 1, 1)<CR>
+
 
 if !hasmapto('<Plug>MarkSet', 'n')
-	nmap <unique> <silent> <leader>m <Plug>MarkSet
+	nmap <unique> <Leader>m <Plug>MarkSet
 endif
-if !hasmapto('<Plug>MarkSet', 'v')
-	vmap <unique> <silent> <leader>m <Plug>MarkSet
+if !hasmapto('<Plug>MarkSet', 'x')
+	xmap <unique> <Leader>m <Plug>MarkSet
 endif
 if !hasmapto('<Plug>MarkRegex', 'n')
-	nmap <unique> <silent> <leader>r <Plug>MarkRegex
+	nmap <unique> <Leader>r <Plug>MarkRegex
 endif
-if !hasmapto('<Plug>MarkRegex', 'v')
-	vmap <unique> <silent> <leader>r <Plug>MarkRegex
+if !hasmapto('<Plug>MarkRegex', 'x')
+	xmap <unique> <Leader>r <Plug>MarkRegex
 endif
 if !hasmapto('<Plug>MarkClear', 'n')
-	nmap <unique> <silent> <leader>n <Plug>MarkClear
+	nmap <unique> <Leader>n <Plug>MarkClear
+endif
+" No default mapping for <Plug>MarkAllClear.
+" No default mapping for <Plug>MarkToggle.
+
+if !hasmapto('<Plug>MarkSearchCurrentNext', 'n')
+	nmap <unique> <Leader>* <Plug>MarkSearchCurrentNext
+endif
+if !hasmapto('<Plug>MarkSearchCurrentPrev', 'n')
+	nmap <unique> <Leader># <Plug>MarkSearchCurrentPrev
+endif
+if !hasmapto('<Plug>MarkSearchAnyNext', 'n')
+	nmap <unique> <Leader>/ <Plug>MarkSearchAnyNext
+endif
+if !hasmapto('<Plug>MarkSearchAnyPrev', 'n')
+	nmap <unique> <Leader>? <Plug>MarkSearchAnyPrev
+endif
+if !hasmapto('<Plug>MarkSearchNext', 'n')
+	nmap <unique> * <Plug>MarkSearchNext
+endif
+if !hasmapto('<Plug>MarkSearchPrev', 'n')
+	nmap <unique> # <Plug>MarkSearchPrev
+endif
+" No default mapping for <Plug>MarkSearchOrCurNext
+" No default mapping for <Plug>MarkSearchOrCurPrev
+" No default mapping for <Plug>MarkSearchOrAnyNext
+" No default mapping for <Plug>MarkSearchOrAnyPrev
+" No default mapping for <Plug>MarkSearchGroupNext
+" No default mapping for <Plug>MarkSearchGroupPrev
+
+function! s:MakeDirectGroupMappings()
+	for l:cnt in range(1, g:mwDirectGroupJumpMappingNum)
+		for [l:isBackward, l:direction, l:keyModifier] in [[0, 'Next', ''], [1, 'Prev', 'C-']]
+			let l:plugMappingName = printf('<Plug>MarkSearchGroup%d%s', l:cnt, l:direction)
+			execute printf('nnoremap <silent> %s :<C-u>call mark#SearchGroupMark(%d, v:count1, %d, 1)<CR>', l:plugMappingName, l:cnt, l:isBackward)
+			if ! hasmapto(l:plugMappingName, 'n')
+				execute printf('nmap <%sk%d> %s', l:keyModifier, l:cnt, l:plugMappingName)
+			endif
+		endfor
+	endfor
+endfunction
+call s:MakeDirectGroupMappings()
+delfunction s:MakeDirectGroupMappings
+
+
+
+"- commands -------------------------------------------------------------------
+
+command! -count -nargs=? Mark if !mark#DoMarkAndSetCurrent(<count>, <f-args>)[0] | echoerr printf('Only %d mark highlight groups', mark#GetGroupNum()) | endif
+command! -bar MarkClear call mark#ClearAll()
+command! -bar Marks call mark#List()
+
+command! -bar -nargs=? -complete=customlist,mark#MarksVariablesComplete MarkLoad call mark#LoadCommand(1, <f-args>)
+command! -bar -nargs=? -complete=customlist,mark#MarksVariablesComplete MarkSave call mark#SaveCommand(<f-args>)
+function! s:SetPalette( paletteName )
+	if type(g:mwDefaultHighlightingPalette) == type([])
+		" Convert the directly defined list to a palette named "default".
+		let g:mwPalettes['default'] = g:mwDefaultHighlightingPalette
+		unlet! g:mwDefaultHighlightingPalette   " Avoid E706.
+	endif
+	let g:mwDefaultHighlightingPalette = a:paletteName
+
+	let l:palette = s:GetPalette()
+	if empty(l:palette)
+		return
+	endif
+
+	call mark#ReInit(s:DefineHighlightings(l:palette, 1))
+	call mark#UpdateScope()
+endfunction
+function! s:MarkPaletteComplete( ArgLead, CmdLine, CursorPos )
+	return sort(filter(keys(g:mwPalettes), 'v:val =~ ''\V\^'' . escape(a:ArgLead, "\\")'))
+endfunction
+command! -bar -nargs=1 -complete=customlist,<SID>MarkPaletteComplete MarkPalette call <SID>SetPalette(<q-args>)
+
+
+
+"- marks persistence ----------------------------------------------------------
+
+if g:mwAutoLoadMarks
+	" As the viminfo is only processed after sourcing of the runtime files, the
+	" persistent global variables are not yet available here. Defer this until Vim
+	" startup has completed.
+	function! s:AutoLoadMarks()
+		if g:mwAutoLoadMarks && exists('g:MARK_MARKS') && g:MARK_MARKS !=# '[]'
+			if ! exists('g:MARK_ENABLED') || g:MARK_ENABLED
+				" There are persistent marks and they haven't been disabled; we need to
+				" show them right now.
+				call mark#LoadCommand(0)
+			else
+				" Though there are persistent marks, they have been disabled. We avoid
+				" sourcing the autoload script and its invasive autocmds right now;
+				" maybe the marks are never turned on. We just inform the autoload
+				" script that it should do this once it is sourced on-demand by a
+				" mark mapping or command.
+				let g:mwDoDeferredLoad = 1
+			endif
+		endif
+	endfunction
+
+	augroup MarkInitialization
+		autocmd!
+		" Note: Avoid triggering the autoload unless there actually are persistent
+		" marks. For that, we need to check that g:MARK_MARKS doesn't contain the
+		" empty list representation, and also :execute the :call.
+		autocmd VimEnter * call <SID>AutoLoadMarks()
+	augroup END
 endif
 
-nnoremap <silent> <Plug>MarkSet   :call
-	\ <sid>MarkCurrentWord()<cr>
-vnoremap <silent> <Plug>MarkSet   <c-\><c-n>:call
-	\ <sid>DoMark(<sid>GetVisualSelectionEscaped("enV"))<cr>
-nnoremap <silent> <Plug>MarkRegex :call
-	\ <sid>MarkRegex()<cr>
-vnoremap <silent> <Plug>MarkRegex <c-\><c-n>:call
-	\ <sid>MarkRegex(<sid>GetVisualSelectionEscaped("N"))<cr>
-nnoremap <silent> <Plug>MarkClear :call
-	\ <sid>DoMark(<sid>CurrentMark())<cr>
-
-" Here is a sumerization of the following keys' behaviors:
-" 
-" First of all, \#, \? and # behave just like \*, \/ and *, respectively,
-" except that \#, \? and # search backward.
-"
-" \*, \/ and *'s behaviors differ base on whether the cursor is currently
-" placed over an active mark:
-"
-"       Cursor over mark                  Cursor not over mark
-" ---------------------------------------------------------------------------
-"  \*   jump to the next occurrence of    jump to the next occurrence of
-"       current mark, and remember it     "last mark".
-"       as "last mark".
-"
-"  \/   jump to the next occurrence of    same as left
-"       ANY mark.
-"
-"   *   if \* is the most recently used,  do VIM's original *
-"       do a \*; otherwise (\/ is the
-"       most recently used), do a \/.
-
-nnoremap <silent> <leader>* :call <sid>SearchCurrentMark()<cr>
-nnoremap <silent> <leader># :call <sid>SearchCurrentMark("b")<cr>
-nnoremap <silent> <leader>/ :call <sid>SearchAnyMark()<cr>
-nnoremap <silent> <leader>? :call <sid>SearchAnyMark("b")<cr>
-nnoremap <silent> * :if !<sid>SearchNext()<bar>execute "norm! *"<bar>endif<cr>
-nnoremap <silent> # :if !<sid>SearchNext("b")<bar>execute "norm! #"<bar>endif<cr>
-
-command! -nargs=? Mark call s:DoMark(<f-args>)
-
-autocmd! BufWinEnter * call s:UpdateMark()
-
-" Functions
-
-function! s:MarkCurrentWord()
-	let w = s:PrevWord()
-	if w != ""
-		call s:DoMark('\<' . w . '\>')
-	endif
-endfunction
-
-function! s:GetVisualSelection()
-	let save_a = @a
-	silent normal! gv"ay
-	let res = @a
-	let @a = save_a
-	return res
-endfunction
-
-function! s:GetVisualSelectionEscaped(flags)
-	" flags:
-	"  "e" \  -> \\  
-	"  "n" \n -> \\n  for multi-lines visual selection
-	"  "N" \n removed
-	"  "V" \V added   for marking plain ^, $, etc.
-	let result = s:GetVisualSelection()
-	let i = 0
-	while i < strlen(a:flags)
-		if a:flags[i] ==# "e"
-			let result = escape(result, '\')
-		elseif a:flags[i] ==# "n"
-			let result = substitute(result, '\n', '\\n', 'g')
-		elseif a:flags[i] ==# "N"
-			let result = substitute(result, '\n', '', 'g')
-		elseif a:flags[i] ==# "V"
-			let result = '\V' . result
-		endif
-		let i = i + 1
-	endwhile
-	return result
-endfunction
-
-" manually input a regular expression
-function! s:MarkRegex(...) " MarkRegex(regexp)
-	let regexp = ""
-	if a:0 > 0
-		let regexp = a:1
-	endif
-	call inputsave()
-	let r = input("@", regexp)
-	call inputrestore()
-	if r != ""
-		call s:DoMark(r)
-	endif
-endfunction
-
-" define variables if they don't exist
-function! s:InitMarkVariables()
-	if !exists("g:mwHistAdd")
-		let g:mwHistAdd = "/@"
-	endif
-	if !exists("g:mwCycleMax")
-		let i = 1
-		while hlexists("MarkWord" . i)
-			let i = i + 1
-		endwhile
-		let g:mwCycleMax = i - 1
-	endif
-	if !exists("g:mwCycle")
-		let g:mwCycle = 1
-	endif
-	let i = 1
-	while i <= g:mwCycleMax
-		if !exists("g:mwWord" . i)
-			let g:mwWord{i} = ""
-		endif
-		let i = i + 1
-	endwhile
-	if !exists("g:mwLastSearched")
-		let g:mwLastSearched = ""
-	endif
-endfunction
-
-" return the word under or before the cursor
-function! s:PrevWord()
-	let line = getline(".")
-	if line[col(".") - 1] =~ '\w'
-		return expand("<cword>")
-	else
-		return substitute(strpart(line, 0, col(".") - 1), '^.\{-}\(\w\+\)\W*$', '\1', '')
-	endif
-endfunction
-
-" mark or unmark a regular expression
-function! s:DoMark(...) " DoMark(regexp)
-	" define variables if they don't exist
-	call s:InitMarkVariables()
-
-	" clear all marks if regexp is null
-	let regexp = ""
-	if a:0 > 0
-		let regexp = a:1
-	endif
-	if regexp == ""
-		let i = 1
-		while i <= g:mwCycleMax
-			if g:mwWord{i} != ""
-				let g:mwWord{i} = ""
-				let lastwinnr = winnr()
-				exe "windo syntax clear MarkWord" . i
-				exe lastwinnr . "wincmd w"
-			endif
-			let i = i + 1
-		endwhile
-		let g:mwLastSearched = ""
-		return 0
-	endif
-
-	" clear the mark if it has been marked
-	let i = 1
-	while i <= g:mwCycleMax
-		if regexp == g:mwWord{i}
-			if g:mwLastSearched == g:mwWord{i}
-				let g:mwLastSearched = ""
-			endif
-			let g:mwWord{i} = ""
-			let lastwinnr = winnr()
-			exe "windo syntax clear MarkWord" . i
-			exe lastwinnr . "wincmd w"
-			return 0
-		endif
-		let i = i + 1
-	endwhile
-
-	" add to history
-	if stridx(g:mwHistAdd, "/") >= 0
-		call histadd("/", regexp)
-	endif
-	if stridx(g:mwHistAdd, "@") >= 0
-		call histadd("@", regexp)
-	endif
-
-	" quote regexp with / etc. e.g. pattern => /pattern/
-	let quote = "/?~!@#$%^&*+-=,.:"
-	let i = 0
-	while i < strlen(quote)
-		if stridx(regexp, quote[i]) < 0
-			let quoted_regexp = quote[i] . regexp . quote[i]
-			break
-		endif
-		let i = i + 1
-	endwhile
-	if i >= strlen(quote)
-		return -1
-	endif
-
-	" choose an unused mark group
-	let i = 1
-	while i <= g:mwCycleMax
-		if g:mwWord{i} == ""
-			let g:mwWord{i} = regexp
-			if i < g:mwCycleMax
-				let g:mwCycle = i + 1
-			else
-				let g:mwCycle = 1
-			endif
-			let lastwinnr = winnr()
-			exe "windo syntax clear MarkWord" . i
-			" suggested by Marc Weber
-			" exe "windo syntax match MarkWord" . i . " " . quoted_regexp . " containedin=ALL"
-			exe "windo syntax match MarkWord" . i . " " . quoted_regexp . " containedin=.*"
-			exe lastwinnr . "wincmd w"
-			return i
-		endif
-		let i = i + 1
-	endwhile
-
-	" choose a mark group by cycle
-	let i = 1
-	while i <= g:mwCycleMax
-		if g:mwCycle == i
-			if g:mwLastSearched == g:mwWord{i}
-				let g:mwLastSearched = ""
-			endif
-			let g:mwWord{i} = regexp
-			if i < g:mwCycleMax
-				let g:mwCycle = i + 1
-			else
-				let g:mwCycle = 1
-			endif
-			let lastwinnr = winnr()
-			exe "windo syntax clear MarkWord" . i
-			" suggested by Marc Weber
-			" exe "windo syntax match MarkWord" . i . " " . quoted_regexp . " containedin=ALL"
-			exe "windo syntax match MarkWord" . i . " " . quoted_regexp . " containedin=.*"
-			exe lastwinnr . "wincmd w"
-			return i
-		endif
-		let i = i + 1
-	endwhile
-endfunction
-
-" update mark colors
-function! s:UpdateMark()
-	" define variables if they don't exist
-	call s:InitMarkVariables()
-
-	let i = 1
-	while i <= g:mwCycleMax
-		exe "syntax clear MarkWord" . i
-		if g:mwWord{i} != ""
-			" quote regexp with / etc. e.g. pattern => /pattern/
-			let quote = "/?~!@#$%^&*+-=,.:"
-			let j = 0
-			while j < strlen(quote)
-				if stridx(g:mwWord{i}, quote[j]) < 0
-					let quoted_regexp = quote[j] . g:mwWord{i} . quote[j]
-					break
-				endif
-				let j = j + 1
-			endwhile
-			if j >= strlen(quote)
-				continue
-			endif
-
-			" suggested by Marc Weber
-			" exe "syntax match MarkWord" . i . " " . quoted_regexp . " containedin=ALL"
-			exe "syntax match MarkWord" . i . " " . quoted_regexp . " containedin=.*"
-		endif
-		let i = i + 1
-	endwhile
-endfunction
-
-" return the mark string under the cursor. multi-lines marks not supported
-function! s:CurrentMark()
-	" define variables if they don't exist
-	call s:InitMarkVariables()
-
-	let line = getline(".")
-	let i = 1
-	while i <= g:mwCycleMax
-		if g:mwWord{i} != ""
-			let start = 0
-			while start >= 0 && start < strlen(line) && start < col(".")
-				let b = match(line, g:mwWord{i}, start)
-				let e = matchend(line, g:mwWord{i}, start)
-				if b < col(".") && col(".") <= e
-					let s:current_mark_position = line(".") . "_" . b
-					return g:mwWord{i}
-				endif
-				let start = e
-			endwhile
-		endif
-		let i = i + 1
-	endwhile
-	return ""
-endfunction
-
-" search current mark
-function! s:SearchCurrentMark(...) " SearchCurrentMark(flags)
-	let flags = ""
-	if a:0 > 0
-		let flags = a:1
-	endif
-	let w = s:CurrentMark()
-	if w != ""
-		let p = s:current_mark_position
-		call search(w, flags)
-		call s:CurrentMark()
-		if p == s:current_mark_position
-			call search(w, flags)
-		endif
-		let g:mwLastSearched = w
-	else
-		if g:mwLastSearched != ""
-			call search(g:mwLastSearched, flags)
-		else
-			call s:SearchAnyMark(flags)
-			let g:mwLastSearched = s:CurrentMark()
-		endif
-	endif
-endfunction
-
-" combine all marks into one regexp
-function! s:AnyMark()
-	" define variables if they don't exist
-	call s:InitMarkVariables()
-
-	let w = ""
-	let i = 1
-	while i <= g:mwCycleMax
-		if g:mwWord{i} != ""
-			if w != ""
-				let w = w . '\|' . g:mwWord{i}
-			else
-				let w = g:mwWord{i}
-			endif
-		endif
-		let i = i + 1
-	endwhile
-	return w
-endfunction
-
-" search any mark
-function! s:SearchAnyMark(...) " SearchAnyMark(flags)
-	let flags = ""
-	if a:0 > 0
-		let flags = a:1
-	endif
-	let w = s:CurrentMark()
-	if w != ""
-		let p = s:current_mark_position
-	else
-		let p = ""
-	endif
-	let w = s:AnyMark()
-	call search(w, flags)
-	call s:CurrentMark()
-	if p == s:current_mark_position
-		call search(w, flags)
-	endif
-	let g:mwLastSearched = ""
-endfunction
-
-" search last searched mark
-function! s:SearchNext(...) " SearchNext(flags)
-	let flags = ""
-	if a:0 > 0
-		let flags = a:1
-	endif
-	let w = s:CurrentMark()
-	if w != ""
-		if g:mwLastSearched != ""
-			call s:SearchCurrentMark(flags)
-		else
-			call s:SearchAnyMark(flags)
-		endif
-		return 1
-	else
-		return 0
-	endif
-endfunction
-
-" Restore previous 'cpo' value
 let &cpo = s:save_cpo
-
-" vim: ts=2 sw=2
+unlet s:save_cpo
+" vim: ts=4 sts=0 sw=4 noet
