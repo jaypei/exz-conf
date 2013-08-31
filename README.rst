@@ -36,16 +36,22 @@ usage
 - ``0`` 等同于 ``^`` ，到行首字母前 (noarmal)
 - ``Q`` 关闭文件 (normal)
 
+------
+
 - ``F4`` or ``Shift+F4`` 切换 source/header (A)
 - ``F5`` or ``Shift+F5`` 语法静态检查 (SyntasticCheck)
 - ``F8`` or ``Shift+F8`` VimWiki
 - ``F11`` or ``Shift+F11`` tag list (tagbar)
 - ``F12`` or ``Shift+F12`` 目录树 (NERDTree)
 
+------
+
 - ``Ctrl+h`` 光标移进 ``左`` 侧分割窗
 - ``Ctrl+l`` 光标移进 ``右`` 侧分割窗
 - ``Ctrl+j`` 光标移进 ``下`` 侧分割窗
 - ``Ctrl+k`` 光标移进 ``上`` 侧分割窗
+
+------
 
 默认 leader key 已设置为 ``,`` 。
 
