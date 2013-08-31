@@ -1,3 +1,6 @@
 [submodule "vimconf/vimfiles/bundle/tagbar"]
 	path = vimconf/vimfiles/bundle/tagbar
 	url = git://github.com/majutsushi/tagbar
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh
+	url = https://github.com/jaypei/oh-my-zsh.git
