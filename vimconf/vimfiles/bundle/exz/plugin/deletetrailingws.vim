@@ -4,6 +4,8 @@ func! g:DeleteTrailingWS()
   exe "normal mz"
   %s/\s\+$//ge
   exe "normal `z"
+  echo "Trailing white spaces has been delete."
 endfunc
-map <leader>s :call g:DeleteTrailingWS()<CR>
+
+map <silent> <leader>s :call g:DeleteTrailingWS()<CR>
 

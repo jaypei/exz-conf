@@ -187,12 +187,15 @@ map Q :q<CR>
 map <space> /
 map 0 ^
 map <F4> :A<CR>
-map <S-F8> :VimwikiIndex<CR>
+map <S-F4> <F4>
 map <F8> :VimwikiIndex<CR>
-map <S-F11> :TagbarToggle <CR>
+map <S-F8> <F8>
+map <F5> :SyntasticCheck<CR>:Errors<CR>
+map <S-F5> <F5>
 map <F11> :TagbarToggle <CR>
-map <S-F12> :NERDTreeToggle %<CR>
+map <S-F11> <F11>
 map <F12> :NERDTreeToggle %<CR>
+map <S-F12> <F12>
 
 " python
 autocmd FileType python     map <F9> :!python "%"<CR>
@@ -203,7 +206,7 @@ autocmd FileType lua        map <F9> :!lua "%"<CR>
 " shell
 autocmd FileType sh         map <F9> :!bash "%"<CR>
 " erlang
-autocmd FileType erlang     map <F10> :!erlc "%"<CR>
+autocmd FileType erlang     map <S-F9> :!erlc "%"<CR>
 if has("win32")
     autocmd FileType erlang map <F9> :!escript.exe "%"<CR>
 else
@@ -300,6 +303,13 @@ autocmd BufRead,BufNewFile *.thrift set filetype=thrift
 "{{{ javascript syntax
 
 autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+
+"}}}
+
+"{{{ syntastic
+
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_python_checkers=['pyflake8', 'pylint']
 
 "}}}
 

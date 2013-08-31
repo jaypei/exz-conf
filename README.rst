@@ -35,6 +35,8 @@ usage
 - ``0`` 等同于 ``^`` ，到行首字母前 (noarmal)
 - ``Q`` 关闭文件 (normal)
 
+- ``F4`` or ``Shift+F4`` 切换 source/header (A)
+- ``F5`` or ``Shift+F5`` 语法静态检查 (SyntasticCheck)
 - ``F8`` or ``Shift+F8`` VimWiki
 - ``F11`` or ``Shift+F11`` tag list (tagbar)
 - ``F12`` or ``Shift+F12`` 目录树 (NERDTree)
@@ -52,6 +54,7 @@ usage
 - ``,m`` 设置当前位置单词高亮
 - ``,n`` 取消当前位置单词高亮
 - ``,c`` 清除所有高亮
+- ``,s`` 删除所有行尾空白
 
 
 ARCHLINUX
