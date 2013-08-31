@@ -7,12 +7,12 @@
 "   snipMate - http://www.vim.org/scripts/script.php?script_id=2540
 "   Vimwiki - http://code.google.com/p/vimwiki/
 "   A - http://www.vim.org/scripts/script.php?script_id=31
-"   genutils - http://www.vim.org/scripts/script.php?script_id=197
-"   look up files - http://www.vim.org/scripts/script.php?script_id=1581
+"   tagbar - http://www.vim.org/scripts/script.php?script_id=3465
 "
 " Syntax :
 "   python - http://www.vim.org/scripts/script.php?script_id=790
 "   qml - https://github.com/peterhoeg/vim-qml
+"   jquery - http://www.vim.org/scripts/script.php?script_id=2416
 "
 " Indent :
 "   web-indent - http://www.vim.org/scripts/script.php?script_id=3081
@@ -34,18 +34,23 @@ source $VIMRUNTIME/vimrc_example.vim
 """""""""""""""""""""""""""""""
 " VIM userinterface
 """""""""""""""""""""""""""""""
+" Sets how many lines of history VIM has to remember
+set history=700
+
 " Enable filetype plugins
 filetype on
 filetype plugin on
 filetype indent on
 syntax on
 
+" 自动补全命令时候使用菜单式匹配列表
+set wildmenu
+set wildignore=*.o,*~,*.pyc
+
 set nocompatible
 set nowrap
 set nobackup
 set noswapfile
-set number
-set wildmenu "自动补全命令时候使用菜单式匹配列表
 set showcmd "显示命令
 set foldmethod=marker
 
@@ -68,9 +73,6 @@ else
     color candycode
 endif
 
-" Search
-set ignorecase smartcase
-
 "Set backspace
 set backspace=eol,start,indent
  
@@ -92,17 +94,11 @@ endif
 "Set 1 lines to the curors - when moving vertical..
 set so=1
  
-"Turn on Wild menu
-set wildmenu
- 
 "Always show current position
 set ruler
  
-"The commandbar is 1 high
-set cmdheight=1
- 
 "Show line number
-set nu
+set number
  
 "Do not redraw, when running macros.. lazyredraw
 set lz
@@ -114,10 +110,11 @@ set hid
 set whichwrap+=<,>,h,l
  
 "Ignore case when searching
-set ignorecase
+set ignorecase smartcase
 set incsearch
 "Set magic on
 set magic
+set hlsearch
  
 "No sound on errors.
 set noerrorbells
@@ -130,9 +127,6 @@ set showmatch
 "How many tenths of a second to blink
 set mat=2
  
-"Highlight search things
-set hlsearch
- 
 " Set to auto read when a file is changed from the outside
 set autoread
 
@@ -142,8 +136,12 @@ set cmdheight=1
  
 
 """""""""""""""""""""""""""""""
-" maps
+" shortcuts
 """""""""""""""""""""""""""""""
+" set default leader to ,
+let mapleader = ","
+let g:mapleader = ","
+
 " fix insert mode Ctrl+X and BackSpace problem
 map <C-X> <S-Del>i
 map <BS> d
@@ -155,7 +153,7 @@ elseif has("unix")
     map <C-F12> :e ~/.vimrc<CR>
 endif
 
-" switch buffers with Tab
+" Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
@@ -168,10 +166,18 @@ map <F2> 0:vertical resize 70<CR>
 map <C-F2> :vertical resize 30<CR>
 map <C-w><C-d> <C-w>_
 
-" shortcuts
-set pastetoggle=<leader>p
+" move a line of text using ALT+[jk] or Comamnd+[jk] on mac
+nmap <leader>j mz:m+<cr>`z
+nmap <leader>k mz:m-2<cr>`z
+vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
+vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
+
+" others
+set pastetoggle=<leader>pp
 map <CR> :
 map Q :q<CR>
+map <space> /
+map 0 ^
 map <F4> :A<CR>
 map <S-F8> :VimwikiIndex<CR>
 map <F8> :VimwikiIndex<CR>
@@ -277,9 +283,15 @@ set completeopt+=longest
 
 "}}}
 
-"{{{ thrift
+"{{{ thrift filetype
 
 autocmd BufRead,BufNewFile *.thrift set filetype=thrift
 
 "}}}
-"
+
+"{{{ javascript syntax
+
+autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+
+"}}}
+
