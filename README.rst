@@ -19,6 +19,7 @@ install
     $ ln -s /path/to/work/exz_conf/vimconf/_vimrc ~/.vimrc
     $ ln -s /path/to/work/exz_conf/vimconf/_gvimrc ~/.gvimrc
     $ ln -s /path/to/work/exz_conf/vimconf/vimfiles ~/.vim
+    $ ln -s /path/to/work/exz_conf/vimconf/pylint.ini ~/.pylintrc
 
 updating
 --------
@@ -53,8 +54,10 @@ usage
 - ``,pp`` 切换paste和nopaste模式
 - ``,m`` 设置当前位置单词高亮
 - ``,n`` 取消当前位置单词高亮
+- ``,/`` 跳转到下一个高亮位置
 - ``,c`` 清除所有高亮
 - ``,s`` 删除所有行尾空白
+- ``,w`` 删除所有行尾空白
 
 
 ARCHLINUX

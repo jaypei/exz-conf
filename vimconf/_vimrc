@@ -11,6 +11,7 @@
 "   mark - http://www.vim.org/scripts/script.php?script_id=2666
 "   powerline - https://github.com/Lokaltog/vim-powerline
 "   ack - https://github.com/mileszs/ack.vim
+"   syntastic - https://github.com/scrooloose/syntastic
 "
 " Syntax :
 "   python - http://www.vim.org/scripts/script.php?script_id=790
@@ -148,34 +149,32 @@ let mapleader = ","
 let g:mapleader = ","
 
 " fix insert mode Ctrl+X and BackSpace problem
-map <C-X> <S-Del>i
-map <BS> d
+map <silent> <C-X> <S-Del>i
+map <silent> <BS> d
 
 " vimrc autoload
 if has("win32")
-    map <C-F12> :e $VIM/_vimrc<CR>
+    map <silent> <C-F12> :e $VIM/_vimrc<CR>
 elseif has("unix")
-    map <C-F12> :e ~/.vimrc<CR>
+    map <silent> <C-F12> :e ~/.vimrc<CR>
 endif
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-map <C-Tab> :bn<CR>
-map <S-Tab> :bp<CR>
+map <silent> <C-j> <C-W>j
+map <silent> <C-k> <C-W>k
+map <silent> <C-h> <C-W>h
+map <silent> <C-l> <C-W>l
 
 " window resizing
-map <F2> 0:vertical resize 70<CR>
-map <C-F2> :vertical resize 30<CR>
-map <C-w><C-d> <C-w>_
+map <silent> <F2> 0:vertical resize 70<CR>
+map <silent> <C-F2> :vertical resize 30<CR>
+map <silent> <C-w><C-d> <C-w>_
 
 " move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nmap <leader>j mz:m+<cr>`z
-nmap <leader>k mz:m-2<cr>`z
-vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
-vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
+nmap <silent> <leader>j mz:m+<cr>`z
+nmap <silent> <leader>k mz:m-2<cr>`z
+vmap <silent> <leader>j :m'>+<cr>`<my`>mzgv`yo`z
+vmap <silent> <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
 
 " Clear search highlight
 map <silent> <leader>c :let @/=""<CR>:MarkClear<CR>:echo "Cleared search register."<CR>
@@ -186,35 +185,36 @@ map <CR> :
 map Q :q<CR>
 map <space> /
 map 0 ^
-map <F4> :A<CR>
-map <S-F4> <F4>
-map <F8> :VimwikiIndex<CR>
-map <S-F8> <F8>
-map <F5> :SyntasticCheck<CR>:Errors<CR>
-map <S-F5> <F5>
-map <F11> :TagbarToggle <CR>
-map <S-F11> <F11>
-map <F12> :NERDTreeToggle %<CR>
-map <S-F12> <F12>
+map <leader><leader> :w<CR>
+map <silent> <F4> :A<CR>
+map <silent> <S-F4> <F4>
+map <silent> <F8> :VimwikiIndex<CR>
+map <silent> <S-F8> <F8>
+map <silent> <F5> :SyntasticCheck<CR>:Errors<CR>:echo "SyntasticCheck: syntax check completed."<CR>
+map <silent> <S-F5> <F5>
+map <silent> <F11> :TagbarToggle <CR>
+map <silent> <S-F11> <F11>
+map <silent> <F12> :NERDTreeToggle %<CR>
+map <silent> <S-F12> <F12>
 
 " python
-autocmd FileType python     map <F9> :!python "%"<CR>
+autocmd FileType python     map <silent> <F9> :!python "%"<CR>
 " perl
-autocmd FileType perl       map <F9> :!perl -w "%"<CR>
+autocmd FileType perl       map <silent> <F9> :!perl -w "%"<CR>
 " lua
-autocmd FileType lua        map <F9> :!lua "%"<CR>
+autocmd FileType lua        map <silent> <F9> :!lua "%"<CR>
 " shell
-autocmd FileType sh         map <F9> :!bash "%"<CR>
+autocmd FileType sh         map <silent> <F9> :!bash "%"<CR>
 " erlang
-autocmd FileType erlang     map <S-F9> :!erlc "%"<CR>
+autocmd FileType erlang     map <silent> <S-F9> :!erlc "%"<CR>
 if has("win32")
-    autocmd FileType erlang map <F9> :!escript.exe "%"<CR>
+    autocmd FileType erlang map <silent> <F9> :!escript.exe "%"<CR>
 else
-    autocmd FileType erlang map <F9> :!"%"<CR>
+    autocmd FileType erlang map <silent> <F9> :!"%"<CR>
 endif
 " vim
-autocmd FileType vim        map <buffer> <leader><space> :w<CR>:source %<CR>
-autocmd FileType vim        map <F9> :source %<CR>
+autocmd FileType vim        map <silent> <buffer> <leader><space> :w<CR>:source %<CR>
+autocmd FileType vim        map <silent> <F9> :source %<CR>
 
 
 """""""""""""""""""""""""""""""
@@ -308,8 +308,10 @@ autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
 "{{{ syntastic
 
-let g:syntastic_always_populate_loc_list=1
+let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_python_checkers=['pyflake8', 'pylint']
+let g:syntastic_mode_map = { 'mode': 'passive' }
+
 
 "}}}
 
