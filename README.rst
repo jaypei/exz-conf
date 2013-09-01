@@ -78,4 +78,14 @@ install
     $ ln -s /path/to/work/exz_conf/oh-my-zsh ~/.oh-my-zsh
     $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/Xdefaults ~/.Xdefaults
     $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/xinitrc ~/.xinitrc
+    $ ln -s /path/to/work/exz-conf/archlinux/dotfiles/screenrc ~/.screenrc
+
+
+MAC OSX
+=======
+
+install
+-------
+
+.. code-block:: sh
 

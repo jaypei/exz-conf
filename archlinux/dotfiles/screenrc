@@ -1,0 +1,51 @@
+# Start message
+startup_message off 
+bell_msg ""
+ 
+autodetach on
+
+# Set default encoding using utf8
+defutf8 on
+ 
+# Refresh the display when exiting programs
+altscreen on
+ 
+# Dynamic title
+shelltitle ''
+ 
+# hotkey win
+bindkey ^[z prev
+bindkey ^[x next
+#   for chrome
+bindkey 5D prev # ctrl + left   , move to previous window
+bindkey 5C next # ctrl+ right , move to next window
+#   for Xshell
+bindkey ^5D prev 
+bindkey ^5C next 
+#  for putty
+bindkey ^[[D prev #ctrl + left   , move to previous window
+bindkey ^[[C next # ctrl+ right , move to next window
+ 
+#mac
+bindkey \033[5D prev #ctrl + left   , move to previous window
+bindkey \033[5C next # ctrl+ right , move to next window
+shell ${SHELL}
+ 
+bind s
+#ban掉鎖定預設熱鍵
+ 
+ 
+defencoding utf8
+caption always "%{.KW} %-w%{.mW}[%n] %t%{.KW}%+w"
+hardstatus alwayslastline "%{R}[ %{w}%1` %{R}]%=%{M}%e %{G}%H %{Y} %c %{R} %d/%m/%Y %{K} Load: %l %{w}"
+ 
+#term screen-256color
+attrcolor b ".I"
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+defbce on
+ 
+screen 0
+select 0
+#exec ssh-agent screen
+#exec true
+#source $HOME/.ssh/screen_agent
