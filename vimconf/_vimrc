@@ -215,6 +215,8 @@ endif
 " vim
 autocmd FileType vim        map <silent> <buffer> <leader><space> :w<CR>:source %<CR>
 autocmd FileType vim        map <silent> <F9> :source %<CR>
+" unbind return key in quickfix
+autocmd FileType qf         unmap <CR>
 
 
 """""""""""""""""""""""""""""""
