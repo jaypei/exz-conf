@@ -12,6 +12,7 @@
 "   powerline - https://github.com/Lokaltog/vim-powerline
 "   ack - https://github.com/mileszs/ack.vim
 "   syntastic - https://github.com/scrooloose/syntastic
+"   vim-gitgutter - https://github.com/airblade/vim-gitgutter
 "
 " Syntax :
 "   python - http://www.vim.org/scripts/script.php?script_id=790
@@ -314,6 +315,13 @@ let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_python_checkers=['pyflake8', 'pylint']
 let g:syntastic_mode_map = { 'mode': 'passive' }
 
+
+"}}}
+
+"{{{ vim-gitgutter
+
+let g:gitgutter_eager = 0
+let g:gitgutter_realtime = 0
 
 "}}}
 
