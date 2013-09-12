@@ -1,0 +1,41 @@
+[global_config]
+  enabled_plugins = ,
+  inactive_color_offset = 0.92
+[keybindings]
+  search = <Super>f
+  switch_to_tab_7 = <Super>7
+  switch_to_tab_10 = <Super>0
+  next_tab = <Primary>equal
+  switch_to_tab_5 = <Super>5
+  switch_to_tab_6 = <Super>6
+  group_tab = <Primary>minus
+  switch_to_tab_4 = <Super>4
+  close_term = <Super>w
+  switch_to_tab_2 = <Super>2
+  switch_to_tab_3 = <Super>3
+  switch_to_tab_1 = <Super>1
+  new_tab = <Super>t
+  copy = <Super>c
+  paste = <Super>v
+  switch_to_tab_8 = <Super>8
+  switch_to_tab_9 = <Super>9
+[profiles]
+  [[default]]
+    palette = "#000000:#cd0000:#00cd00:#cdcd00:#1e90ff:#cd00cd:#00cdcd:#e5e5e5:#4c4c4c:#ff0000:#00ff00:#ffff00:#4682b4:#ff00ff:#00ffff:#ffffff"
+    font = monofur Bold 12
+    background_image = None
+    use_system_font = False
+    foreground_color = "#00ff00"
+    show_titlebar = False
+    copy_on_selection = True
+    allow_bold = False
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
