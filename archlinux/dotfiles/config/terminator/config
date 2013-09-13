@@ -21,14 +21,13 @@
   switch_to_tab_9 = <Super>9
 [profiles]
   [[default]]
-    palette = "#000000:#cd0000:#00cd00:#cdcd00:#1e90ff:#cd00cd:#00cdcd:#e5e5e5:#4c4c4c:#ff0000:#00ff00:#ffff00:#4682b4:#ff00ff:#00ffff:#ffffff"
-    font = monofur Bold 12
+    palette = "#000000:#aa0000:#00aa00:#aa5500:#0000aa:#aa00aa:#00aaaa:#aaaaaa:#555555:#ff5555:#55ff55:#ffff55:#5555ff:#ff55ff:#55ffff:#ffffff"
+    font = monofur 14
     background_image = None
     use_system_font = False
     foreground_color = "#00ff00"
     show_titlebar = False
     copy_on_selection = True
-    allow_bold = False
 [layouts]
   [[default]]
     [[[child1]]]
