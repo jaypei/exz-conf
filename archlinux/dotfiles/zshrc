@@ -62,6 +62,7 @@ alias ls='ls --color'
 alias ack='/usr/bin/vendor_perl/ack'
 alias ack-grep='ack'
 alias gd='git diff --color'
+alias e='emacsclient'
 
 mkdir -p /tmp/ssh
 

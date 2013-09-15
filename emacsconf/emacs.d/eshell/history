@@ -1,0 +1,14 @@
+ls
+ls
+cd /home/q
+ls
+ls
+cd work/
+ls
+ls -al
+ls
+cd /tmp
+ls
+ls -al
+cd
+ls

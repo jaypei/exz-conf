@@ -2,9 +2,9 @@ GET CODE
 ========
 .. code-block:: sh
 
-    $ cd /path/to/work
-    $ git clone https://github.com/jaypei/exz_conf.git
-    $ cd exz_conf
+    $ cd $CONFDIR
+    $ git clone https://github.com/jaypei/exz-conf.git
+    $ cd exz-conf
     $ git submodule init
     $ git submodule update
 
@@ -16,16 +16,17 @@ install
 -------
 .. code-block:: sh
 
-    $ ln -s /path/to/work/exz_conf/vimconf/_vimrc ~/.vimrc
-    $ ln -s /path/to/work/exz_conf/vimconf/_gvimrc ~/.gvimrc
-    $ ln -s /path/to/work/exz_conf/vimconf/vimfiles ~/.vim
-    $ ln -s /path/to/work/exz_conf/vimconf/pylint.ini ~/.pylintrc
+    $ ln -s $CONFDIR/exz-conf/vimconf/_vimrc ~/.vimrc
+    $ ln -s $CONFDIR/exz-conf/vimconf/_gvimrc ~/.gvimrc
+    $ ln -s $CONFDIR/exz-conf/vimconf/vimfiles ~/.vim
+    # pylint
+    $ ln -s $CONFDIR/exz-conf/vimconf/pylint.ini ~/.pylintrc
 
 updating
 --------
 .. code-block:: sh
 
-    $ cd ~/.vim
+    $ cd $CONFDIR/exz-conf
     $ git pull --rebase; git submodule update
     $ cd -
 
@@ -66,6 +67,17 @@ usage
 - ``,,`` 保存文件，等同于 ``:w``
 
 
+EMACS CONFIG
+============
+
+install
+-------
+
+.. code-block:: sh
+
+    $ ln -s $CONFDIR/exz-conf/emacsconf/emacs.d ~/.emacs.d
+
+
 ARCHLINUX
 =========
 
@@ -75,15 +87,15 @@ install
 .. code-block:: sh
 
     # zsh
-    $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/zshrc ~/.zshrc
-    $ ln -s /path/to/work/exz_conf/oh-my-zsh ~/.oh-my-zsh
+    $ ln -s $CONFDIR/exz-conf/archlinux/dotfiles/zshrc ~/.zshrc
+    $ ln -s $CONFDIR/exz-conf/oh-my-zsh ~/.oh-my-zsh
     # screen
-    $ ln -s /path/to/work/exz-conf/archlinux/dotfiles/screenrc ~/.screenrc
+    $ ln -s $CONFDIR/exz-conf/archlinux/dotfiles/screenrc ~/.screenrc
     # terminator
-    $ ln -s /path/to/work/exz-conf/archlinux/dotfiles/config/terminator ~/.config/terminator
+    $ ln -s $CONFDIR/exz-conf/archlinux/dotfiles/config/terminator ~/.config/terminator
     # others
-    $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/Xdefaults ~/.Xdefaults
-    $ ln -s /path/to/work/exz_conf/archlinux/dotfiles/xinitrc ~/.xinitrc
+    $ ln -s $CONFDIR/exz-conf/archlinux/dotfiles/Xdefaults ~/.Xdefaults
+    $ ln -s $CONFDIR/exz-conf/archlinux/dotfiles/xinitrc ~/.xinitrc
 
 
 MAC OSX
