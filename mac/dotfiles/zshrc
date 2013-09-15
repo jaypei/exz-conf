@@ -28,7 +28,7 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment following line if you want to disable command autocorrection
-# DISABLE_CORRECTION="true"
+DISABLE_CORRECTION="true"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
@@ -50,7 +50,7 @@ source $ZSH/oh-my-zsh.sh
 mkdir -p /tmp/ssh
 export GOPATH="/Users/jaypei/work/goexz:/Users/jaypei/work/qagent/qagent"
 export GOBIN=/usr/local/Cellar/go/1.0.3/bin
-export PATH=/Users/jaypei/bin:/usr/local/sbin:/usr/local/bin:$PATH:/usr/local/Cellar/go/1.0.3/bin
+export PATH=/Users/jaypei/bin:/usr/local/sbin:/usr/local/bin:$PATH:/usr/local/Cellar/go/1.0.3/bin:/Users/jaypei/work/vimwiki/bin
 export HOMEBREW_TEMP=/usr/local/tmp/homebrew
 export ANDROID_SDK_ROOT=/usr/local/opt/android-sdk
 export EDITOR=vim

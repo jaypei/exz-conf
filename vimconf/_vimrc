@@ -191,7 +191,7 @@ map <silent> <F4> :A<CR>
 map <silent> <S-F4> <F4>
 map <silent> <F8> :VimwikiIndex<CR>
 map <silent> <S-F8> <F8>
-map <silent> <F5> :SyntasticCheck<CR>:Errors<CR>:echo "SyntasticCheck: syntax check completed."<CR>
+map <silent> <F5> :SyntasticCheck<CR>:echo "SyntasticCheck: syntax check completed."<CR>
 map <silent> <S-F5> <F5>
 map <silent> <F11> :TagbarToggle <CR>
 map <silent> <S-F11> <F11>
@@ -312,7 +312,7 @@ autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 "{{{ syntastic
 
 let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_python_checkers=['pyflake8', 'pylint']
+let g:syntastic_python_checkers=['flake8', 'pylint']
 let g:syntastic_mode_map = { 'mode': 'passive' }
 
 
