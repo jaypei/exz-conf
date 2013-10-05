@@ -1,45 +1,29 @@
-;; ==== colors =====
-;; color-theme-molokai - https://github.com/alloy-d/color-theme-molokai
-;; color-theme - http://www.emacswiki.org/emacs/ColorTheme
-;; =================
 
-;; 设置有用的个人信息。这在很多地方有用
+;; (require 'linum)
+
 (setq user-full-name "Pei Zhen")
 (setq user-mail-address "jaypei97159@gmail.com")
 
-;; font
-(set-default-font "monofur-13")
-(add-to-list 'load-path "~/.emacs.d")
-(add-to-list 'load-path "~/.emacs.d")
-
-;; color schema
-(set-background-color "black")
-(set-foreground-color "white")
-(set-face-foreground 'region "green")
-(set-face-background 'region "blue")
-;(load "~/.emacs.d/color-theme-molokai.el")
-;(color-theme-molokai)
-;(require 'color-theme-autoload "color-theme-autoloads")
-;(require 'color-theme "color-theme/color-theme.el")
-(require 'redo "redo.el")
+;; 在标题栏显示buffer的名字，而不是 emacs@wangyin.com 这样没用 的提示
+(setq frame-title-format "emacs@%b")
 
 
 ;; 关闭工具栏
-(tool-bar-mode -1)
-
+(if tool-bar-mode
+    (tool-bar-mode -1))
 
 ;; binding keys
-(global-set-key (kbd "C-z") (quote undo))
-(global-set-key (kbd "C-S-z") (quote redo))
-(global-set-key [(control f6)] 'sams-toggle-truncate)
+;; undo and redo
+(require 'tree-mode "tree-mode.el")
+(require 'redo "redo.el")
+(require 'dirtree "dirtree.el")
 (put 'downcase-region 'disabled nil)
-(add-to-list 'load-path "~/elisp")
 
-;; 关闭滴滴声
-(setq visible-bell t)
+;; 默认mode
+(setq default-major-mode 'text-mode)
 
-;; 关闭起动时的那个“开机画面”
-(setq inhibit-startup-message t)
+(setq visible-bell t)    ;; 关闭滴滴声
+(setq inhibit-startup-message t)    ;; 关闭起动时的那个“开机画面”
 
 ;; 显示列号
 (setq column-number-mode t)
@@ -47,18 +31,15 @@
 ;; 不要在鼠标点击的那个地方插入剪贴板内容
 (setq mouse-yank-at-point t)
 
-;; 用一个很大的 kill ring. 防止误删
-(setq kill-ring-max 200)
-
-;; fill-column 设为 80
-(setq default-fill-column 80)
+(setq kill-ring-max 200)    ;; 用一个很大的 kill ring. 防止误删
+(setq default-fill-column 80)    ;; fill-column 设为 80
 
 ;; 不用 TAB 字符来indent, 这会引起很多奇怪的错误。编辑 Makefile 的时候也不用担心，因为 makefile-mode 会把 TAB 键设置成真正的 TAB 字符，并且加亮显示的
 (setq-default indent-tabs-mode nil)
 (setq default-tab-width 8)
 (setq tab-stop-list ())
-;(loop for x downfrom 40 to 1 do
-;      (setq tab-stop-list (cons (* x 4) tab-stop-list)))
+(loop for x downfrom 40 to 1 do
+      (setq tab-stop-list (cons (* x 4) tab-stop-list)))
 
 ;; 设置 sentence-end 可以识别中文标点。不用在 fill 时在句号后插 入两个空格
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
@@ -71,9 +52,6 @@
 (setq scroll-margin 3
       scroll-conservatively 10000)
 
-;; 把缺省的 major mode 设置为 text-mode, 而不是几乎什么功能也 没有的 fundamental-mode
-(setq default-major-mode 'text-mode)
-
 ;; 括号匹配时显示另外一边的括号，而不是烦人的跳到另一个括号
 (show-paren-mode t)
 (setq show-paren-style 'parentheses)
@@ -81,8 +59,8 @@
 ;; 光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线
 (mouse-avoidance-mode 'animate)
 
-;; 在标题栏显示buffer的名字，而不是 emacs@wangyin.com 这样没用 的提示
-(setq frame-title-format "emacs@%b")
+;;
+(setq ns-pop-up-frames nil)
 
 ;; 让 Emacs 可以直接打开和显示图片
 (auto-image-file-mode)
@@ -97,8 +75,8 @@
 (put 'downcase-region 'disabled nil)
 (put 'LaTeX-hide-environment 'disabled nil)
 
-;; 设置一下备份时的版本控制，这样更加安全
-(setq version-control t)
+;; 关闭版本控制
+(setq version-control nil)
 (setq kept-new-versions 3)
 (setq delete-old-versions t)
 (setq kept-old-versions 2)
@@ -151,7 +129,6 @@
   (insert string))
 
 
-;; undo and redo
 (defun copy-lines(&optional arg) 
   "Function to copy lines"
   "\"C-c w\" copy one line, \"C-u 5 C-c w\" copy 5 lines"
@@ -175,3 +152,7 @@
                        (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 (global-set-key [f11] 'fullscreen)
 
+
+
+
+(provide 'exz-others)
