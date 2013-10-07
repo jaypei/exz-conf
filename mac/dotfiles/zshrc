@@ -58,4 +58,5 @@ export EDITOR=vim
 LANG=en_US.UTF-8
 alias ls="ls -G"
 alias tree="tree -C"
+alias e="emacs"
 

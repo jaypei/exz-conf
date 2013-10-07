@@ -1,0 +1,7 @@
+
+#+TITLE: exz-emacs使用方法
+
+undo / redo
+* =C-z= undo
+* =C-M-z= redo
+
