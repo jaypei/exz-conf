@@ -1,7 +1,19 @@
 
 #+TITLE: exz-emacs使用方法
 
+# 编译elc，加快启动
+$ cd ~/.emacs.d/site-lisp/cedet
+$ make EMACS=emacs
+
+在emacs中键入命令:
+ecb-byte-compile
+
+
+
+# 使用方法
+
 undo / redo
 * =C-z= undo
 * =C-M-z= redo
+
 
