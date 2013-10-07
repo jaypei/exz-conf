@@ -185,7 +185,14 @@ set pastetoggle=<leader>pp
 nmap <CR> :
 nmap Q :q<CR>
 nmap <space> ,/
-nmap 0 ^
+
+imap <silent> <C-a> <Esc>0I
+imap <silent> <C-e> <Esc>A
+imap <silent> <C-b> <Esc>i
+imap <silent> <C-f> <Esc>la
+imap <silent> <Esc>f <Esc>lwi
+imap <silent> <Esc>b <Esc>bi
+
 nmap <leader><leader> :w<CR>
 map <silent> <F4> :A<CR>
 map <silent> <S-F4> <F4>

@@ -12,3 +12,12 @@ ls
 ls -al
 cd
 ls
+ls
+ls -al
+vim exz-others.el
+ls
+e exz-others.el
+emacs exz-others.el
+ls -al
+ls -al
+help
