@@ -5,8 +5,8 @@
 
 ;; cedet
 ;;-------
-(add-search-path "cedet-1.1")
-(load-file "~/.emacs.d/cedet-1.1/common/cedet.el")
+(add-search-path "site-lisp/cedet")
+(load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
 (require 'cedet)
 
 ;; Enable EDE (Project Management) features
@@ -44,8 +44,8 @@
 
 ;; ecb
 ;;-------
-(add-search-path "ecb")
-(load-file "~/.emacs.d/ecb/ecb.el")
+(add-search-path "site-lisp/ecb")
+(load-file "~/.emacs.d/site-lisp/ecb/ecb.el")
 (require 'ecb)
 (setq ecb-auto-activate t)
 (setq ecb-windows-hidden t)
