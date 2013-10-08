@@ -20,7 +20,7 @@
 ;; (require 'ysl-shell)
 ;; (require 'ysl-coding)
 ;; (require 'ysl-ess)
-;; (require 'ysl-org-mode)
+(require 'exz-org)
 ;; (require 'ysl-erc)
 ;; (require 'ysl-easypg)
 (require 'exz-keybindings)

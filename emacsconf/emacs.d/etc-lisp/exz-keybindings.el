@@ -33,6 +33,9 @@
             (local-set-key (kbd "C-o 3") 'ecb-open-source-in-editwin3)
             (local-set-key (kbd "C-o 4") 'ecb-open-source-in-editwin4)))
 
+;; org
+(global-set-key (kbd "<f8> p") 'org-publish)
+
 ;; window move
 (global-set-key (kbd "C-z C-b") 'windmove-left)
 (global-set-key (kbd "C-z C-f") 'windmove-right)
