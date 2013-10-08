@@ -4,13 +4,13 @@
 (setq user-full-name "Pei Zhen")
 (setq user-mail-address "jaypei97159@gmail.com")
 
-;; 在标题栏显示buffer的名字，而不是 emacs@wangyin.com 这样没用 的提示
 (setq frame-title-format "emacs@%b")
 
-
-;; 关闭工具栏
 (if tool-bar-mode
     (tool-bar-mode -1))
+
+(scroll-bar-mode -1)
+
 
 ;; binding keys
 ;; undo and redo
@@ -81,6 +81,7 @@
 (setq delete-old-versions t)
 (setq kept-old-versions 2)
 (setq dired-kept-versions 1)
+(setq-default make-backup-files nil)
 
 ;; 一个简单的办法设置 auto-mode-alist, 免得写很多 add-to-list.
 (mapcar

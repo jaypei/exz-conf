@@ -47,9 +47,12 @@
 (add-search-path "site-lisp/ecb")
 (load-file "~/.emacs.d/site-lisp/ecb/ecb.el")
 (require 'ecb)
-(setq ecb-auto-activate t)
-(setq ecb-windows-hidden t)
+(setq ecb-auto-activate nil)
 (setq ecb-tip-of-the-day nil)
 (setq stack-trace-on-error nil)
+
+(setq ecb-layout-name "left3")
+(setq ecb-show-sources-in-directories-buffer 'always)
+;;(setq ecb-compile-window-height 12)
 
 (provide 'exz-ecb)
