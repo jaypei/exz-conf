@@ -6,10 +6,11 @@
 
 (setq frame-title-format "emacs@%b")
 
-(if tool-bar-mode
+(if (boundp 'tool-bar-mode)
     (tool-bar-mode -1))
 
-(scroll-bar-mode -1)
+(if (boundp 'scroll-bar-mode)
+    (scroll-bar-mode -1))
 
 
 ;; binding keys
@@ -21,12 +22,17 @@
 
 ;; 默认mode
 (setq default-major-mode 'text-mode)
+(setq column-number-mode t)
+
+;; tab
+(setq-default indent-tabs-mode nil)
+(setq default-tab-width 8)
+(setq tab-stop-list ())
+(loop for x downfrom 40 to 1 do
+      (setq tab-stop-list (cons (* x 4) tab-stop-list)))
 
 (setq visible-bell t)    ;; 关闭滴滴声
 (setq inhibit-startup-message t)    ;; 关闭起动时的那个“开机画面”
-
-;; 显示列号
-(setq column-number-mode t)
 
 ;; 不要在鼠标点击的那个地方插入剪贴板内容
 (setq mouse-yank-at-point t)
@@ -34,12 +40,6 @@
 (setq kill-ring-max 200)    ;; 用一个很大的 kill ring. 防止误删
 (setq default-fill-column 80)    ;; fill-column 设为 80
 
-;; 不用 TAB 字符来indent, 这会引起很多奇怪的错误。编辑 Makefile 的时候也不用担心，因为 makefile-mode 会把 TAB 键设置成真正的 TAB 字符，并且加亮显示的
-(setq-default indent-tabs-mode nil)
-(setq default-tab-width 8)
-(setq tab-stop-list ())
-(loop for x downfrom 40 to 1 do
-      (setq tab-stop-list (cons (* x 4) tab-stop-list)))
 
 ;; 设置 sentence-end 可以识别中文标点。不用在 fill 时在句号后插 入两个空格
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")

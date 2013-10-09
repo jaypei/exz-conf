@@ -54,5 +54,9 @@
 (setq ecb-layout-name "left3")
 (setq ecb-show-sources-in-directories-buffer 'always)
 ;;(setq ecb-compile-window-height 12)
+(setq ecb-windows-width 38)
+;(setq ecb-fix-window-size t)
+
+(custom-set-variables '(ecb-options-version "2.40"))
 
 (provide 'exz-ecb)
