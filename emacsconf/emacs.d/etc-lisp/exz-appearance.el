@@ -5,9 +5,14 @@
 
 ;; font
 (cond
- ((eq system-type 'darwin) (set-default-font "monofur-17"))
- ((eq system-type 'gnu/linux) (set-default-font "monofur-13"))
-)
+ ((eq system-type 'darwin)
+  (set-default-font "monofur-17"))
+ ((eq system-type 'gnu/linux)
+  (set-face-attribute 'default nil
+                      :family "Inconsolata-dz for Powerline"
+                      :foundry "unknown"
+                      :height 113))
+ )
 
 ;; color schema
 (set-background-color "black")

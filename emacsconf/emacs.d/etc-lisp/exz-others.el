@@ -1,35 +1,11 @@
 
 ;; (require 'linum)
 
-(setq user-full-name "Pei Zhen")
-(setq user-mail-address "jaypei97159@gmail.com")
-
-(setq frame-title-format "emacs@%b")
-
-(if (boundp 'tool-bar-mode)
-    (tool-bar-mode -1))
-
-(if (boundp 'scroll-bar-mode)
-    (scroll-bar-mode -1))
-
-
 ;; binding keys
 ;; undo and redo
-(require 'tree-mode "tree-mode.el")
 (require 'redo "redo.el")
 (require 'dirtree "dirtree.el")
 (put 'downcase-region 'disabled nil)
-
-;; 默认mode
-(setq default-major-mode 'text-mode)
-(setq column-number-mode t)
-
-;; tab
-(setq-default indent-tabs-mode nil)
-(setq default-tab-width 8)
-(setq tab-stop-list ())
-(loop for x downfrom 40 to 1 do
-      (setq tab-stop-list (cons (* x 4) tab-stop-list)))
 
 (setq visible-bell t)    ;; 关闭滴滴声
 (setq inhibit-startup-message t)    ;; 关闭起动时的那个“开机画面”
@@ -39,7 +15,6 @@
 
 (setq kill-ring-max 200)    ;; 用一个很大的 kill ring. 防止误删
 (setq default-fill-column 80)    ;; fill-column 设为 80
-
 
 ;; 设置 sentence-end 可以识别中文标点。不用在 fill 时在句号后插 入两个空格
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
@@ -59,7 +34,6 @@
 ;; 光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线
 (mouse-avoidance-mode 'animate)
 
-;;
 (setq ns-pop-up-frames nil)
 
 ;; 让 Emacs 可以直接打开和显示图片
@@ -83,25 +57,9 @@
 (setq dired-kept-versions 1)
 (setq-default make-backup-files nil)
 
-;; 一个简单的办法设置 auto-mode-alist, 免得写很多 add-to-list.
-(mapcar
- (function (lambda (setting)
-	     (setq auto-mode-alist
-		   (cons setting auto-mode-alist))))
- '(("\\.xml$".  sgml-mode)
-   ("\\\.bash" . sh-mode)
-   ("\\.rdf$".  sgml-mode)
-   ("\\.session" . emacs-lisp-mode)
-   ("\\.l$" . c-mode)
-   ("\\.css$" . css-mode)
-   ("\\.cfm$" . html-mode)
-   ("gnus" . emacs-lisp-mode)
-   ("\\.idl$" . idl-mode)))
-
 ;; 让 dired 可以递归的拷贝和删除目录。
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
-
 
 (defadvice kill-ring-save (around slick-copy activate)
   "When called interactively with no active region, copy a single line instead."
@@ -112,7 +70,6 @@
               nil '(yank-line))
     (message "Copied line")))
 
-
 (defadvice kill-region (around slick-copy activate)
   "When called interactively with no active region, kill a single line instead."
   (if (or (use-region-p) (not (called-interactively-p)))
@@ -121,14 +78,12 @@
                                        (line-beginning-position 2) t)
               nil '(yank-line))))
 
-
 (defun yank-line (string)
   "Insert STRING above the current line."
   (beginning-of-line)
   (unless (= (elt string (1- (length string))) ?\n)
     (save-excursion (insert "\n")))
   (insert string))
-
 
 (defun copy-lines(&optional arg) 
   "Function to copy lines"
@@ -145,15 +100,11 @@
   ) 
 (global-set-key (kbd "C-c w") 'copy-lines) 
 
-
 ;; full screen
 (defun fullscreen ()
   (interactive)
   (set-frame-parameter nil 'fullscreen
                        (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 (global-set-key [f11] 'fullscreen)
-
-
-
 
 (provide 'exz-others)

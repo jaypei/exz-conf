@@ -63,7 +63,7 @@ alias ack='/usr/bin/vendor_perl/ack'
 alias ack-grep='ack'
 alias gd='git diff --color'
 alias emacs='env LC_ALL=zh_CN.UTF-8 emacs'
-alias e='emacsclient'
+alias e='emacs -t /dev/pts/0'
 
 mkdir -p /tmp/ssh
 

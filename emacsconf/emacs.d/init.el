@@ -6,10 +6,18 @@
 (setq custom-file (concat user-home-dir "/.userlocal.el"))
 (add-to-list 'load-path (concat conf-root-dir "/etc-lisp"))
 
+;; persinal infos
+(setq user-full-name "Pei Zhen")
+(setq user-mail-address "jaypei97159@gmail.com")
+(setq frame-title-format "emacs@%b")
+
 ;; import submodules
 (require 'exz-init)
-(if (file-exists-p user-info-file) (load-file user-info-file))
+(if (file-exists-p user-info-file)
+    (load-file user-info-file))
+(require 'exz-mode)
 (require 'exz-appearance)
+(require 'exz-dired)
 (require 'exz-ecb)
 ;; (require 'ysl-package)
 ;; (require 'ysl-color-theme)

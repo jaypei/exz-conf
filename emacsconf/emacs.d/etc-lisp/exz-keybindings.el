@@ -1,6 +1,8 @@
 ;; prefix - Ctrl-z
 (define-prefix-command 'ctl-z-map)
+(define-prefix-command 'ctl-point-map)
 (global-set-key (kbd "C-z") 'ctl-z-map)
+(global-set-key (kbd "C-.") 'ctl-point-map)
 
 ;; undo / redo
 (global-set-key (kbd "C-z u") 'undo)
@@ -9,14 +11,16 @@
 ;; ecb
 (global-set-key [(f12)] 'speedbar)
 (global-set-key [(f9)] 'ecb-activate)
-(global-set-key (kbd "C-z 1") 'ecb-goto-window-edit1)
-(global-set-key (kbd "C-z 2") 'ecb-goto-window-edit2)
-(global-set-key (kbd "C-z 3") 'ecb-goto-window-edit3)
-(global-set-key (kbd "C-z 4") 'ecb-goto-window-edit4)
-(global-set-key (kbd "C-z 0") 'ecb-goto-window-directories)
-(global-set-key (kbd "C-z 9") 'ecb-goto-window-sources)
-(global-set-key (kbd "C-z 8") 'ecb-goto-window-methods)
-(global-set-key (kbd "C-z 7") 'ecb-goto-window-compilation)
+(global-set-key (kbd "C-. g 1") 'ecb-goto-window-edit1)
+
+;; (global-set-key (kbd "C-z 1") 'ecb-goto-window-edit1)
+;; (global-set-key (kbd "C-z 2") 'ecb-goto-window-edit2)
+;; (global-set-key (kbd "C-z 3") 'ecb-goto-window-edit3)
+;; (global-set-key (kbd "C-z 4") 'ecb-goto-window-edit4)
+;; (global-set-key (kbd "C-z 0") 'ecb-goto-window-directories)
+;; (global-set-key (kbd "C-z 9") 'ecb-goto-window-sources)
+;; (global-set-key (kbd "C-z 8") 'ecb-goto-window-methods)
+;; (global-set-key (kbd "C-z 7") 'ecb-goto-window-compilation)
 
 (add-hook 'ecb-common-tree-buffer-after-create-hook
           (lambda ()
