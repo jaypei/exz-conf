@@ -107,4 +107,7 @@
                        (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 (global-set-key [f11] 'fullscreen)
 
+(setq enable-local-variables t
+      enable-local-eval t)
+
 (provide 'exz-others)
