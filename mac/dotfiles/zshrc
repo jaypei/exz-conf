@@ -53,7 +53,7 @@ export GOBIN=/usr/local/Cellar/go/1.0.3/bin
 export PATH=/Users/jaypei/bin:/usr/local/sbin:/usr/local/bin:$PATH:/usr/local/Cellar/go/1.0.3/bin:/Users/jaypei/work/vimwiki/bin
 export HOMEBREW_TEMP=/usr/local/tmp/homebrew
 export ANDROID_SDK_ROOT=/usr/local/opt/android-sdk
-export EDITOR=vim
+export EDITOR=emacs
 
 LANG=en_US.UTF-8
 alias ls="ls -G"

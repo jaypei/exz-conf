@@ -7,8 +7,10 @@
 
 
 ;; 默认关闭的bar mode
-(if (boundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (boundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if window-system
+    (cond
+     (tool-bar-mode -1)
+     (scroll-bar-mode -1)))
 (menu-bar-mode -1)
 
 

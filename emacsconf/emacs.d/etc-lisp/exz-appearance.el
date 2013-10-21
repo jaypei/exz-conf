@@ -6,7 +6,10 @@
 ;; font
 (cond
  ((eq system-type 'darwin)
-  (set-default-font "monofur-17"))
+  (set-face-attribute 'default nil
+                      :family "Inconsolata for Powerline"
+                      :height 145
+                      :weight 'normal))
  ((eq system-type 'gnu/linux)
   (set-face-attribute 'default nil
                       :family "Inconsolata-dz for Powerline"
