@@ -8,7 +8,7 @@
 
 ;; 默认关闭的bar mode
 (if window-system
-    (cond
+    (progn
      (tool-bar-mode -1)
      (scroll-bar-mode -1)))
 (menu-bar-mode -1)
