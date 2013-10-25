@@ -59,4 +59,5 @@ LANG=en_US.UTF-8
 alias ls="ls -G"
 alias tree="tree -C"
 alias e="emacs"
+alias ex="/Applications/Emacs.app/Contents/MacOS/Emacs > /dev/null 2>&1"
 

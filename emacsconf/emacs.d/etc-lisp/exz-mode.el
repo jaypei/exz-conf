@@ -1,5 +1,6 @@
 
 (require 'tree-mode "tree-mode.el")
+(load-file "~/.emacs.d/site-lisp/graphviz-dot-mode.el")
 
 ;; 默认mode
 (setq default-major-mode 'text-mode)

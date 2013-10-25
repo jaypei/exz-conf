@@ -71,9 +71,20 @@ the layout contains no persistent compilation window and the other windows get a
 little more place."
     (ecb-set-directories-buffer)
     (ecb-split-ver 0.7)
-    (ecb-set-methods-buffer))
-    ;;(select-window (next-window (next-window))))
+    (ecb-set-methods-buffer)
+    (select-window (next-window (next-window))))
   
+  (custom-set-variables
+   '(ecb-options-version "2.40")
+   '(ecb-source-path (quote ("." "~" "~/work")))
+   '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
+   '(ecb-tip-of-the-day nil)
+   '(ecb-show-sources-in-directories-buffer 'always)
+   ;;'(ecb-tree-buffer-style (quote ascii-guides))
+   ;;'(ecb-fix-window-size t)
+   ;;'(ecb-compile-window-height 12)
+   )
+
   (require 'ecb)
   (ecb-activate)
   (ecb-layout-switch "exz-left")
@@ -82,20 +93,5 @@ little more place."
 (setq ecb-auto-activate nil)
 (setq ecb-tip-of-the-day nil)
 (setq stack-trace-on-error nil)
-
-(custom-set-variables
- '(ecb-options-version "2.40")
- '(ecb-source-path (quote ("~" "~/work")))
- '(ecb-fix-window-size 30)
- '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
- '(ecb-tip-of-the-day nil)
- '(ecb-show-sources-in-directories-buffer 'always)
- ;;'(ecb-tree-buffer-style (quote ascii-guides))
- )
-
-;;(setq ecb-compile-window-height 12)
-;;(setq ecb-windows-width 30)
-;;(setq ecb-fix-window-size t)
-
 
 (provide 'exz-ecb)
