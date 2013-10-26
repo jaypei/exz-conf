@@ -2,7 +2,7 @@
 (message (concat "exz-init: conf-root-dir: " conf-root-dir))
 
 ;; define basic functions
-(defun add-search-path (path)
+(defun exz-add-search-path (path)
   (add-to-list 'load-path (concat conf-root-dir "/" path))
   (message (concat "exz-init: load-path added: " path)))
 
@@ -12,8 +12,8 @@
   (load-file "~/.emacs.d/init.el") (message "dotEmacs reloaded successfully"))
 
 ;; load basic search path
-(add-search-path "etc-lisp")
-(add-search-path "site-lisp")
-(add-search-path "site-lisp/extra")
+(exz-add-search-path "etc-lisp")
+(exz-add-search-path "site-lisp")
+(exz-add-search-path "site-lisp/extra")
 
 (provide 'exz-init)

@@ -7,6 +7,8 @@
 (require 'dirtree "dirtree.el")
 (put 'downcase-region 'disabled nil)
 
+(setq default-truncate-lines t)
+
 (setq visible-bell t)    ;; 关闭滴滴声
 (setq inhibit-startup-message t)    ;; 关闭起动时的那个“开机画面”
 
@@ -27,20 +29,7 @@
 (setq scroll-margin 3
       scroll-conservatively 10000)
 
-;; 括号匹配时显示另外一边的括号，而不是烦人的跳到另一个括号
-(show-paren-mode t)
-(setq show-paren-style 'parentheses)
-
-;; 光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线
-(mouse-avoidance-mode 'animate)
-
 (setq ns-pop-up-frames nil)
-
-;; 让 Emacs 可以直接打开和显示图片
-(auto-image-file-mode)
-
-;; 进行语法加亮
-(global-font-lock-mode t)
 
 ;; 把这些缺省禁用的功能打开
 (put 'set-goal-column 'disabled nil)
@@ -98,7 +87,6 @@
     (kill-ring-save (mark) (point)) 
     ) 
   ) 
-(global-set-key (kbd "C-c w") 'copy-lines) 
 
 ;; full screen
 (defun fullscreen ()

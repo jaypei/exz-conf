@@ -17,15 +17,19 @@
                       :height 113))
  )
 
+;; color-theme
+(exz-add-search-path "site-lisp/color-theme")
+(load-file "~/.emacs.d/site-lisp/color-theme/color-theme.el")
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-robin-hood)
+(color-theme-dark-laptop)
+
 ;; color schema
 (set-background-color "black")
 (set-foreground-color "white")
 (set-face-foreground 'region "green")
 (set-face-background 'region "blue")
-;(load "~/.emacs.d/color-theme-molokai.el")
-;(color-theme-molokai)
-;(require 'color-theme-autoload "color-theme-autoloads")
-;(require 'color-theme "color-theme/color-theme.el")
 
 
 (provide 'exz-appearance)

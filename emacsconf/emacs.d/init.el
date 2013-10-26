@@ -22,8 +22,6 @@
 ;; (require 'ysl-package)
 ;; (require 'ysl-color-theme)
 ;; (require 'ysl-ui)
-;; (require 'ysl-editing)
-;; (require 'ysl-backup)
 ;; (require 'ysl-mail)
 ;; (require 'ysl-shell)
 ;; (require 'ysl-coding)

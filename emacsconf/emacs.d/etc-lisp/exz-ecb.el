@@ -3,8 +3,8 @@
 ;; ecb:      https://github.com/alexott/ecb/
 ;; ============================
 
-(add-search-path "site-lisp/cedet")
-(add-search-path "site-lisp/ecb")
+(exz-add-search-path "site-lisp/cedet")
+(exz-add-search-path "site-lisp/ecb")
 
 ;; sample
 ;;-------
