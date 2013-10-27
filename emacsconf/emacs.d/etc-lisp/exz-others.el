@@ -103,5 +103,6 @@
 (exz-add-search-path "site-lisp/f")
 (exz-add-search-path "site-lisp/flycheck")
 (require 'flycheck)
+(add-hook 'after-init-hook 'global-flycheck-mode)
 
 (provide 'exz-others)

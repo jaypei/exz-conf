@@ -31,6 +31,10 @@
 ;; (set-face-background 'region "blue")
 
 ;; powerline
+(exz-add-search-path "site-lisp/powerline")
+(require 'powerline)
+(powerline-default-theme)
 
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on) ; color shell
 
 (provide 'exz-appearance)

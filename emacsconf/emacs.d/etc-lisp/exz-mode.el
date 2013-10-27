@@ -2,16 +2,18 @@
 (require 'tree-mode "tree-mode.el")
 (exz-load-file "site-lisp/graphviz-dot-mode.el")
 
-;; 默认mode
-(setq default-major-mode 'text-mode)
+(setq default-major-mode 'text-mode)    ; text-mode by default
 (setq column-number-mode t)
 
-;; 默认关闭的bar mode
+(require 'ido)                          ; ido-mode
+(ido-mode t)
+
 (if window-system
     (progn
-     (tool-bar-mode -1)
-     (scroll-bar-mode -1)))
-(menu-bar-mode -1)
+     (tool-bar-mode -1)                 ; tool-bar-mode
+     (scroll-bar-mode -1)))             ; scroll-bar-mode
+
+(menu-bar-mode -1)                      ; menu-bar-mode
 
 ;; 括号匹配时显示另外一边的括号，而不是烦人的跳到另一个括号
 (show-paren-mode t)
