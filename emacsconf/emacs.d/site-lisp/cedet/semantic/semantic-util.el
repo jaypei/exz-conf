@@ -28,7 +28,6 @@
 ;; Semantic utility API for use with semantic tag tables.
 ;;
 
-(require 'assoc)
 (require 'semantic)
 (eval-when-compile
   ;; Emacs 21

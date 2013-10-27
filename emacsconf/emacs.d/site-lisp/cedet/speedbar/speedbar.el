@@ -61,7 +61,6 @@ this version is not backward compatible to 0.14 or earlier.")
 ;;; TODO:
 ;; - Timeout directories we haven't visited in a while.
 
-(require 'assoc)
 (require 'easymenu)
 (require 'dframe)
 (require 'sb-image)

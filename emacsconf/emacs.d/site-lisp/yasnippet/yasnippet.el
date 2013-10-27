@@ -138,7 +138,6 @@
 ;;; Code:
 
 (require 'cl)
-(require 'assoc)
 (require 'easymenu)
 
 

@@ -37,7 +37,6 @@
     "Current version of Semantic."))
 
 (require 'working)
-(require 'assoc)
 (require 'semantic-tag-ls)
 (require 'semantic-lex)
 (require 'inversion)

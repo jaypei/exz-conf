@@ -33,7 +33,6 @@
 ;; Originally written in semantic-util.el
 ;;
 
-(require 'assoc)
 (require 'semantic)
 (require 'semanticdb)
 (eval-when-compile
