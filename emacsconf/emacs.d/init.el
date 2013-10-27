@@ -20,7 +20,7 @@
 (require 'exz-dired)
 (require 'exz-ecb)
 (require 'exz-yasnippet)
-;; (require 'ysl-package)
+(require 'exz-package)
 ;; (require 'ysl-mail)
 ;; (require 'ysl-shell)
 ;; (require 'ysl-coding)

@@ -4,21 +4,22 @@
 (put 'downcase-region 'disabled nil)
 (setq default-truncate-lines t)
 
-(setq visible-bell t)    ;; 关闭滴滴声
-(setq inhibit-startup-message t)    ;; 关闭起动时的那个“开机画面”
+(setq visible-bell t)                   ; 关闭滴滴声
+(setq inhibit-startup-message t)        ; 关闭起动时的那个“开机画面”
 
-;; 不要在鼠标点击的那个地方插入剪贴板内容
-(setq mouse-yank-at-point t)
+(setq enable-local-variables t
+      enable-local-eval t)
 
-(setq kill-ring-max 200)    ;; 用一个很大的 kill ring. 防止误删
-(setq default-fill-column 80)    ;; fill-column 设为 80
+(setq mouse-yank-at-point t)            ; 不要在鼠标点击的地方插入剪切板内容
 
-;; 设置 sentence-end 可以识别中文标点。不用在 fill 时在句号后插 入两个空格
+(setq kill-ring-max 200)                ; 用一个很大的 kill ring. 防止误删
+(setq default-fill-column 80)           ; fill-column 设为 80
+
+; 设置 sentence-end 可以识别中文标点。不用在 fill 时在句号后插 入两个空格
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
 
-;; 可以递归的使用 minibuffer
-(setq enable-recursive-minibuffers t)
+(setq enable-recursive-minibuffers t)   ; 可以递归的使用 minibuffer
 
 ;; 防止页面滚动时跳动
 (setq scroll-margin 3
@@ -89,14 +90,18 @@
   (set-frame-parameter nil 'fullscreen
                        (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 
-(setq enable-local-variables t
-      enable-local-eval t)
-
 ;; auto-complete
 (exz-add-search-path "site-lisp/auto-complete")
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories (concat conf-root-dir "auto-complete/dict"))
 (require 'auto-complete-config)
 (ac-config-default)
+
+;; flycheck
+(exz-add-search-path "site-lisp/s")
+(exz-add-search-path "site-lisp/dash")
+(exz-add-search-path "site-lisp/f")
+(exz-add-search-path "site-lisp/flycheck")
+(require 'flycheck)
 
 (provide 'exz-others)

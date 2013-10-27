@@ -30,4 +30,7 @@
 ;; (set-face-foreground 'region "green")
 ;; (set-face-background 'region "blue")
 
+;; powerline
+
+
 (provide 'exz-appearance)
