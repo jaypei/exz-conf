@@ -6,13 +6,13 @@
 (global-set-key (kbd "C-?") 'redo)
 (global-set-key (kbd "C-z c") 'copy-region-as-kill)
 
-;; cua
-(global-set-key [(f10)] 'cua-mode)
+(global-set-key [(f7)] 'cua-mode)
+;;(global-set-key [(f8)] 'cua-mode)
+(global-set-key [(f9)] 'exz-load-ecb)
+(global-set-key [(f10)] 'menu-bar-mode)
+(global-set-key [(f12)] 'speedbar)
 
 ;; ecb
-(global-set-key [(f12)] 'speedbar)
-(global-set-key [(f9)] 'exz-load-ecb)
-
 (add-hook 'ecb-common-tree-buffer-after-create-hook
           (lambda ()
             (hl-line-mode)
@@ -55,8 +55,5 @@
 (global-set-key (kbd "C-z w n") 'windmove-down)
 (global-set-key (kbd "C-z w p") 'windmove-up)
 (global-set-key (kbd "C-z w k") 'delete-window)
-
-;; org
-(global-set-key (kbd "<f8> p") 'org-publish)
 
 (provide 'exz-keybindings)
