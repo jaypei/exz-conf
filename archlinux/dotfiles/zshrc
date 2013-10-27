@@ -1,3 +1,5 @@
+# -*- mode: shell-script -*-
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -53,7 +55,7 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 
-export EDITOR='emacs -t /dev/pts/0'
+export EDITOR=e
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export PATH=~/bin:~/work/vimwiki/bin:$PATH
