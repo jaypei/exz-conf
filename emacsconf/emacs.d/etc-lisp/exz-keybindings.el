@@ -8,9 +8,10 @@
 
 (global-set-key [(f7)] 'cua-mode)
 ;;(global-set-key [(f8)] 'cua-mode)
-(global-set-key [(f9)] 'exz-load-ecb)
-(global-set-key [(f10)] 'menu-bar-mode)
-(global-set-key [(f12)] 'speedbar)
+(global-set-key [f9] 'exz-load-ecb)
+(global-set-key [f10] 'menu-bar-mode)
+(global-set-key [f11] 'fullscreen)
+(global-set-key [f12] 'speedbar)
 
 ;; ecb
 (add-hook 'ecb-common-tree-buffer-after-create-hook

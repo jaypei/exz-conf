@@ -25,10 +25,9 @@
 (color-theme-dark-laptop)
 
 ;; color schema
-(set-background-color "black")
-(set-foreground-color "white")
-(set-face-foreground 'region "green")
-(set-face-background 'region "blue")
-
+;; (set-background-color "black")
+;; (set-foreground-color "white")
+;; (set-face-foreground 'region "green")
+;; (set-face-background 'region "blue")
 
 (provide 'exz-appearance)

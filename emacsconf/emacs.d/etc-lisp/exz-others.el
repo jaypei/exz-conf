@@ -1,12 +1,7 @@
 
-;; (require 'linum)
-
-;; binding keys
-;; undo and redo
 (require 'redo "redo.el")
-(require 'dirtree "dirtree.el")
-(put 'downcase-region 'disabled nil)
 
+(put 'downcase-region 'disabled nil)
 (setq default-truncate-lines t)
 
 (setq visible-bell t)    ;; 关闭滴滴声
@@ -93,9 +88,15 @@
   (interactive)
   (set-frame-parameter nil 'fullscreen
                        (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
-(global-set-key [f11] 'fullscreen)
 
 (setq enable-local-variables t
       enable-local-eval t)
+
+;; auto-complete
+(exz-add-search-path "site-lisp/auto-complete")
+(require 'auto-complete)
+(add-to-list 'ac-dictionary-directories (concat conf-root-dir "auto-complete/dict"))
+(require 'auto-complete-config)
+(ac-config-default)
 
 (provide 'exz-others)
