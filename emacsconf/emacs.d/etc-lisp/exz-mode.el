@@ -1,6 +1,11 @@
+;;; Package --- exz-mode
+;;; Commentary:
 
 (require 'tree-mode "tree-mode.el")
-(exz-load-file "site-lisp/graphviz-dot-mode.el")
+
+;;; Code:
+
+(exz-load-file "site-lisp/graphviz-dot-mode.el") ; graphviz-mode
 
 (setq default-major-mode 'text-mode)    ; text-mode by default
 (setq column-number-mode t)
@@ -15,18 +20,18 @@
 
 (menu-bar-mode -1)                      ; menu-bar-mode
 
-;; 括号匹配时显示另外一边的括号，而不是烦人的跳到另一个括号
-(show-paren-mode t)
+(exz-add-search-path "site-lisp/git-gutter") ; git-gutter
+(require 'git-gutter)
+(global-git-gutter-mode 1)
+
+(show-paren-mode t)                     ; 括号匹配
 (setq show-paren-style 'parentheses)
 
-;; 光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线
-(mouse-avoidance-mode 'animate)
+(mouse-avoidance-mode 'animate)         ; 鼠标自动让开
 
-;; 让 Emacs 可以直接打开和显示图片
-(auto-image-file-mode)
+(auto-image-file-mode)                  ; 可自动打开图片
 
-;; 进行语法加亮
-(global-font-lock-mode t)
+(global-font-lock-mode t)               ; 高亮
 
 ;; 一个简单的办法设置 auto-mode-alist, 免得写很多 add-to-list.
 (mapcar
@@ -43,8 +48,7 @@
    ("gnus" . emacs-lisp-mode)
    ("\\.idl$" . idl-mode)))
 
-;; tab
-(setq-default indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)     ; tab
 (setq default-tab-width 4)
 (setq tab-width 4)
 (setq-default c-basic-offset 4)
@@ -52,5 +56,5 @@
 (loop for x downfrom 40 to 1 do
       (setq tab-stop-list (cons (* x 4) tab-stop-list)))
 
+;;; exz-mode.el ends here
 (provide 'exz-mode)
-
