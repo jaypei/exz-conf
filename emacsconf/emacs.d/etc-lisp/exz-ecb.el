@@ -2,12 +2,8 @@
 ;; cedet:    http://cedet.sourceforge.net/
 ;; ecb:      https://github.com/alexott/ecb/
 ;; ============================
-
-(exz-add-search-path "site-lisp/cedet")
-(exz-add-search-path "site-lisp/ecb")
-
-;; sample
-;;-------
+;; cedet config sample
+;;--------------------
 ;; Enable EDE (Project Management) features
 ;;(global-ede-mode 1)
 ;; Enable EDE for a pre-existing C++ project
@@ -34,12 +30,15 @@
 ;;(global-srecode-minor-mode 1)
 
 
+(exz-add-search-path "site-lisp/cedet")
+(exz-add-search-path "site-lisp/ecb")
+
 (defun exz-load-ecb ()
   (interactive)
-  (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+  (exz-load-file "site-lisp/cedet/common/cedet.el")
   (require 'cedet)
   (global-ede-mode 1)
-  (load-file "~/.emacs.d/site-lisp/ecb/ecb.el")
+  (exz-load-file "site-lisp/ecb/ecb.el")
 
   (ecb-layout-define "exz-left" left
     "This function creates the following layout:

@@ -6,6 +6,10 @@
   (add-to-list 'load-path (concat conf-root-dir "/" path))
   (message (concat "exz-init: load-path added: " path)))
 
+(defun exz-load-file (path)
+  (load-file (concat conf-root-dir "/" path))
+  (message "exz-load-file: loading %s" path))
+
 ; reload dotemacs
 (defun exz-reload()
   (interactive)

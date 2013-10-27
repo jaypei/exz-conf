@@ -19,7 +19,6 @@
 
 ;; color-theme
 (exz-add-search-path "site-lisp/color-theme")
-(load-file "~/.emacs.d/site-lisp/color-theme/color-theme.el")
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-robin-hood)
