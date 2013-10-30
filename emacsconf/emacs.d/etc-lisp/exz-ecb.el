@@ -1,3 +1,6 @@
+;;; Package --- ecb configuration
+;;; Commentary: 
+
 ;; ============================
 ;; cedet:    http://cedet.sourceforge.net/
 ;; ecb:      https://github.com/alexott/ecb/
@@ -30,8 +33,15 @@
 ;;(global-srecode-minor-mode 1)
 
 
+;;; Code:
+
 (exz-add-search-path "site-lisp/cedet")
 (exz-add-search-path "site-lisp/ecb")
+
+(setq exz-ecb-source-path (quote (
+                           "/Users/jaypei/work/vimwiki/org"
+                           "/Users/jaypei/work"
+                           ".")))
 
 (defun exz-load-ecb ()
   (interactive)
@@ -75,7 +85,7 @@ little more place."
   
   (custom-set-variables
    '(ecb-options-version "2.40")
-   '(ecb-source-path (quote ("." "~" "~/work")))
+   '(ecb-source-path exz-ecb-source-path)
    '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
    '(ecb-tip-of-the-day nil)
    '(ecb-show-sources-in-directories-buffer 'always)
@@ -89,8 +99,6 @@ little more place."
   (ecb-layout-switch "exz-left")
   )
 
-(setq ecb-auto-activate nil)
-(setq ecb-tip-of-the-day nil)
-(setq stack-trace-on-error nil)
-
 (provide 'exz-ecb)
+
+;;; exz-ecb.el ends here

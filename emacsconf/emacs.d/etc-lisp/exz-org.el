@@ -1,6 +1,6 @@
 (setq org-publish-project-alist
       '(("note-org"
-         :base-directory "~/work/vimwiki/org2"
+         :base-directory "~/work/vimwiki/org"
          :publishing-directory "~/work/vimwiki/org2-publish"
          :base-extension "org"
          :recursive t
