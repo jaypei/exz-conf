@@ -1,0 +1,7 @@
+# name: shebang-line
+# key: shebang-qunar
+# --
+#!/usr/bin/q-python27
+# -*- coding: utf-8 -*-
+
+$0

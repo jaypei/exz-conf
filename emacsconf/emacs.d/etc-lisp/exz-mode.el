@@ -10,8 +10,8 @@
 (setq default-major-mode 'text-mode)    ; text-mode by default
 (setq column-number-mode t)
 
-(require 'ido)                          ; ido-mode
-(ido-mode t)
+;; (require 'ido)                          ; ido-mode
+;; (ido-mode t)
 
 (if window-system
     (progn
