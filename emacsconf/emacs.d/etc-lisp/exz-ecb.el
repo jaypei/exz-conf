@@ -39,8 +39,8 @@
 (exz-add-search-path "site-lisp/ecb")
 
 (setq exz-ecb-source-path (quote (
-                           "/Users/jaypei/work/vimwiki/org"
-                           "/Users/jaypei/work"
+                           "~/work/vimwiki/org"
+                           "~/work"
                            ".")))
 
 (defun exz-load-ecb ()
