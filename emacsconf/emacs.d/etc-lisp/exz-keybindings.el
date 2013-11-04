@@ -6,9 +6,7 @@
 (global-set-key (kbd "C-?") 'redo)
 
 ;; prefix definition
-(define-prefix-command 'exz-win-map)
 (define-prefix-command 'exz-z-map)
-(global-set-key (kbd "C-`") 'exz-win-map)
 (global-set-key (kbd "C-x C-z") 'exz-z-map)
 (global-set-key (kbd "C-z") 'exz-z-map)
 
@@ -34,17 +32,17 @@
                            (lambda ()
                              (interactive)
                              (message "ECB -- hello world!")))
-            (global-set-key (kbd "C-` 1") 'ecb-goto-window-edit1)
-            (global-set-key (kbd "C-` 2") 'ecb-goto-window-edit2)
-            (global-set-key (kbd "C-` 3") 'ecb-goto-window-edit3)
-            (global-set-key (kbd "C-` 4") 'ecb-goto-window-edit4)
-            (global-set-key (kbd "C-` 5") 'ecb-goto-window-edit5)
-            (global-set-key (kbd "C-` m") 'ecb-goto-window-methods)
-            (global-set-key (kbd "C-` d") 'ecb-goto-window-directories)
-            (global-set-key (kbd "C-` s") 'ecb-goto-window-sources)
-            (global-set-key (kbd "C-` c") 'ecb-goto-window-compilation)
-            (global-set-key (kbd "C-` h") 'ecb-goto-window-history)
-            (global-set-key (kbd "C-` s") 'ecb-goto-window-speedbar)
+            (global-set-key (kbd "C-z w 1") 'ecb-goto-window-edit1)
+            (global-set-key (kbd "C-z w 2") 'ecb-goto-window-edit2)
+            (global-set-key (kbd "C-z w 3") 'ecb-goto-window-edit3)
+            (global-set-key (kbd "C-z w 4") 'ecb-goto-window-edit4)
+            (global-set-key (kbd "C-z w 5") 'ecb-goto-window-edit5)
+            (global-set-key (kbd "C-z w m") 'ecb-goto-window-methods)
+            (global-set-key (kbd "C-z w d") 'ecb-goto-window-directories)
+            (global-set-key (kbd "C-z w s") 'ecb-goto-window-sources)
+            (global-set-key (kbd "C-z w c") 'ecb-goto-window-compilation)
+            (global-set-key (kbd "C-z w h") 'ecb-goto-window-history)
+            (global-set-key (kbd "C-z w s") 'ecb-goto-window-speedbar)
             (local-set-key (kbd "p") 'previous-line)
             (local-set-key (kbd "n") 'next-line)
             ))
@@ -70,16 +68,16 @@
             ))
 
 ;; window move
-(global-set-key (kbd "C-` b") 'windmove-left)
-(global-set-key (kbd "C-` f") 'windmove-right)
-(global-set-key (kbd "C-` n") 'windmove-down)
-(global-set-key (kbd "C-` p") 'windmove-up)
-(global-set-key (kbd "C-` k") 'delete-window)
+(global-set-key (kbd "C-z w b") 'windmove-left)
+(global-set-key (kbd "C-z w f") 'windmove-right)
+(global-set-key (kbd "C-z w n") 'windmove-down)
+(global-set-key (kbd "C-z w p") 'windmove-up)
+(global-set-key (kbd "C-z w k") 'delete-window)
 
 ;; org
 (add-hook 'org-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-` o") 'exz-org-publish)))
+            (local-set-key (kbd "C-z o p") 'exz-org-publish)))
 
 
 ;;; exz-keybindings.el ends here
