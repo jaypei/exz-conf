@@ -11,10 +11,10 @@ elseif has("unix")
 endif
 
 " default
-if has("win32") || has("gui")
-    source $VIMRUNTIME/mswin.vim
-    behave mswin
-endif
+"if has("win33") || has("gui")
+"    source $VIMRUNTIME/mswin.vim
+"    behave mswin
+"endif
 
  
 " color

@@ -190,8 +190,8 @@ imap <silent> <C-a> <Esc>0I
 imap <silent> <C-e> <Esc>A
 imap <silent> <C-b> <Esc>i
 imap <silent> <C-f> <Esc>la
-imap <silent> <Esc>f <Esc>lwi
-imap <silent> <Esc>b <Esc>bi
+imap <silent> <C-a> <Home>
+imap <silent> <C-e> <End>
 
 nmap <leader><leader> :w<CR>
 map <silent> <F4> :A<CR>

@@ -19,16 +19,16 @@
     (set-fontset-font (frame-parameter nil 'font) charset 
                       (font-spec :family chinese :size chinese-size)))) 
 
-(ecase system-type 
-  ;; Monaco for Powerline
-  ;; Inconsolata-dz for Powerline
-  (gnu/linux
-   (exz-set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
-  (darwin 
-   (set-face-attribute 'default nil
-                       :family "Inconsolata-dz for Powerline"
-                       :foundry "unknown"
-                       :height 113)))
+(if (display-graphic-p)
+    ((lambda () (ecase system-type 
+                  ;; Monaco for Powerline
+                  ;; Inconsolata-dz for Powerline
+                  (gnu/linux
+                   (exz-set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
+                  (darwin
+                   (set-face-attribute 'default nil
+                                       :font (format "Inconsolata for Powerline:pixelsize=16")))
+                  ))))
 
 ;; color-theme
 (exz-add-search-path "site-lisp/color-theme")
