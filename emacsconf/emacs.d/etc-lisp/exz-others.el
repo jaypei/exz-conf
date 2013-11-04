@@ -122,5 +122,32 @@ occurence of CHAR."
     (search-forward (string char) nil nil n))
   (setq unread-command-events (list last-input-event)))
 
+;; window move
+(defun window-move-up (&optional arg)
+  "Current window move-up 2 lines."
+  (interactive "P")
+  (if arg
+      (scroll-up arg)
+    (scroll-up 2)))
+
+(defun window-move-down (&optional arg)
+  "Current window move-down 3 lines."
+  (interactive "P")
+  (if arg
+      (scroll-down arg)
+    (scroll-down 3)))
+
+(defun other-window-move-up (&optional arg)
+  "Other window move-up 1 lines."
+  (interactive "p")
+  (scroll-other-window arg))
+
+(defun other-window-move-down (&optional arg)
+  "Other window move-down 2 lines."
+  (interactive "P")
+  (if arg
+      (scroll-other-window-down arg)
+    (scroll-other-window-down 2)))
+
 ;;; exz-others.el ends here
 (provide 'exz-others)
