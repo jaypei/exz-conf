@@ -35,20 +35,17 @@
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-robin-hood)
-(color-theme-dark-laptop)
-
-;; color schema
-;; (set-background-color "black")
-;; (set-foreground-color "white")
-;; (set-face-foreground 'region "green")
-;; (set-face-background 'region "blue")
+(if (display-graphic-p)
+    (color-theme-dark-laptop)
+  (color-theme-comidia))
 
 ;; powerline
 (exz-add-search-path "site-lisp/powerline")
 (require 'powerline)
 (powerline-default-theme)
 
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on) ; color shell
+(add-hook 'shell-mode-hook
+          'ansi-color-for-comint-mode-on) ; color shell
 
 ;;; exz-appearance.el ends here
 (provide 'exz-appearance)

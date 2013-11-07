@@ -13,16 +13,22 @@
 ;; (require 'ido)                          ; ido-mode
 ;; (ido-mode t)
 
-(if window-system
-    (progn
-     (tool-bar-mode -1)                 ; tool-bar-mode
-     (scroll-bar-mode -1)))             ; scroll-bar-mode
+(if (display-graphic-p)
+    ((lambda()
+       (tool-bar-mode -1)
+       (scroll-bar-mode -1)))
+  ((lambda ()
+     (xterm-mouse-mode t))))
 
 (menu-bar-mode -1)                      ; menu-bar-mode
 
+;; git
 (exz-add-search-path "site-lisp/git-gutter") ; git-gutter
 (require 'git-gutter)
 (global-git-gutter-mode 1)
+
+(exz-add-search-path "site-lisp/git-commit-mode") ; git-commit-mode
+(require 'git-commit-mode)
 
 (show-paren-mode t)                     ; 括号匹配
 (setq show-paren-style 'parentheses)
