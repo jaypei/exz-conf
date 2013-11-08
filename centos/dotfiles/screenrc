@@ -1,0 +1,25 @@
+#
+# ~/.screenrc
+#
+
+# 启动时不显示欢迎屏幕
+startup_message off
+
+#  定义screen的功能键为Ctrl-\。向终端输入Ctrl-\时应按 Ctrl-\ \。
+escape ^\\
+
+# 屏幕缓冲区 1024 行。
+defscrollback 1024
+
+# 在最下一行显示窗口列表和时钟
+hardstatus off
+hardstatus alwayslastline
+hardstatus string "%{.bW}%-w%{.rY}%n %t%{-}%+w %=%{..G} %H(%l) %{..Y} %Y/%m/%d %c:%s "
+
+# 关闭错误提示
+vbell off
+
+# 按 Ctrl-\ w 或 Ctrl-\ Ctrl-W 显示窗口列表
+bind w windowlist -b
+bind ^w windowlist -b
+
