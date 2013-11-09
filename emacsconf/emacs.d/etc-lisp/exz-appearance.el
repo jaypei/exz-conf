@@ -14,24 +14,35 @@
                       (font-spec :family chinese :size chinese-size)))) 
 
 (if (display-graphic-p)
-    ((lambda () (ecase system-type 
-                  ;; Monaco for Powerline
-                  ;; Inconsolata-dz for Powerline
-                  (gnu/linux
-                   (exz-set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
-                  (darwin
-                   (set-face-attribute 'default nil
-                                       :font (format "Inconsolata for Powerline:pixelsize=16")))
-                  ))))
+    (ecase system-type 
+      ;; Monaco for Powerline
+      ;; Inconsolata-dz for Powerline
+      (gnu/linux
+       (exz-set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
+      (darwin
+       (set-face-attribute 'default nil
+                           :font (format "Inconsolata for Powerline:pixelsize=16")))
+      ))
 
 ;; color-theme
 (exz-add-search-path "site-lisp/color-theme")
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-robin-hood)
+
 (if (display-graphic-p)
-    (color-theme-dark-laptop)
-  (color-theme-comidia))
+    (progn 
+      (exz-add-search-path "site-lisp/color-theme-tomorrow")
+      (require 'color-theme-tomorrow)
+      (color-theme-tomorrow--define-theme night)
+      ;(color-theme-dark-laptop)
+      )
+  (progn
+    (color-theme-comidia)
+    )
+  )
+;(color-theme-tomorrow--define-theme night)
+
 
 ;; powerline
 (exz-add-search-path "site-lisp/powerline")
