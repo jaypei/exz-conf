@@ -3,12 +3,6 @@
 
 ;;; Code:
 
-
-;; ==== colors =====
-;; color-theme-molokai - https://github.com/alloy-d/color-theme-molokai
-;; color-theme - http://www.emacswiki.org/emacs/ColorTheme
-;; =================
-
 ;; font
 (eval-when-compile (require 'cl)) 
 

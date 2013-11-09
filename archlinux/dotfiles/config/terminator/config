@@ -29,7 +29,6 @@
     foreground_color = "#ffffff"
     show_titlebar = False
     copy_on_selection = True
-    background_color = "#222222"
 [layouts]
   [[default]]
     [[[window0]]]

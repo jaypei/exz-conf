@@ -7,21 +7,6 @@
 
 (exz-load-file "site-lisp/graphviz-dot-mode.el") ; graphviz-mode
 
-(setq default-major-mode 'text-mode)    ; text-mode by default
-(setq column-number-mode t)
-
-;; (require 'ido)                          ; ido-mode
-;; (ido-mode t)
-
-(if (display-graphic-p)
-    ((lambda()
-       (tool-bar-mode -1)
-       (scroll-bar-mode -1)))
-  ((lambda ()
-     (xterm-mouse-mode t))))
-
-(menu-bar-mode -1)                      ; menu-bar-mode
-
 ;; git
 (exz-add-search-path "site-lisp/git-gutter") ; git-gutter
 (require 'git-gutter)
@@ -29,6 +14,35 @@
 
 (exz-add-search-path "site-lisp/git-commit-mode") ; git-commit-mode
 (require 'git-commit-mode)
+
+;; web mode
+(exz-add-search-path "site-lisp/web-mode")
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+;; ido
+;; (require 'ido)                          ; ido-mode
+;; (ido-mode t)
+
+;; tab
+(setq-default indent-tabs-mode nil)
+(setq default-tab-width 4)
+(setq tab-width 4)
+(setq-default c-basic-offset 4)
+(setq tab-stop-list ())
+(loop for x downfrom 40 to 1 do
+      (setq tab-stop-list (cons (* x 4) tab-stop-list)))
+
+;; others
+(setq default-major-mode 'text-mode)    ; text-mode by default
+(setq column-number-mode t)
 
 (show-paren-mode t)                     ; 括号匹配
 (setq show-paren-style 'parentheses)
@@ -39,28 +53,17 @@
 
 (global-font-lock-mode t)               ; 高亮
 
-;; 一个简单的办法设置 auto-mode-alist, 免得写很多 add-to-list.
-(mapcar
- (function (lambda (setting)
-             (setq auto-mode-alist
-                   (cons setting auto-mode-alist))))
- '(("\\.xml$".  sgml-mode)
-   ("\\\.bash" . sh-mode)
-   ("\\.rdf$".  sgml-mode)
-   ("\\.session" . emacs-lisp-mode)
-   ("\\.l$" . c-mode)
-   ("\\.css$" . css-mode)
-   ("\\.cfm$" . html-mode)
-   ("gnus" . emacs-lisp-mode)
-   ("\\.idl$" . idl-mode)))
+; disable menubar / scrollbar
+(if (display-graphic-p)
+    ((lambda()
+       (tool-bar-mode -1)
+       (scroll-bar-mode -1)))
+  ((lambda ()
+     (xterm-mouse-mode t))))
 
-(setq-default indent-tabs-mode nil)     ; tab
-(setq default-tab-width 4)
-(setq tab-width 4)
-(setq-default c-basic-offset 4)
-(setq tab-stop-list ())
-(loop for x downfrom 40 to 1 do
-      (setq tab-stop-list (cons (* x 4) tab-stop-list)))
+(menu-bar-mode -1)                      ; menu-bar-mode
+
+(add-to-list 'auto-mode-alist '("\\.bash$" . sh-mode))
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)
