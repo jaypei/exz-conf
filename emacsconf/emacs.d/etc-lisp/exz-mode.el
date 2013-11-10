@@ -40,6 +40,11 @@
 (loop for x downfrom 40 to 1 do
       (setq tab-stop-list (cons (* x 4) tab-stop-list)))
 
+;; window-number
+(exz-add-search-path "site-lisp/window-number")
+(require 'window-number)
+(window-number-meta-mode)
+
 ;; others
 (setq default-major-mode 'text-mode)    ; text-mode by default
 (setq column-number-mode t)
@@ -52,6 +57,11 @@
 (auto-image-file-mode)                  ; 可自动打开图片
 
 (global-font-lock-mode t)               ; 高亮
+
+;; 行号
+(setq linum-format " %d")
+(global-linum-mode 1)
+(setq linum-eager nil)
 
 ; disable menubar / scrollbar
 (if (display-graphic-p)
