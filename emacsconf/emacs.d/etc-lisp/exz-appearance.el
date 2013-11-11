@@ -3,12 +3,6 @@
 
 ;;; Code:
 
-
-;; ==== colors =====
-;; color-theme-molokai - https://github.com/alloy-d/color-theme-molokai
-;; color-theme - http://www.emacswiki.org/emacs/ColorTheme
-;; =================
-
 ;; font
 (eval-when-compile (require 'cl)) 
 
@@ -20,35 +14,43 @@
                       (font-spec :family chinese :size chinese-size)))) 
 
 (if (display-graphic-p)
-    ((lambda () (ecase system-type 
-                  ;; Monaco for Powerline
-                  ;; Inconsolata-dz for Powerline
-                  (gnu/linux
-                   (exz-set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
-                  (darwin
-                   (set-face-attribute 'default nil
-                                       :font (format "Inconsolata for Powerline:pixelsize=17")))
-                  ))))
+    (ecase system-type 
+      ;; Monaco for Powerline
+      ;; Inconsolata-dz for Powerline
+      (gnu/linux
+       (exz-set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
+      (darwin
+       (set-face-attribute 'default nil
+                           :font (format "Inconsolata for Powerline:pixelsize=17")))
+      ))
+
 
 ;; color-theme
 (exz-add-search-path "site-lisp/color-theme")
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-robin-hood)
-(color-theme-dark-laptop)
 
-;; color schema
-;; (set-background-color "black")
-;; (set-foreground-color "white")
-;; (set-face-foreground 'region "green")
-;; (set-face-background 'region "blue")
+(if (display-graphic-p)
+    (progn 
+      (exz-add-search-path "site-lisp/color-theme-tomorrow")
+      (require 'color-theme-tomorrow)
+      (color-theme-tomorrow--define-theme night-bright)
+      ;(color-theme-dark-laptop)
+      )
+  (progn
+    (color-theme-comidia)
+    )
+  )
+
 
 ;; powerline
 (exz-add-search-path "site-lisp/powerline")
 (require 'powerline)
 (powerline-default-theme)
 
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on) ; color shell
+(add-hook 'shell-mode-hook
+          'ansi-color-for-comint-mode-on) ; color shell
 
 ;;; exz-appearance.el ends here
 (provide 'exz-appearance)

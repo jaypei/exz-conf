@@ -4,6 +4,10 @@
 ;;; Code:
 
 (global-set-key (kbd "C-?") 'redo)
+(global-set-key (kbd "M-n") 'window-move-up)
+(global-set-key (kbd "M-p") 'window-move-down)
+(global-set-key (kbd "M-N") 'other-window-move-up)
+(global-set-key (kbd "M-P") 'other-window-move-down)
 
 ;; prefix definition
 (define-prefix-command 'exz-z-map)
@@ -22,7 +26,7 @@
 (global-set-key [f9] 'exz-load-ecb)
 (global-set-key [f10] 'menu-bar-mode)
 (global-set-key [f11] 'fullscreen)
-(global-set-key [f12] 'speedbar)
+(global-set-key [f12] 'sr-speedbar-toggle)
 
 ;; ecb
 (add-hook 'ecb-common-tree-buffer-after-create-hook
