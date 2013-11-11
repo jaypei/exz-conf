@@ -1,3 +1,7 @@
+;;; Package --- Summary
+;;; Commentary:
+
+;;; Code:
 
 (setq dired-recursive-copies t)         ; 可递归删除
 (require 'dired-x)                      ; 特殊功能
@@ -15,4 +19,5 @@
        (list "//.mpg$" "gmplayer"))
       )
 
+;;; exz-dired.el ends here
 (provide 'exz-dired)
