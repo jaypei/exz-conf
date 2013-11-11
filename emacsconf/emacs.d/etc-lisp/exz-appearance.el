@@ -27,7 +27,7 @@
                    (exz-set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
                   (darwin
                    (set-face-attribute 'default nil
-                                       :font (format "Inconsolata for Powerline:pixelsize=16")))
+                                       :font (format "Inconsolata for Powerline:pixelsize=17")))
                   ))))
 
 ;; color-theme
