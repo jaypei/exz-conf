@@ -48,6 +48,8 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+export TERM=xterm-256color
+
 PS1="%{$fg[red]%}c|%{$reset_color%}"$PS1
 
 autoload -Uz compinit

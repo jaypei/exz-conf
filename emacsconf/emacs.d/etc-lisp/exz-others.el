@@ -11,8 +11,8 @@
 (setq visible-bell t)                   ; 关闭滴滴声
 (setq inhibit-startup-message t)        ; 关闭起动时的那个“开机画面”
 
-(setq enable-local-variables t
-      enable-local-eval t)
+(setq enable-local-variables :all)
+(setq enable-local-eval t)
 
 (setq mouse-yank-at-point t)            ; 不要在鼠标点击的地方插入剪切板内容
 
