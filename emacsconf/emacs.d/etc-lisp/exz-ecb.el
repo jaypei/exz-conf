@@ -38,12 +38,13 @@
 (exz-add-search-path "site-lisp/cedet")
 (exz-add-search-path "site-lisp/ecb")
 
-(setq exz-ecb-source-path (quote (
-                           "~/work/vimwiki/org"
-                           "~/work"
-                           ".")))
+(defun exz-ecb-add-source (path alias)
+  (if (file-exists-p path)
+      (ecb-add-source-path path alias t)
+    (message "exz-ecb-addsource: %s not found, ignored." alias))
+  )
 
-(defun exz-load-ecb ()
+(defun exz-ecb-load ()
   (interactive)
   (exz-load-file "site-lisp/cedet/common/cedet.el")
   (require 'cedet)
@@ -85,7 +86,7 @@ little more place."
   
   (custom-set-variables
    '(ecb-options-version "2.40")
-   '(ecb-source-path exz-ecb-source-path)
+   '(ecb-source-path nil)
    '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
    '(ecb-tip-of-the-day nil)
    '(ecb-show-sources-in-directories-buffer 'always)
@@ -97,6 +98,8 @@ little more place."
   (require 'ecb)
   (ecb-activate)
   (ecb-layout-switch "exz-left")
+  (exz-ecb-add-source "~/work/vimwiki/org" "org")
+  (exz-ecb-add-source "~/work" "work")
   )
 
 (exz-add-search-path "site-lisp/sr-speedbar")

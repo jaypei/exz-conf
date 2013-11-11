@@ -61,7 +61,7 @@
 ;; 行号
 (setq linum-format " %d")
 (global-linum-mode 1)
-(setq linum-eager nil)
+
 
 ; disable menubar / scrollbar
 (if (display-graphic-p)

@@ -23,7 +23,7 @@
 
 (global-set-key [(f7)] 'cua-mode)
 ;;(global-set-key [(f8)] 'cua-mode)
-(global-set-key [f9] 'exz-load-ecb)
+(global-set-key [f9] 'exz-ecb-load)
 (global-set-key [f10] 'menu-bar-mode)
 (global-set-key [f11] 'fullscreen)
 (global-set-key [f12] 'sr-speedbar-toggle)

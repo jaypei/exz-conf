@@ -12,7 +12,7 @@ escape ^\\
 defscrollback 1024
 
 # 在最下一行显示窗口列表和时钟
-hardstatus off
+hardstatus on
 hardstatus alwayslastline
 hardstatus string "%{.bW}%-w%{.rY}%n %t%{-}%+w %=%{..G} %H(%l) %{..Y} %Y/%m/%d %c:%s "
 
