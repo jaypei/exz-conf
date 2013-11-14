@@ -149,5 +149,8 @@ occurence of CHAR."
       (scroll-other-window-down arg)
     (scroll-other-window-down 2)))
 
+; tramp
+(setq tramp-chunksize 500)
+
 ;;; exz-others.el ends here
 (provide 'exz-others)

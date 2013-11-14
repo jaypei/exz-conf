@@ -8,14 +8,21 @@
 (exz-load-file "site-lisp/graphviz-dot-mode.el") ; graphviz-mode
 
 ;; git
-(exz-add-search-path "site-lisp/fringe-helper")
 (exz-add-search-path "site-lisp/git-gutter") ; git-gutter
-(exz-add-search-path "site-lisp/git-gutter-fringe")
 
-(require 'git-gutter-fringe)
-(set-face-foreground 'git-gutter-fr:modified "yellow")
-(set-face-foreground 'git-gutter-fr:added    "blue")
-(set-face-foreground 'git-gutter-fr:deleted  "white")
+(if (display-graphic-p)
+    (progn
+      (exz-add-search-path "site-lisp/fringe-helper")
+      (exz-add-search-path "site-lisp/git-gutter-fringe")
+      (require 'git-gutter-fringe)
+      (set-face-foreground 'git-gutter-fr:modified "yellow")
+      (set-face-foreground 'git-gutter-fr:added "blue")
+      (set-face-foreground 'git-gutter-fr:deleted "white")
+      )
+  (progn
+    (require 'git-gutter)
+    ))
+
 (global-git-gutter-mode 1)
 
 (exz-add-search-path "site-lisp/git-commit-mode") ; git-commit-mode
