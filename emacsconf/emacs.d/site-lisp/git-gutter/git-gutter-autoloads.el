@@ -6,7 +6,7 @@
 ;;;### (autoloads (git-gutter:toggle git-gutter:clear git-gutter
 ;;;;;;  git-gutter:previous-hunk git-gutter:next-hunk git-gutter:popup-hunk
 ;;;;;;  git-gutter:revert-hunk global-git-gutter-mode git-gutter-mode)
-;;;;;;  "git-gutter" "git-gutter.el" (21101 7548 31630 501000))
+;;;;;;  "git-gutter" "git-gutter.el" (21124 19491 0 0))
 ;;; Generated autoloads from git-gutter.el
 
 (autoload 'git-gutter-mode "git-gutter" "\
@@ -72,8 +72,8 @@ toggle to show diff information
 
 ;;;***
 
-;;;### (autoloads nil nil ("git-gutter-pkg.el") (21101 7548 42495
-;;;;;;  150000))
+;;;### (autoloads nil nil ("git-gutter-pkg.el") (21124 19491 251625
+;;;;;;  0))
 
 ;;;***
 

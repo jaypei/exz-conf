@@ -20,16 +20,23 @@
       (gnu/linux
        (exz-set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
       (darwin
-       (set-face-attribute 'default nil
-                           :font (format "Inconsolata for Powerline:pixelsize=17")))
-      ))
+       (create-fontset-from-fontset-spec
+        "-apple-Hannotate ST-medium-r-normal-*-18-*-*-*-*-*-fontset-mymonaco,
+         ascii:-apple-Inconsolata for Powerline-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1,
+         chinese-gb2312:-apple-Hannotate SC-medium-normal-normal-12-*-*-*-*-p-0-iso10646-1,
+         chinese-utf8:-apple-Hannotate SC-medium-normal-normal-12-*-*-*-*-p-0-iso10646-1,
+         latin-iso8859-1:-apple-Hannotate SC-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1,
+         mule-unicode-0100-24ff:-apple-Hannotate SC-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+
+       (setq default-frame-alist (append '((font . "fontset-mymonaco")) default-frame-alist))
+       (set-default-font "fontset-mymonaco")
+      )))
 
 
 ;; color-theme
 (exz-add-search-path "site-lisp/color-theme")
 (require 'color-theme)
 (color-theme-initialize)
-(color-theme-robin-hood)
 
 (if (display-graphic-p)
     (progn 
@@ -39,6 +46,7 @@
       ;(color-theme-dark-laptop)
       )
   (progn
+    (color-theme-robin-hood)
     (color-theme-comidia)
     )
   )

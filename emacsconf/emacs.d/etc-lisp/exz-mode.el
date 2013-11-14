@@ -8,12 +8,19 @@
 (exz-load-file "site-lisp/graphviz-dot-mode.el") ; graphviz-mode
 
 ;; git
+(exz-add-search-path "site-lisp/fringe-helper")
 (exz-add-search-path "site-lisp/git-gutter") ; git-gutter
-(require 'git-gutter)
+(exz-add-search-path "site-lisp/git-gutter-fringe")
+
+(require 'git-gutter-fringe)
+(set-face-foreground 'git-gutter-fr:modified "yellow")
+(set-face-foreground 'git-gutter-fr:added    "blue")
+(set-face-foreground 'git-gutter-fr:deleted  "white")
 (global-git-gutter-mode 1)
 
 (exz-add-search-path "site-lisp/git-commit-mode") ; git-commit-mode
 (require 'git-commit-mode)
+
 
 ;; web mode
 (exz-add-search-path "site-lisp/web-mode")
@@ -26,6 +33,10 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(setq web-mode-indent-style 1)
+(setq web-mode-code-indent-offset 4)
+(setq web-mode-markup-indent-offset 4)
+(setq web-mode-css-indent-offset 4)
 
 ;; ido
 ;; (require 'ido)                          ; ido-mode
@@ -36,6 +47,9 @@
 (setq default-tab-width 4)
 (setq tab-width 4)
 (setq-default c-basic-offset 4)
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+
 (setq tab-stop-list ())
 (loop for x downfrom 40 to 1 do
       (setq tab-stop-list (cons (* x 4) tab-stop-list)))
@@ -59,7 +73,7 @@
 (global-font-lock-mode t)               ; 高亮
 
 ;; 行号
-(setq linum-format " %d")
+;(setq linum-format " %d")
 (global-linum-mode 1)
 
 
