@@ -28,6 +28,20 @@
 (exz-add-search-path "site-lisp/git-commit-mode") ; git-commit-mode
 (require 'git-commit-mode)
 
+;; auto-complete
+(exz-add-search-path "site-lisp/auto-complete")
+(require 'auto-complete)
+(add-to-list 'ac-dictionary-directories (concat conf-root-dir "auto-complete/dict"))
+(require 'auto-complete-config)
+(ac-config-default)
+
+;; flycheck
+(exz-add-search-path "site-lisp/s")
+(exz-add-search-path "site-lisp/dash")
+(exz-add-search-path "site-lisp/f")
+(exz-add-search-path "site-lisp/flycheck")
+(require 'flycheck)
+(add-hook 'after-init-hook 'global-flycheck-mode)
 
 ;; web mode
 (exz-add-search-path "site-lisp/web-mode")
@@ -40,6 +54,7 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.bash$" . sh-mode))
 (setq web-mode-indent-style 1)
 (setq web-mode-code-indent-offset 4)
 (setq web-mode-markup-indent-offset 4)
@@ -94,7 +109,6 @@
 
 (menu-bar-mode -1)                      ; menu-bar-mode
 
-(add-to-list 'auto-mode-alist '("\\.bash$" . sh-mode))
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)

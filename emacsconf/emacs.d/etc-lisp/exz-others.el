@@ -46,10 +46,6 @@
 (setq dired-kept-versions 1)
 (setq-default make-backup-files nil)
 
-;; 让 dired 可以递归的拷贝和删除目录。
-(setq dired-recursive-copies 'top)
-(setq dired-recursive-deletes 'top)
-
 (defadvice kill-ring-save (around slick-copy activate)
   "When called interactively with no active region, copy a single line instead."
   (if (or (use-region-p) (not (called-interactively-p)))
@@ -76,7 +72,6 @@
 
 (defun copy-lines(&optional arg) 
   "Function to copy lines"
-  "\"C-c w\" copy one line, \"C-u 5 C-c w\" copy 5 lines"
   (interactive "p") 
   (save-excursion 
     (beginning-of-line) 
@@ -84,31 +79,24 @@
     (if arg 
         (next-line (- arg 1))) 
     (end-of-line) 
-    (kill-ring-save (mark) (point)) 
+    (kill-ring-save (mark) (point))
     ) 
   ) 
 
-;; full screen
-(defun fullscreen ()
-  "Full screen."
-  (interactive)
-  (set-frame-parameter nil 'fullscreen
-                       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
-
-;; auto-complete
-(exz-add-search-path "site-lisp/auto-complete")
-(require 'auto-complete)
-(add-to-list 'ac-dictionary-directories (concat conf-root-dir "auto-complete/dict"))
-(require 'auto-complete-config)
-(ac-config-default)
-
-;; flycheck
-(exz-add-search-path "site-lisp/s")
-(exz-add-search-path "site-lisp/dash")
-(exz-add-search-path "site-lisp/f")
-(exz-add-search-path "site-lisp/flycheck")
-(require 'flycheck)
-(add-hook 'after-init-hook 'global-flycheck-mode)
+;; duplicate current line
+(defun duplicate-current-line (&optional n)
+  "Duplicate current line, make more than 1 copy given a numeric argument."
+  (interactive "p")
+  (save-excursion
+    (let ((nb (or n 1))
+    	  (current-line (thing-at-point 'line)))
+      ;; when on last line, insert a newline first
+      (when (or (= 1 (forward-line 1)) (eq (point) (point-max)))
+    	(insert "\n"))
+      ;; now insert as many time as requested
+      (while (> n 0)
+    	(insert current-line)
+    	(decf n)))))
 
 ;; goto-char
 (defun exz-goto-char (n char)
@@ -121,6 +109,26 @@ occurence of CHAR."
 		     char)
     (search-forward (string char) nil nil n))
   (setq unread-command-events (list last-input-event)))
+
+(defun exz-new-line-previous ()
+  (interactive)
+  (move-beginning-of-line 1)
+  (insert "\n")
+  (previous-line)
+  (indent-for-tab-command))
+
+(defun exz-new-line-forward ()
+  (interactive)
+  (move-end-of-line 1)
+  (insert "\n")
+  (indent-for-tab-command))
+
+;; full screen
+(defun fullscreen ()
+  "Full screen."
+  (interactive)
+  (set-frame-parameter nil 'fullscreen
+                       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 
 ;; window move
 (defun window-move-up (&optional arg)

@@ -6,6 +6,10 @@
 (setq dired-recursive-copies t)         ; 可递归删除
 (require 'dired-x)                      ; 特殊功能
 
+;; 让 dired 可以递归的拷贝和删除目录。
+(setq dired-recursive-copies 'top)
+(setq dired-recursive-deletes 'top)
+
 (setq dired-guess-shell-alist-user
       (list
        (list "//.chm$" "xchm")

@@ -8,6 +8,7 @@
 (global-set-key (kbd "M-p") 'window-move-down)
 (global-set-key (kbd "M-N") 'other-window-move-up)
 (global-set-key (kbd "M-P") 'other-window-move-down)
+(global-set-key (kbd "RET") 'newline-and-indent)
 
 ;; prefix definition
 (define-prefix-command 'exz-z-map)
@@ -20,9 +21,12 @@
 
 ;; goto char
 (define-key global-map (kbd "C-z f") 'exz-goto-char)
+(define-key global-map (kbd "C-z y") 'copy-lines)
+(define-key global-map (kbd "M-w") 'kill-ring-save)
+(define-key global-map (kbd "C-o") 'exz-new-line-forward)
+(define-key global-map (kbd "C-S-o") 'exz-new-line-previous)
 
 (global-set-key [(f7)] 'cua-mode)
-;;(global-set-key [(f8)] 'cua-mode)
 (global-set-key [f9] 'exz-ecb-load)
 (global-set-key [f10] 'menu-bar-mode)
 (global-set-key [f11] 'fullscreen)

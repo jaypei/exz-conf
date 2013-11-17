@@ -96,6 +96,9 @@ little more place."
    )
 
   (require 'ecb)
+  ;; 解决因为ssh别名导致not-accessible ignored问题
+  (setq ecb-ping-options (list "-c" "1" "127.0.0.1"))
+
   (ecb-activate)
   (ecb-layout-switch "exz-left")
   (exz-ecb-add-source "~/work/vimwiki/org" "org")
