@@ -3,7 +3,6 @@
 
 ;;; Code:
 
-(setq dired-recursive-copies t)         ; 可递归删除
 (require 'dired-x)                      ; 特殊功能
 
 ;; 让 dired 可以递归的拷贝和删除目录。

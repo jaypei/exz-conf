@@ -15,14 +15,13 @@
 (global-set-key (kbd "C-x C-z") 'exz-z-map)
 (global-set-key (kbd "C-z") 'exz-z-map)
 
-;; copy
-(global-set-key (kbd "C-z c") 'copy-region-as-kill)
-(global-set-key (kbd "C-z y") 'copy-lines)
+;; copy & cut
+(global-set-key (kbd "C-w") 'cut-line-or-region)
+(global-set-key (kbd "M-w") 'copy-line-or-region)
 
 ;; goto char
 (define-key global-map (kbd "C-z f") 'exz-goto-char)
 (define-key global-map (kbd "C-z y") 'copy-lines)
-(define-key global-map (kbd "M-w") 'kill-ring-save)
 (define-key global-map (kbd "C-o") 'exz-new-line-forward)
 (define-key global-map (kbd "C-S-o") 'exz-new-line-previous)
 
@@ -80,13 +79,29 @@
 (global-set-key (kbd "C-z w f") 'windmove-right)
 (global-set-key (kbd "C-z w n") 'windmove-down)
 (global-set-key (kbd "C-z w p") 'windmove-up)
-(global-set-key (kbd "C-z w k") 'delete-window)
+(global-set-key (kbd "C-z k") 'delete-window)
 
 ;; org
 (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (kbd "C-z o p") 'exz-org-publish)))
 
+;; tabbar
+(global-set-key [M-left] 'tabbar-ruler-tabbar-backward-tab)
+(global-set-key [M-right] 'tabbar-ruler-tabbar-forward-tab)
+(global-set-key [M-up] 'tabbar-ruler-up)
+(global-set-key [M-down] 'tabbar-ruler-up)
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key [M-left] 'tabbar-ruler-tabbar-backward-tab)
+            (local-set-key [M-right] 'tabbar-ruler-tabbar-forward-tab)
+            (local-set-key [M-up] 'tabbar-ruler-up)
+            (local-set-key [M-down] 'tabbar-ruler-up)
+            ))
+(global-set-key (kbd "C-z <left>") 'tabbar-ruler-tabbar-backward-tab)
+(global-set-key (kbd "C-z <right>") 'tabbar-ruler-tabbar-forward-tab)
+(global-set-key (kbd "C-z <up>") 'tabbar-ruler-up)
+(global-set-key (kbd "C-z <down>") 'tabbar-ruler-up)
 
 ;;; exz-keybindings.el ends here
 (provide 'exz-keybindings)

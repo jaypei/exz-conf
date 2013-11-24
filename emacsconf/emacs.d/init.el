@@ -1,3 +1,8 @@
+;;; Package --- Summary
+;;; Commentary:
+
+;;; Code:
+
 ;; Setup basic variables
 (defvar user-home-dir (getenv "HOME"))
 (defvar conf-root-dir (concat user-home-dir "/.emacs.d"))
@@ -19,7 +24,7 @@
 (require 'exz-appearance)
 (require 'exz-dired)
 (require 'exz-ecb)
-(require 'exz-yasnippet)
+(require 'exz-speedbar)
 (require 'exz-package)
 ;; (require 'ysl-mail)
 ;; (require 'ysl-shell)
@@ -28,10 +33,11 @@
 (require 'exz-org)
 ;; (require 'ysl-erc)
 ;; (require 'ysl-easypg)
-(require 'exz-keybindings)
 ;; (require 'ysl-frame-size)
 ;; (require 'ysl-mode-line)
+(require 'exz-coding-hooks)
 (require 'exz-others)
+(require 'exz-keybindings)
 
 ;; start emacs server {{
 (require 'server)
@@ -47,4 +53,8 @@
 
 (if (file-exists-p "~/.emacs.d/emacs.el")
     (load "~/.emacs.d/emacs.el"))
+
+
+;;; init.el ends here
+(provide 'init)
 

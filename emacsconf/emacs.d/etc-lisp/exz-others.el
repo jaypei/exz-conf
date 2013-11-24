@@ -15,9 +15,7 @@
 (setq enable-local-eval t)
 
 (setq mouse-yank-at-point t)            ; 不要在鼠标点击的地方插入剪切板内容
-
 (setq kill-ring-max 200)                ; 用一个很大的 kill ring. 防止误删
-(setq default-fill-column 80)           ; fill-column 设为 80
 
 ; 设置 sentence-end 可以识别中文标点。不用在 fill 时在句号后插 入两个空格
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
@@ -46,57 +44,12 @@
 (setq dired-kept-versions 1)
 (setq-default make-backup-files nil)
 
-(defadvice kill-ring-save (around slick-copy activate)
-  "When called interactively with no active region, copy a single line instead."
-  (if (or (use-region-p) (not (called-interactively-p)))
-      ad-do-it
-    (kill-new (buffer-substring (line-beginning-position)
-                                (line-beginning-position 2))
-              nil '(yank-line))
-    (message "Copied line")))
-
-(defadvice kill-region (around slick-copy activate)
-  "When called interactively with no active region, kill a single line instead."
-  (if (or (use-region-p) (not (called-interactively-p)))
-      ad-do-it
-    (kill-new (filter-buffer-substring (line-beginning-position)
-                                       (line-beginning-position 2) t)
-              nil '(yank-line))))
-
 (defun yank-line (string)
   "Insert STRING above the current line."
   (beginning-of-line)
   (unless (= (elt string (1- (length string))) ?\n)
     (save-excursion (insert "\n")))
   (insert string))
-
-(defun copy-lines(&optional arg) 
-  "Function to copy lines"
-  (interactive "p") 
-  (save-excursion 
-    (beginning-of-line) 
-    (set-mark (point)) 
-    (if arg 
-        (next-line (- arg 1))) 
-    (end-of-line) 
-    (kill-ring-save (mark) (point))
-    ) 
-  ) 
-
-;; duplicate current line
-(defun duplicate-current-line (&optional n)
-  "Duplicate current line, make more than 1 copy given a numeric argument."
-  (interactive "p")
-  (save-excursion
-    (let ((nb (or n 1))
-    	  (current-line (thing-at-point 'line)))
-      ;; when on last line, insert a newline first
-      (when (or (= 1 (forward-line 1)) (eq (point) (point-max)))
-    	(insert "\n"))
-      ;; now insert as many time as requested
-      (while (> n 0)
-    	(insert current-line)
-    	(decf n)))))
 
 ;; goto-char
 (defun exz-goto-char (n char)
@@ -157,7 +110,22 @@ occurence of CHAR."
       (scroll-other-window-down arg)
     (scroll-other-window-down 2)))
 
-; tramp
+;; http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html
+(defun copy-line-or-region ()
+  "Copy current line, or current text selection."
+  (interactive)
+  (if (region-active-p)
+      (kill-ring-save (region-beginning) (region-end))
+    (kill-ring-save (line-beginning-position) (line-beginning-position 2)) ) )
+
+(defun cut-line-or-region ()
+  "Cut the current line, or current text selection."
+  (interactive)
+  (if (region-active-p)
+      (kill-region (region-beginning) (region-end))
+    (kill-region (line-beginning-position) (line-beginning-position 2)) ) )
+
+;; tramp
 (setq tramp-chunksize 500)
 
 ;;; exz-others.el ends here
