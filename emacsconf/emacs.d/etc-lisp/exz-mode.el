@@ -44,6 +44,10 @@
 (exz-add-search-path "site-lisp/git-commit-mode")
 (require 'git-commit-mode)
 
+;; go-mode
+(exz-add-search-path "site-lisp/go-mode")
+(require 'go-mode)
+
 ;; auto-complete
 (exz-add-search-path "site-lisp/auto-complete")
 (require 'auto-complete)

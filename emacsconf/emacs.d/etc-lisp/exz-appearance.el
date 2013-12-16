@@ -42,7 +42,7 @@
     (progn 
       (exz-add-search-path "site-lisp/color-theme-tomorrow")
       (require 'color-theme-tomorrow)
-      (color-theme-tomorrow--define-theme night-bright)
+      (color-theme-tomorrow--define-theme night)
       ;(color-theme-dark-laptop)
       )
   (progn
