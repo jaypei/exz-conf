@@ -84,7 +84,8 @@
 ;; org
 (add-hook 'org-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-z o p") 'exz-org-publish)))
+            (local-set-key (kbd "C-z o p") 'exz-org-publish)
+            (local-set-key (kbd "C-z c") 'org-publish-current-file)))
 
 ;; tabbar
 (global-set-key [M-left] 'tabbar-ruler-tabbar-backward-tab)
