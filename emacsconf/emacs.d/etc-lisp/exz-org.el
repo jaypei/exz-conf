@@ -45,5 +45,22 @@
   (interactive)
   (find-file "~/work/vimwiki/org/index.org"))
 
+(add-hook 'org-mode-hook
+          (lambda ()
+            (org-babel-do-load-languages
+             'org-babel-load-languages
+             '(
+               (sh . t)
+               (python . t)
+               (R . t)
+               (ruby . t)
+               (ditaa . t)
+               (dot . t)
+               (octave . t)
+               (sqlite . t)
+               (perl . t)
+               ))))
+
+
 ;;; exz-org.el ends here
 (provide 'exz-org)

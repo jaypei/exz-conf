@@ -11,19 +11,18 @@
             ))
 
 ;; show all files
-;;(setq speedbar-show-unknown-files t)
+(setq speedbar-show-unknown-files t)
 
 ;; turn off the ugly icons
-(setq speedbar-use-images nil)
+;;(setq speedbar-use-images nil)
 
 ;; left-side pane
-;(setq sr-speedbar-right-side nil)
+(setq sr-speedbar-right-side nil)
 
 ;; don't refresh on buffer changes
 (setq sr-speedbar-auto-refresh nil)
 
 (add-hook 'sr-speedbar-mode-hook '(lambda () (linum-mode -1)))
-
 
 (require 'sr-speedbar)
 
