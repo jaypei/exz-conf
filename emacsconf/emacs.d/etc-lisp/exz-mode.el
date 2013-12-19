@@ -50,6 +50,7 @@
 
 ;; auto-complete
 (exz-add-search-path "site-lisp/auto-complete")
+(require 'go-autocomplete)
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories (concat conf-root-dir "auto-complete/dict"))
 (require 'auto-complete-config)
