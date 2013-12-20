@@ -71,7 +71,7 @@ alias gd='git diff --color'
 
 mkdir -p /tmp/ssh
 
-export GOPATH="/home/zhen.pei/work/qagent/qagent"
+export GOPATH="$GOPATH:/home/zhen.pei/work/qagent/qagent"
 export GOPATH="$GOPATH:/home/zhen.pei/work/qlib-go"
 
 if [[ "$TERM" == "dumb" ]]

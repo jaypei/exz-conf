@@ -87,6 +87,18 @@
             (local-set-key (kbd "C-z o p") 'exz-org-publish)
             (local-set-key (kbd "C-z c") 'org-publish-current-file)))
 
+;; python
+(add-hook 'python-mode-hook
+          (lambda ()
+            (local-set-key (kbd "TAB") 'indent-for-tab-command)
+            ))
+
+;; auto-complete
+(add-hook 'auto-complete-mode-hook
+          (lambda()
+            (local-set-key (kbd "M-/") 'auto-complete)
+            ))
+
 ;; tabbar
 (global-set-key [M-left] 'tabbar-ruler-tabbar-backward-tab)
 (global-set-key [M-right] 'tabbar-ruler-tabbar-forward-tab)

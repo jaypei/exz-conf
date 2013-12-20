@@ -50,8 +50,10 @@
 
 ;; auto-complete
 (exz-add-search-path "site-lisp/auto-complete")
-(require 'go-autocomplete)
+(setq ac-auto-start nil)
+(setq ac-show-menu-immediately-on-auto-complete t)
 (require 'auto-complete)
+(require 'go-autocomplete)
 (add-to-list 'ac-dictionary-directories (concat conf-root-dir "auto-complete/dict"))
 (require 'auto-complete-config)
 (ac-config-default)
