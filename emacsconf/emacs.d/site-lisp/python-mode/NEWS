@@ -1,360 +1,6 @@
 Python Mode News
 ================
 
-New in version 6.1.2
----------------------
-- simplified menu
-
-- `py-execute-...'-commands return result as string 
-  Controlled by boolean `py-store-result-p', Default is nil
-  When non-nil, put resulting string of `py-execute-...' into kill-ring, so it might be yanked. 
-
-- commands deleting all commented lines:
-  `py-delete-comments-in-def-or-class'
-  `py-delete-comments-in-class'
-  `py-delete-comments-in-block'
-  `py-delete-comments-in-region'
-
-- boolean `py-indent-paren-spanned-multilines-p, default is nil
-  If non-nil, indents elements of list a value of `py-indent-offset' to first element: 
-  def foo():
-      if (foo &&
-              baz):
-          bar()
-
-  Default lines up with first element:
-
-  def foo():
-      if (foo &&
-          baz):
-          bar()
-
-- `py-output-buffer' made customizable
-  See boolean `py-enforce-output-buffer-p' 
-
-- exceptions following executed regions made point to source
-
--  command `py-empty-out-list-backward'
-  Deletes all elements from list before point
-  With when cursor after 
-  mystring[0:1]
-  -------------^
-  ==> 
-  mystring[]
-  ---------^
-  In result cursor is insided emptied delimited form."
-
-- `py-minor-expression' reconsidered, numeric args dropped
-  grasps keyword-arguments
-
-- boolean `py-electric-kill-backward-p', default is nil.
-  If behind a delimited form of braces, brackets or parentheses,
-  `py-electric-backspace' runs `py-empty-out-list-backward'
-
-- py-flakes8-run, flakes8 API
-
-- customizable `py-backslashed-lines-indent-offset'
-
-- boolean `py-pylint-offer-current-p'
-  If current buffers file should be offered for check.
-  Otherwise `py-pylint-run' looks up filename from history
-
-- boolean `py-prompt-on-changed-p'
-  When called interactively, ask for save before a
-  changed buffer is sent to interpreter.
-
-- customizable `py-closing-list-space'
-  Number of chars, closing parentesis outdent from opening
-
-- customizable `py-uncomment-indents-p'
-  When non-nil, after uncomment indent lines.
-
-- boolean `py-load-skeletons-p'
-  If skeleton definitions should be loaded
-
-- boolean `py-if-name-main-permission-p'
-  Allows execution of code inside blocks started by
-  if __name__== '__main__'
-
-- boolean `py-highlight-error-source-p', default is nil
-  When py-execute-... commands raise an error, respective code in source-buffer will be highlighted.
-
-- `py-remove-overlays-at-point', command
-  Remove overlays as set when `py-highlight-error-source-p' is non-nil. 
-
-- `py-which-def-or-class', command, now used `which-function-mode' 
-
-- unused variable `py-backspace-function' removed
-
-- Bundled third-party-stuff removed as reported conflicting at emacs-mirror, lp:1153998 
-  affects autopair.el, smart-operator.el  
-  Kept  menu switches resp. commands will issue a warning 
-
-- dropped `py-paragraph-fill-docstring-p'; just `fill-paragraph' should DTRT
-
-- `py-set-pager-cat-p', default is nil
-   If non-nil, $PAGER is set to 'cat'
-
-- in directory doc customizable variables are listed:
-  variables-python-mode.org, variables-python-mode.rst
-
-New in version 6.1.1
----------------------
-
-- comment-related commands:
-  py-uncomment 
-  py-comment-block, py-comment-clause,
-  py-comment-block-or-clause, py-comment-def,
-  py-comment-class, py-comment-def-or-class,
-  py-comment-statement
-
-- boolean `py-set-fill-column-p'
-  If `t', enables use Python specific `fill-column' according to
-  `py-docstring-fill-column', default is 72
-  and `py-comment-fill-column, default is 79
-
-- boolean `py-tab-shifts-region-p'
-  when `t', TAB will indent/cycle the region, not just the current line.
-
-- boolean `py-tab-indents-region-p' 
-  when `t', when first TAB doesn't shift, `indent-region' is called
-
-- command from RET customizable via `py-return-key':
-  `py-newline-and-indent', `newline' or `py-newline-and-dedent'
-
-- boolean `py-use-font-lock-doc-face-p', default is nil 
-  If non-nil, documention strings get `font-lock-doc-face'
-
-- boolean `py-newline-delete-trailing-whitespace-p' 
-  Delete trailing whitespace maybe left by `py-newline-and-indent'
-
-- `py-electric-comment-p' new default nil
-
-- py-up minor API change
-  If inside a delimited form --string or list-- go to it's beginning
-  If not at beginning of a statement or block, go to it's beginning
-  If at beginning of a statement or block, go to beginning one level above of c
-
-- py-down minor API change:
-  Go to beginning of one level below of compound statement or definition at point.
-  If no statement or block below, but a delimited form --string or list-- go to it's beginning. 
-  Repeated call from there will behave like down-list.
-
-- commands make underscore syntax changes easier:
-  toggle-py-underscore-word-syntax-p
-  py-underscore-word-syntax-p-on
-  py-underscore-word-syntax-p-off
-
-- py-update-imports removed
-  Do not maintain a static variable containing needed imports
-  Determine imports on the fly rather, as it might have changed
-
-- variable `py-fill-docstring-style' renamed `py-docstring-style'
-
-New in version 6.1.0
----------------------
-
-- py-up 
-  Go to beginning one level above of compound statement or definition at point.
-- py-down
-  Go to beginning one level below of compound statement or definition at point.
-
-- Customizable output directory 
-  After checking for a remote shell, the following variables are consulted:
-
-  py-use-current-dir-when-execute-p, default t
-  When `t', current directory is used by Python-shell for output of `py-execute-buffer' and related commands
-
-  py-fileless-buffer-use-default-directory-p, default t
-  When `py-use-current-dir-when-execute-p' is non-nil and no buffer-file exists, value of `default-directory' sets current working directory of Python output shell"
-
-  py-keep-shell-dir-when-execute-p, default nil
-  Don't change Python shell's current working directory when sending code.
-
-  `py-execute-directory', default nil
-
-  If nothing was set so far, $VIRTUAL_ENV and $HOME are queried.
-
-- Set of commands calling Python3.3
-
-- fill docstrings according to style, commands 
-  py-fill-string-django
-  py-fill-string-onetwo
-  py-fill-string-pep-257
-  py-fill-string-pep-257-nn
-  py-fill-string-symmetric
-
-  Customizable variable `py-fill-docstring-style' provides default value
-  used by `py-fill-string', `py-fill-paragraph'
-
-  DJANGO:
-
-      \"\"\"
-      Process foo, return bar.
-      \"\"\"
-
-      \"\"\"
-      Process foo, return bar.
-
-      If processing fails throw ProcessingError.
-      \"\"\"
-
-  ONETWO:
-
-      \"\"\"Process foo, return bar.\"\"\"
-
-      \"\"\"
-      Process foo, return bar.
-
-      If processing fails throw ProcessingError.
-
-      \"\"\"
-
-  PEP-257:
-
-      \"\"\"Process foo, return bar.\"\"\"
-
-      \"\"\"Process foo, return bar.
-
-      If processing fails throw ProcessingError.
-
-      \"\"\"
-
-  PEP-257-NN:
-
-      \"\"\"Process foo, return bar.\"\"\"
-
-      \"\"\"Process foo, return bar.
-
-      If processing fails throw ProcessingError.
-      \"\"\"
-
-  SYMMETRIC:
-
-      \"\"\"Process foo, return bar.\"\"\"
-
-      \"\"\"
-      Process foo, return bar.
-
-      If processing fails throw ProcessingError.
-      \"\"\""
-
-  Built upon code seen at python.el, thanks Fabian
-
-- `py-down-statement', `py-up-statement'
-
-- toggle-py-split-windows-on-execute-p
-- py-split-windows-on-execute-p-off
-- py-split-windows-on-execute-p-on
-
-- toggle-py-switch-buffers-on-execute-p
-- py-switch-buffers-on-execute-p-on
-- py-switch-buffers-on-execute-p-off
-
-- `py-shell-switch-buffers-on-execute-p' renamed `py-switch-buffers-on-execute-p'
-
-New in version 6.0.12
----------------------
-
-- py-sexp-function,
-  When set, it's value is called instead of `forward-sexp', `backward-sexp
-  Choices are py-partial-expression, py-expression, default nil
-
-- `py-partial-expression' reconsidered.
-   Beside common moves like `defun', `statement' specific Python-mode edits are delivered:
-
-  `py-expression' and `py-partial-expression'.
-
-  Statement below is considered composed of two `py-expression'
-
-  a = ['spam', 'eggs', 100, 1234]
-  |_| |_________________________|
-
-  Assigment operator and all inside comments is ignored.
-
-  `py-partial-expression' would match six sections
-
-   a = ['spam', 'eggs', 100, 1234]
-  |_|   |_____|  |____| |__| |__|
-       |_________________________|
-
-  When traversing code, `py-partial-expression' climbs down and up
-  all levels encountered, i.e. at opening `[' `py-expression' would return ['spam', 'eggs', 100, 1234], while one char behind at `''
-  it yields `'spam','
-
-- `py-find-definition' also detects non-imported definition in current buffer
-
-- Choice between `py-imenu-create-index-new' and series 5.
-  py-imenu-create-index-function made easier.
-  Customizable variable `py-imenu-create-index-function' provided, see also
-  command in PyTools
-
-- New commands addressing BOL as start/end:
-  py-beginning-of-block-bol
-  py-end-of-block-bol
-  py-mark-block-bol
-  py-copy-block-bol
-  py-kill-block-bol
-  py-delete-block-bol
-  py-end-of-clause-bol
-  etc.
-
-- While commands "py-beginning..." resp. "py-end..." compute the context, 
-  selecting the corresponding beginning or end,
-  new "py-up...", "py-down..." jump regexp-based to the 
-  next element in buffer.
-  See also menu PyEdit. 
-
-New in version 6.0.11
----------------------
-
-- improved Pymacs based code completion:
-  - Completion of symbols from imported modules, functions, classes,
-    module/class-level data members and instance variables in the current
-    buffer. The information for this completion is updated whenever the file
-    is saved.
-  - Completion of local variables and function parameters.
-  - Type deduction from constructor calls and literals.
-  - Show help for modules, classes and functions.
-  - Go to definition of modules, classes and functions.
-  - Show signature of functions.
-  - Support for auto-complete and company.
-
-- remote shell support
-
-- extended version of smart-operator added
-  original smart-operator.el authored by
-  William Xu <william.xwl@gmail.com>
-  Url: http://xwl.appspot.com/ref/smart-operator.el
-
-- py-electric-colon extended
-  if `py-electric-colon-newline-and-indent-p' is non-nil,
-  `py-electric-colon' calls `newline-and-indent'
-
-- boolean `py-no-completion-calls-dabbrev-expand-p'
-  If completion function should call dabbrev-expand
-  when no completion found. Default is `t'
-
-- boolean `py-shell-prompt-read-only', default t
-  sets `comint-prompt-read-only', avoid unintentional edits
-
-- customizable history variables/files
-  py-python-history defaults to "~/.python_history"
-  py-ipython-history defaults to "~/.ipython/history"
-
-  If py-honor-PYTHONHISTORY-p is `t', $PYTHONHISTORY takes precedence, default is nil
-  If py-honor-IPYTHONDIR-p is `t', $IPYTHONHISTORY precedes, default is nil
-
-- customizable boolean `py-trailing-whitespace-smart-delete-p'
-  Default is nil. Some commands may delete trailing
-  whitespaces by the way. When editing other peoples
-  code, this may produce a larger diff than expected
-
-New in version 6.0.10
---------------------
-
-addresses bugs and speed issues
-
 New in version 6.0.9
 --------------------
 
@@ -388,24 +34,24 @@ New in version 6.0.9
   not taken as proposal.
 
 - py-edit-abbrevs
-  Jumps to `python-mode-abbrev-table'
+  Jumps to `python-mode-abbrev-table' 
 
 - modeline enhanced
   when a path/to/my/favoured/Python is given with `py-shell-name'
   the Python-shell buffer before would display
 
-  *ND path/to/my/favoured/Python*
+  *ND path/to/my/favoured/Python* 
 
   now:
 
   *ptmfP Python*
 
-  boolean `py-modeline-display-full-path-p'
-  boolean `py-modeline-acronym-display-home-p'
+  boolean `py-modeline-display-full-path-p' 
+  boolean `py-modeline-acronym-display-home-p'  
   If the modeline acronym should contain chars indicating the home-directory.
 
 - mode-line indicates "Py" by default
-  customize  `python-mode-modeline-display'
+  customize  `python-mode-modeline-display' 
 
 - Pymacs intergration dropped from trunk
   conflicts with classic install being reported
@@ -417,18 +63,18 @@ New in version 6.0.8
 - `py-pep8-run', new command checking formatting
    `py-pep8-help'
 
-- `py-pyflake-run', new command
+- `py-pyflake-run', new command 
    Pyflakes is a simple program which checks Python
    source files for errors. - It is similar to
    PyChecker in scope, but differs in - that it does
    not execute the modules to check them.
    `py-pyflake-help'
 
-- `py-pylint-run', new command calls Pylint,
+- `py-pylint-run', new command calls Pylint, 
   a Python source code analyzer which looks for
   programming errors, helps enforcing a coding standard
   and sniffs for some code smells (as defined in Martin
-  Fowler's Refactoring book) .
+  Fowler's Refactoring book) . 
 
   Pylint checks length of lines of code, if variable
   names are well-formed according to your coding
@@ -438,7 +84,7 @@ New in version 6.0.8
   `py-pylint-doku', `py-pylint-help'
 
 - py-pyflakespep8-run, combines calls to pyflakes and pep8
-
+  
 - respective flymake-modes,
   `pyflakespep8-flymake-mode', `pylint-flymake-mode'
   etc. See meny PyTools

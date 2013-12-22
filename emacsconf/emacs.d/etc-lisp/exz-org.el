@@ -3,6 +3,8 @@
 
 ;;; Code:
 
+(exz-add-search-path "site-lisp/org")
+
 ;; fontify code in code blocks
 (setq org-src-fontify-natively t)
 
