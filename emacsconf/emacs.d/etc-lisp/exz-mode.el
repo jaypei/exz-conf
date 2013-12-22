@@ -49,7 +49,10 @@
 
 ;; auto-complete
 (exz-add-search-path "site-lisp/auto-complete")
+(setq ac-auto-start nil)
+(setq ac-show-menu-immediately-on-auto-complete t)
 (require 'auto-complete)
+(require 'go-autocomplete)
 (add-to-list 'ac-dictionary-directories (concat conf-root-dir "auto-complete/dict"))
 (require 'auto-complete-config)
 (ac-config-default)
@@ -143,6 +146,28 @@
               ((eq major-mode 'dired-mode) "emacs")
               (t "user"))))
 (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
+
+;; python-mode
+(setq py-install-directory "~/.emacs.d/site-lisp/python-mode")
+(exz-add-search-path "site-lisp/python-mode")
+(require 'python-mode)
+
+; use IPython
+(setq-default py-shell-name "ipython")
+(setq-default py-which-bufname "IPython")
+; use the wx backend, for both mayavi and matplotlib
+(setq py-python-command-args
+        '("--gui=wx" "--pylab=wx" "-colors" "Linux"))
+(setq py-force-py-shell-name-p t)
+
+; switch to the interpreter after executing code
+(setq py-shell-switch-buffers-on-execute-p t)
+(setq py-switch-buffers-on-execute-p t)
+; don't split windows
+(setq py-split-windows-on-execute-p nil)
+; try to automagically figure out indentation
+(setq py-smart-indentation t)
+
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)
