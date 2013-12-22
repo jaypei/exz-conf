@@ -24,7 +24,6 @@
 (require 'exz-appearance)
 (require 'exz-dired)
 (require 'exz-ecb)
-(require 'exz-speedbar)
 (require 'exz-package)
 ;; (require 'ysl-mail)
 ;; (require 'ysl-shell)
@@ -35,7 +34,7 @@
 ;; (require 'ysl-easypg)
 ;; (require 'ysl-frame-size)
 ;; (require 'ysl-mode-line)
-(require 'exz-coding-hooks)
+(require 'exz-templates)
 (require 'exz-others)
 (require 'exz-keybindings)
 

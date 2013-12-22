@@ -57,10 +57,17 @@
    '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
    '(ecb-tip-of-the-day nil)
    '(ecb-show-sources-in-directories-buffer 'always)
-   ;;'(ecb-tree-buffer-style (quote ascii-guides))
    ;;'(ecb-fix-window-size t)
    ;;'(ecb-compile-window-height 12)
    )
+  ;; 减小在console下tree的宽度
+  (if (display-graphic-p)
+      ()
+    (custom-set-variables
+     '(ecb-tree-indent 1)
+     '(ecb-tree-expand-symbol-before nil)
+     '(ecb-tree-buffer-style (quote ascii-no-guides))
+     ))
 
   (require 'ecb)
   ;; 解决因为ssh别名导致not-accessible ignored问题
