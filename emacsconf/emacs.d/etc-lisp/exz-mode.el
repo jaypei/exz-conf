@@ -6,7 +6,6 @@
 (exz-add-search-path "site-lisp/s")
 (exz-add-search-path "site-lisp/dash")
 (exz-add-search-path "site-lisp/f")
-(exz-add-search-path "site-lisp/flycheck")
 
 (exz-load-file "site-lisp/graphviz-dot-mode.el") ; graphviz-mode
 
@@ -56,6 +55,9 @@
 (ac-config-default)
 
 ;; flycheck
+(exz-add-search-path "site-lisp/flycheck")
+(setq flycheck-check-syntax-automatically '(mode-enabled save))
+(setq flycheck-idle-change-delay 0)
 (require 'flycheck)
 ;;(add-hook 'after-init-hook 'global-flycheck-mode)
 

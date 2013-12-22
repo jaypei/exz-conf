@@ -51,39 +51,6 @@
   (global-ede-mode 1)
   (exz-load-file "site-lisp/ecb/ecb.el")
 
-  (ecb-layout-define "exz-left" left
-    "This function creates the following layout:
-
-   -------------------------------------------------------
-   |              |                                      |
-   |  Directories |                                      |
-   |              |                                      |
-   |              |                                      |
-   |              |                                      |
-   |              |                                      |
-   |              |                                      |
-   |              |                 Edit                 |
-   |              |                                      |
-   |              |                                      |
-   |--------------|                                      |
-   |              |                                      |
-   |  Methods     |                                      |
-   |              |                                      |
-   |              |                                      |
-   -------------------------------------------------------
-   |                                                     |
-   |                    Compilation                      |
-   |                                                     |
-   -------------------------------------------------------
-
-If you have not set a compilation-window in `ecb-compile-window-height' then
-the layout contains no persistent compilation window and the other windows get a
-little more place."
-    (ecb-set-directories-buffer)
-    (ecb-split-ver 0.7)
-    (ecb-set-methods-buffer)
-    (select-window (next-window (next-window))))
-  
   (custom-set-variables
    '(ecb-options-version "2.40")
    '(ecb-source-path nil)
@@ -100,7 +67,7 @@ little more place."
   (setq ecb-ping-options (list "-c" "1" "127.0.0.1"))
 
   (ecb-activate)
-  (ecb-layout-switch "exz-left")
+  (ecb-layout-switch "left13")
   (exz-ecb-add-source "~/work/vimwiki/org" "org")
   (exz-ecb-add-source "~/work" "work")
   )
