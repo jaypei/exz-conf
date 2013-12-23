@@ -53,12 +53,15 @@
 
 
 ;; powerline
-(exz-add-search-path "site-lisp/powerline")
-(require 'powerline)
-(powerline-default-theme)
+(if (display-graphic-p)
+    (progn
+      (exz-add-search-path "site-lisp/powerline")
+      (require 'powerline)
+      (powerline-default-theme)
 
-(add-hook 'shell-mode-hook
-          'ansi-color-for-comint-mode-on) ; color shell
+      (add-hook 'shell-mode-hook
+                'ansi-color-for-comint-mode-on) ; color shell
+      ))
 
 ;;; exz-appearance.el ends here
 (provide 'exz-appearance)

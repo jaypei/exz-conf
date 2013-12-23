@@ -9,13 +9,11 @@
 ;; define basic functions
 (defun exz-add-search-path (path)
   "Add PATH to 'load-path."
-  (add-to-list 'load-path (concat conf-root-dir "/" path))
-  (message (concat "exz-init: load-path added: " path)))
+  (add-to-list 'load-path (concat conf-root-dir "/" path)))
 
 (defun exz-load-file (path)
   "Load lib file in PATH."
-  (load-file (concat conf-root-dir "/" path))
-  (message "exz-load-file: loading %s" path))
+  (load-file (concat conf-root-dir "/" path)))
 
 ; reload dotemacs
 (defun exz-reload()

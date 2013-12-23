@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>{{ title }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!-- Bootstrap -->
+        <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css" rel="stylesheet" />
+        <link href="http://getbootstrap.com/assets/css/docs.css" rel="stylesheet" />
+        <style type="text/css">
+          html, body {height: 100%}
+          #footer {height: 60px}
+          #table-of-contents { text-shadow: 0 1px 0 #fff; }
+          #wrap {
+             min-height: 100%;
+             height: auto !important;
+             height: 100%;
+             margin: 0 auto -60px;
+             padding: 0 0 60px;
+          }
+          h1[id], h2[id], h3[id], h4[id] {
+             padding-top: 80px;
+             margin-top: -45px;
+          }
+        </style>
+    </head>
+
+    <body>
+        <div id="wrap">
+            <!-- Fixed navbar -->
+            <div class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">{{ site_name }}</a>
+                    </div>
+                    <div class="navbar-collapse collapse bs-navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            {% for name in projects: %}
+                            {% if name == project %}
+                            <li class="active">
+                                <a href="{{ site_root }}/{{ name }}/">{{ project }}</a>
+                            </li>
+                            {% else %}
+                            <li class="">
+                                <a href="{{ site_root }}/{{ name }}/">{{ name }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+
+            <div class="container bs-docs-container">
+                {{ content }}
+            </div> <!-- /container -->
+
+        </div>
+    <div id="footer" class="well">
+      <div class="container">
+        <p class="text-muted credit">&copy; <b>Jianing Yang</b>, 2009-2013.</p>
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://codeorigin.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="http://platform.twitter.com/widgets.js"></script>
+
+    <script src="http://getbootstrap.com/assets/js/holder.js"></script>
+
+    <script src="http://getbootstrap.com/assets/js/application.js"></script>
+
+    </body>
+</html>

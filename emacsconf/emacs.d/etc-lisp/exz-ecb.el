@@ -51,56 +51,30 @@
   (global-ede-mode 1)
   (exz-load-file "site-lisp/ecb/ecb.el")
 
-  (ecb-layout-define "exz-left" left
-    "This function creates the following layout:
-
-   -------------------------------------------------------
-   |              |                                      |
-   |  Directories |                                      |
-   |              |                                      |
-   |              |                                      |
-   |              |                                      |
-   |              |                                      |
-   |              |                                      |
-   |              |                 Edit                 |
-   |              |                                      |
-   |              |                                      |
-   |--------------|                                      |
-   |              |                                      |
-   |  Methods     |                                      |
-   |              |                                      |
-   |              |                                      |
-   -------------------------------------------------------
-   |                                                     |
-   |                    Compilation                      |
-   |                                                     |
-   -------------------------------------------------------
-
-If you have not set a compilation-window in `ecb-compile-window-height' then
-the layout contains no persistent compilation window and the other windows get a
-little more place."
-    (ecb-set-directories-buffer)
-    (ecb-split-ver 0.7)
-    (ecb-set-methods-buffer)
-    (select-window (next-window (next-window))))
-  
   (custom-set-variables
    '(ecb-options-version "2.40")
    '(ecb-source-path nil)
    '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
    '(ecb-tip-of-the-day nil)
    '(ecb-show-sources-in-directories-buffer 'always)
-   ;;'(ecb-tree-buffer-style (quote ascii-guides))
    ;;'(ecb-fix-window-size t)
    ;;'(ecb-compile-window-height 12)
    )
+  ;; 减小在console下tree的宽度
+  (if (display-graphic-p)
+      ()
+    (custom-set-variables
+     '(ecb-tree-indent 1)
+     '(ecb-tree-expand-symbol-before nil)
+     '(ecb-tree-buffer-style (quote ascii-no-guides))
+     ))
 
   (require 'ecb)
   ;; 解决因为ssh别名导致not-accessible ignored问题
   (setq ecb-ping-options (list "-c" "1" "127.0.0.1"))
 
   (ecb-activate)
-  (ecb-layout-switch "exz-left")
+  (ecb-layout-switch "left13")
   (exz-ecb-add-source "~/work/vimwiki/org" "org")
   (exz-ecb-add-source "~/work" "work")
   )

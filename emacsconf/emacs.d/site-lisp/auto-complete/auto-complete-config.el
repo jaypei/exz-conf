@@ -21,7 +21,7 @@
 
 ;;; Commentary:
 
-;;
+;; 
 
 ;;; Code:
 
@@ -79,12 +79,12 @@
 ;; gtags
 
 (defface ac-gtags-candidate-face
-  '((t (:inherit ac-candidate-face :foreground "navy")))
+  '((t (:background "lightgray" :foreground "navy")))
   "Face for gtags candidate"
   :group 'auto-complete)
 
 (defface ac-gtags-selection-face
-  '((t (:inherit ac-selection-face :background "navy")))
+  '((t (:background "navy" :foreground "white")))
   "Face for the gtags selected candidate."
   :group 'auto-complete)
 
@@ -102,13 +102,12 @@
 ;; yasnippet
 
 (defface ac-yasnippet-candidate-face
-  '((t (:inherit ac-candidate-face
-                 :background "sandybrown" :foreground "black")))
+  '((t (:background "sandybrown" :foreground "black")))
   "Face for yasnippet candidate."
   :group 'auto-complete)
 
 (defface ac-yasnippet-selection-face
-  '((t (:inherit ac-selection-face :background "coral3")))
+  '((t (:background "coral3" :foreground "white")))
   "Face for the yasnippet selected candidate."
   :group 'auto-complete)
 
@@ -142,26 +141,17 @@
 
 (defun ac-yasnippet-candidates ()
   (with-no-warnings
-    (cond (;; 0.8 onwards
-           (fboundp 'yas-active-keys)
-           (all-completions ac-prefix (yas-active-keys)))
-          (;; >0.6.0
-           (fboundp 'yas/get-snippet-tables)
-           (apply 'append (mapcar 'ac-yasnippet-candidate-1
-                                  (condition-case nil
-                                      (yas/get-snippet-tables major-mode)
-                                    (wrong-number-of-arguments
-                                     (yas/get-snippet-tables)))))
-           )
-          (t
-           (let ((table
-                  (if (fboundp 'yas/snippet-table)
-                      ;; <0.6.0
-                      (yas/snippet-table major-mode)
-                    ;; 0.6.0
-                    (yas/current-snippet-table))))
-             (if table
-                 (ac-yasnippet-candidate-1 table)))))))
+    (if (fboundp 'yas/get-snippet-tables)
+        ;; >0.6.0
+        (apply 'append (mapcar 'ac-yasnippet-candidate-1 (yas/get-snippet-tables major-mode)))
+      (let ((table
+             (if (fboundp 'yas/snippet-table)
+                 ;; <0.6.0
+                 (yas/snippet-table major-mode)
+               ;; 0.6.0
+               (yas/current-snippet-table))))
+        (if table
+            (ac-yasnippet-candidate-1 table))))))
 
 (ac-define-source yasnippet
   '((depends yasnippet)
@@ -176,29 +166,17 @@
 (defun ac-semantic-candidates (prefix)
   (with-no-warnings
     (delete ""            ; semantic sometimes returns an empty string
-            (mapcar (lambda (elem)
-                      (cons (semantic-tag-name elem)
-                            (semantic-tag-clone elem)))
+            (mapcar 'semantic-tag-name
                     (ignore-errors
                       (or (semantic-analyze-possible-completions
                            (semantic-analyze-current-context))
                           (senator-find-tag-for-completion prefix)))))))
 
-(defun ac-semantic-doc (symbol)
-  (with-no-warnings
-    (let* ((proto (semantic-format-tag-summarize-with-file symbol nil t))
-           (doc (semantic-documentation-for-tag symbol))
-           (res proto))
-      (when doc
-        (setq res (concat res "\n\n" doc)))
-      res)))
-
 (ac-define-source semantic
   '((available . (or (require 'semantic-ia nil t)
                      (require 'semantic/ia nil t)))
     (candidates . (ac-semantic-candidates ac-prefix))
-    (document . ac-semantic-doc)
-    (prefix . cc-member)
+    (prefix . c-dot-ref)
     (requires . 0)
     (symbol . "m")))
 
@@ -206,7 +184,6 @@
   '((available . (or (require 'semantic-ia nil t)
                      (require 'semantic/ia nil t)))
     (candidates . (ac-semantic-candidates ac-prefix))
-    (document . ac-semantic-doc)
     (symbol . "s")))
 
 ;; eclim

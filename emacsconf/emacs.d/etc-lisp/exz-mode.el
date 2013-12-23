@@ -6,9 +6,7 @@
 (exz-add-search-path "site-lisp/s")
 (exz-add-search-path "site-lisp/dash")
 (exz-add-search-path "site-lisp/f")
-(exz-add-search-path "site-lisp/flycheck")
-
-(exz-load-file "site-lisp/graphviz-dot-mode.el") ; graphviz-mode
+(exz-add-search-path "site-lisp/popup")
 
 ;; default mode
 (setq default-major-mode 'text-mode)    ; text-mode by default
@@ -22,8 +20,10 @@
      (xterm-mouse-mode t))))
 (menu-bar-mode -1)                      ; menu-bar-mode
 
+;;
 ;; git
 (exz-add-search-path "site-lisp/git-gutter") ; git-gutter
+(exz-load-file "site-lisp/git-gutter/git-gutter-autoloads.el")
 
 (if (display-graphic-p)
     (progn
@@ -33,34 +33,52 @@
       (set-face-foreground 'git-gutter-fr:modified "yellow")
       (set-face-foreground 'git-gutter-fr:added "blue")
       (set-face-foreground 'git-gutter-fr:deleted "white")
-      )
-  (progn
-    (require 'git-gutter)
-    ))
-
+      ))
 (global-git-gutter-mode 1)
+
+;; graphviz-dot-mode
+(exz-add-search-path "site-lisp/graphviz-dot-mode")
+(exz-load-file "site-lisp/graphviz-dot-mode/graphviz-dot-mode-autoloads.el")
 
 ;; git-commit-mode
 (exz-add-search-path "site-lisp/git-commit-mode")
-(require 'git-commit-mode)
+(exz-load-file "site-lisp/git-commit-mode/git-commit-mode-autoloads.el")
 
 ;; go-mode
 (exz-add-search-path "site-lisp/go-mode")
-(require 'go-mode)
+(exz-load-file "site-lisp/go-mode/go-mode-autoloads.el")
 
 ;; auto-complete
-(exz-add-search-path "site-lisp/auto-complete")
-(setq ac-auto-start nil)
-(setq ac-show-menu-immediately-on-auto-complete t)
-(require 'auto-complete)
-(require 'go-autocomplete)
-(add-to-list 'ac-dictionary-directories (concat conf-root-dir "auto-complete/dict"))
-(require 'auto-complete-config)
-(ac-config-default)
+(defun exz-load-auto-complete ()
+  (interactive)
+  (exz-add-search-path "site-lisp/auto-complete")
+  (setq ac-auto-start nil)
+  (setq ac-show-menu-immediately-on-auto-complete t)
+  (require 'auto-complete)
+  ;;(require 'go-autocomplete)
+  (add-to-list 'ac-dictionary-directories (concat conf-root-dir "auto-complete/dict"))
+  (require 'auto-complete-config)
+  (ac-config-default)
+  )
+
+(if (display-graphic-p)
+    (exz-load-auto-complete))
 
 ;; flycheck
-(require 'flycheck)
-;;(add-hook 'after-init-hook 'global-flycheck-mode)
+(defun exz-load-flycheck ()
+  (interactive)
+  (exz-add-search-path "site-lisp/flycheck")
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
+  (setq flycheck-idle-change-delay 0)
+  (exz-load-file "site-lisp/flycheck/flycheck-autoloads.el")
+  (add-hook 'python-mode-hook
+            (lambda()
+              (flycheck-mode)
+              ))
+  )
+
+(if (display-graphic-p)
+    (exz-load-flycheck))
 
 ;; web mode
 (exz-add-search-path "site-lisp/web-mode")
@@ -68,7 +86,7 @@
 (setq web-mode-code-indent-offset 4)
 (setq web-mode-markup-indent-offset 4)
 (setq web-mode-css-indent-offset 4)
-(require 'web-mode)
+(exz-load-file "site-lisp/web-mode/web-mode-autoloads.el")
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
@@ -90,10 +108,6 @@
 (setq-default c-basic-offset 4)
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
-
-(setq tab-stop-list ())
-(loop for x downfrom 40 to 1 do
-      (setq tab-stop-list (cons (* x 4) tab-stop-list)))
 
 ;; window-number
 (exz-add-search-path "site-lisp/window-number")
@@ -117,38 +131,79 @@
 ;;(setq linum-format " %d")
 (global-linum-mode 1)
 (add-hook 'speedbar-mode-hook (lambda () (linum-mode -1)))
+(add-hook 'sr-speedbar-mode-hook '(lambda () (linum-mode -1)))
 
+;; speedbar
+(defun exz-load-sr-speedbar ()
+  (interactive)
+  (exz-add-search-path "site-lisp/sr-speedbar")
+  ;; show all files
+  (setq speedbar-show-unknown-files t)
+  ;; turn off the ugly icons
+  ;;(setq speedbar-use-images nil)
+  ;; left-side pane
+  (setq sr-speedbar-right-side nil)
+  ;; don't refresh on buffer changes
+  (setq sr-speedbar-auto-refresh nil)
+  (require 'sr-speedbar)
+  )
+
+(if (display-graphic-p)
+    (exz-load-sr-speedbar))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; yasnippet
-(exz-add-search-path "site-lisp/yasnippet")
-(require 'yasnippet)
-(yas-global-mode 1)
-(yas-reload-all 1)
+(defun exz-load-yasnippet ()
+  (interactive)
+  (exz-add-search-path "site-lisp/yasnippet")
+  (exz-load-file "site-lisp/yasnippet/yasnippet-autoloads.el")
+  (setq yas/snippet-dirs '("~/.emacs.d/snippets"
+                           "~/.emacs.d/site-lisp/yasnippet/snippets"))
+  (yas-global-mode 1)
+  (yas-reload-all 1)
+
+  (add-hook 'yas-minor-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-z TAB") 'yas-expand)
+              ))
+  )
+
+(if (display-graphic-p)
+    (exz-load-yasnippet))
 
 ;; fill-column-indicator
 (exz-add-search-path "site-lisp/fill-column-indicator")
 (setq fci-rule-width 1)
 (setq fci-rule-color "darkblue")
-(require 'fill-column-indicator)
+(exz-load-file "site-lisp/fill-column-indicator/fill-column-indicator.el")
 
 ;; tabbar
-(exz-add-search-path "site-lisp/tabbar")
-(exz-add-search-path "site-lisp/tabbar-ruler")
-(setq tabbar-ruller-global-tabbar t)
-(require 'tabbar-ruler)
-(defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
-  "Returns the name of the tab group names the current buffer belongs to.
- There are two groups: Emacs buffers (those whose name starts with '*', plus
- dired buffers), and the rest.  This works at least with Emacs v24.2 using
- tabbar.el v1.7."
-  (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
-              ((eq major-mode 'dired-mode) "emacs")
-              (t "user"))))
-(setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
+(defun exz-load-tabbar ()
+  "DOCSTRING"
+  (interactive)
+  (exz-add-search-path "site-lisp/tabbar")
+  (exz-add-search-path "site-lisp/tabbar-ruler")
+  (setq tabbar-ruller-global-tabbar t)
+  (require 'tabbar-ruler)
+  (defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
+    "Returns the name of the tab group names the current buffer belongs to.
+           There are two groups: Emacs buffers (those whose name starts with '*', plus
+           dired buffers), and the rest.  This works at least with Emacs v24.2 using
+           tabbar.el v1.7."
+    (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
+                ((eq major-mode 'dired-mode) "emacs")
+                (t "user"))))
+  (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
+  )
 
+(if (display-graphic-p)
+    (exz-load-tabbar))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; python-mode
 (setq py-install-directory "~/.emacs.d/site-lisp/python-mode")
 (exz-add-search-path "site-lisp/python-mode")
-(require 'python-mode)
 
 ; use IPython
 (setq-default py-shell-name "ipython")
@@ -165,6 +220,21 @@
 (setq py-split-windows-on-execute-p nil)
 ; try to automagically figure out indentation
 (setq py-smart-indentation t)
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (define-key python-mode-map (kbd "C-c |")
+              'py-execute-region-ipython)
+            (fci-mode)
+            ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; lisp-interaction-mode
+(add-hook 'lisp-interaction-mode-hook
+          (lambda ()
+            (fci-mode)
+            ))
+
 
 
 ;;; exz-mode.el ends here

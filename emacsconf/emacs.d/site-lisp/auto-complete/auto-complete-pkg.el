@@ -1,4 +1,4 @@
 (define-package "auto-complete"
-  "1.4.0"
+  "1.4"
   "Auto Completion for GNU Emacs"
-  '((popup "0.5.0")))
+  '((popup "0.5")))
