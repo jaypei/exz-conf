@@ -90,7 +90,7 @@
 ;; python
 (add-hook 'python-mode-hook
           (lambda ()
-            (local-set-key (kbd "TAB") 'indent-for-tab-command)
+            (local-set-key [backtab] 'indent-for-tab-command)
             ))
 
 ;; auto-complete
