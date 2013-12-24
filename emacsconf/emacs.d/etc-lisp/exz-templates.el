@@ -11,7 +11,6 @@
 (define-auto-insert "\\.ino$" "template.ino")
 (define-auto-insert "\\.\\([C]\\|cc\\|cpp\\)$"  "template.c")
 (define-auto-insert "\\.\\([Hh]\\|hh\\|hpp\\)$" "template.h")
-(define-auto-insert "\\.go$" "template.go")
 (define-auto-insert "\\.tex$" "template.tex")
 (define-auto-insert "\\.sh$" "template.sh")
 (define-auto-insert "\\.rb$" "template.rb")
@@ -23,6 +22,19 @@
 (define-auto-insert "\\.mq4$" "template.mql")
 (define-auto-insert "\\.mq5$" "template.mql")
 (define-auto-insert "\\.mql$" "template.mql")
+
+;; golang
+(eval-after-load 'autoinsert
+  '(define-auto-insert '(go-mode . "go skeleton")
+     '("Description: "
+       "/*" \n
+       " * filename   : " (buffer-name) \n
+       " * created at : " (format-time-string "%F %T") \n
+       " * author     : " user-full-name " <" user-mail-address ">" \n
+       " */" \n
+       \n
+       "package main" \n
+       )))
 
 ;;; exz-templates.el ends here
 (provide 'exz-templates)

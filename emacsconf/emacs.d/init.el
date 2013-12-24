@@ -12,7 +12,7 @@
 (add-to-list 'load-path (concat conf-root-dir "/etc-lisp"))
 
 ;; persinal infos
-(setq user-full-name "Pei Zhen")
+(setq user-full-name "jaypei")
 (setq user-mail-address "jaypei97159@gmail.com")
 (setq frame-title-format "emacs@%b")
 

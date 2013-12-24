@@ -7,6 +7,7 @@
 
 (put 'downcase-region 'disabled nil)
 (setq default-truncate-lines t)
+(setq auto-save-default nil)
 
 (setq visible-bell t)                   ; 关闭滴滴声
 (setq inhibit-startup-message t)        ; 关闭起动时的那个“开机画面”
