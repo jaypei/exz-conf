@@ -82,7 +82,7 @@
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'company-mode-hook
           (lambda ()
-            (local-set-key (kbd "M-/") 'company-dabbrev)
+            (local-set-key (kbd "M-/") 'company-dabbrev-code)
             (local-set-key (kbd "M-?") 'company-complete)
             ))
 
@@ -199,6 +199,8 @@
 (setq fci-rule-width 1)
 (setq fci-rule-color "darkblue")
 (exz-load-file "site-lisp/fill-column-indicator/fill-column-indicator.el")
+(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
+(global-fci-mode 1)
 
 ;; tabbar
 (defun exz-load-tabbar ()
@@ -247,17 +249,7 @@
           (lambda ()
             (define-key python-mode-map (kbd "C-c |")
               'py-execute-region-ipython)
-            (fci-mode)
             ))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; lisp-interaction-mode
-(add-hook 'lisp-interaction-mode-hook
-          (lambda ()
-            (fci-mode)
-            ))
-
-
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)

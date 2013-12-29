@@ -59,7 +59,9 @@ export EDITOR=e
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export PATH=~/bin:~/gocode/bin:~/work/vimwiki/bin:$PATH
-export GOPATH=/home/jaypei/gocode:/home/jaypei/work/test_go/
+export GOPATH=/home/jaypei/gocode
+export GOPATH=$GOPATH:/home/jaypei/work/qlib-go
+export GOPATH=$GOPATH:/home/jaypei/work/test_go
 
 alias ls='ls --color'
 alias ack='/usr/bin/vendor_perl/ack'
