@@ -61,8 +61,30 @@
   (ac-config-default)
   )
 
-(if (display-graphic-p)
-    (exz-load-auto-complete))
+;;(if (display-graphic-p)
+;;    (exz-load-auto-complete))
+
+;; company-mode
+(exz-add-search-path "site-lisp/company")
+(setq company-begin-commands '(self-insert-command))
+(setq company-minimum-prefix-length 1)
+(setq company-tooltip-limit 20)
+(setq company-echo-delay 0)
+(setq company-idle-delay .3)
+(exz-load-file "site-lisp/company/company-autoloads.el")
+(exz-add-search-path "site-lisp/company-go")
+(add-hook 'go-mode-hook
+          (lambda ()
+            (require 'company-go)
+            (setq company-minimum-prefix-length 0)
+            (set (make-local-variable 'company-backends) '(company-go))
+            ))
+(add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'company-mode-hook
+          (lambda ()
+            (local-set-key (kbd "M-/") 'company-dabbrev-code)
+            (local-set-key (kbd "M-?") 'company-complete)
+            ))
 
 ;; flycheck
 (defun exz-load-flycheck ()
@@ -177,6 +199,8 @@
 (setq fci-rule-width 1)
 (setq fci-rule-color "darkblue")
 (exz-load-file "site-lisp/fill-column-indicator/fill-column-indicator.el")
+(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
+(global-fci-mode 1)
 
 ;; tabbar
 (defun exz-load-tabbar ()
@@ -225,17 +249,7 @@
           (lambda ()
             (define-key python-mode-map (kbd "C-c |")
               'py-execute-region-ipython)
-            (fci-mode)
             ))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; lisp-interaction-mode
-(add-hook 'lisp-interaction-mode-hook
-          (lambda ()
-            (fci-mode)
-            ))
-
-
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)

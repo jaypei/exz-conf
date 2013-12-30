@@ -58,8 +58,10 @@ SAVEHIST=1000
 export EDITOR=e
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export PATH=~/bin:~/work/vimwiki/bin:$PATH
+export PATH=~/bin:~/gocode/bin:~/work/vimwiki/bin:$PATH
 export GOPATH=/home/jaypei/gocode
+export GOPATH=$GOPATH:/home/jaypei/work/qlib-go
+export GOPATH=$GOPATH:/home/jaypei/work/test_go
 
 alias ls='ls --color'
 alias ack='/usr/bin/vendor_perl/ack'
@@ -70,10 +72,12 @@ mkdir -p /tmp/ssh
 
 if [[ "$TERM" == "dumb" ]]
 then
-  unsetopt zle
-  unsetopt prompt_cr
-  unsetopt prompt_subst
-  unfunction precmd
-  unfunction preexec
-  PS1='$ '
+    unsetopt zle
+    unsetopt prompt_cr
+    unsetopt prompt_subst
+    unfunction precmd
+    unfunction preexec
+    PS1='$ '
+else
+    export TERM="xterm-256color"
 fi
