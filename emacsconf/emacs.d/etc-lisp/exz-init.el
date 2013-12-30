@@ -28,5 +28,8 @@
 (if (equal (system-name) "jaypei-home")
     (setenv "GOPATH" "/home/jaypei/gocode"))
 
+(if (equal (system-name) "jaypei-mbp")
+    (setq exec-path (append exec-path '("/usr/local/bin"))))
+
 ;;; exz-init.el ends here
 (provide 'exz-init)
