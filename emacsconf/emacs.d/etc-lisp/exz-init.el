@@ -25,5 +25,7 @@
 (exz-add-search-path "site-lisp")
 (exz-add-search-path "site-lisp/extra")
 
+(setq exec-path (append exec-path '("/usr/local/bin")))
+
 ;;; exz-init.el ends here
 (provide 'exz-init)
