@@ -49,7 +49,7 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 
 mkdir -p /tmp/ssh
-export GOPATH="/Users/jaypei/gocode:/Users/jaypei/work/test_go:/Users/jaypei/qlib-go:/Users/jaypei/work/qagent/qagent"
+export GOPATH="/Users/jaypei/gocode"
 export PATH=/Users/jaypei/bin:/usr/local/sbin:/usr/local/bin:$PATH:/Users/jaypei/work/vimwiki/bin
 export HOMEBREW_TEMP=/tmp/homebrew
 export ANDROID_SDK_ROOT=/usr/local/opt/android-sdk

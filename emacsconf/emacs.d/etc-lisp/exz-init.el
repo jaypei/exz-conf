@@ -29,8 +29,13 @@
     (setenv "GOPATH" (concat "/home/jaypei/gocode:"
                              "/home/jaypei/work/qlib-go:"
                              "/home/jaypei/work/test_go")))
-(if (equal (system-name) "jaypei-mbp")
-    (setq exec-path (append exec-path '("/usr/local/bin"))))
+
+(if (equal (system-name) "jaypei-mbp.local")
+    (progn
+      (setq exec-path (append exec-path '("/usr/local/bin")))
+      (setq exec-path (append exec-path '("/Users/jaypei/gocode/bin")))
+      (setenv "GOPATH" "/Users/jaypei/gocode")
+      ))
 
 ;;; exz-init.el ends here
 (provide 'exz-init)
