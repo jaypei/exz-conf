@@ -17,7 +17,7 @@
          :publishing-directory "~/work/vimwiki/org-publish"
          :base-extension "org"
          :recursive t
-         :publishing-function org-publish-org-to-html
+         :publishing-function org-html-publish-to-html
          :auto-index nil
          :index-filename "index.org"
          :index-title "index"
