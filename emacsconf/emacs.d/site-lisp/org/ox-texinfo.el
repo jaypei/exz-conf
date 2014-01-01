@@ -1,6 +1,6 @@
 ;;; ox-texinfo.el --- Texinfo Back-End for Org Export Engine
 
-;; Copyright (C) 2012, 2013  Jonathan Leech-Pepin
+;; Copyright (C) 2012-2013 Free Software Foundation, Inc.
 ;; Author: Jonathan Leech-Pepin <jonathan.leechpepin at gmail dot com>
 ;; Keywords: outlines, hypermedia, calendar, wp
 
@@ -143,7 +143,7 @@
 
 ;;; Preamble
 
-(defcustom org-texinfo-filename nil
+(defcustom org-texinfo-filename ""
   "Default filename for Texinfo output."
   :group 'org-export-texinfo
   :type '(string :tag "Export Filename"))
@@ -202,7 +202,7 @@ a format string in which the section title will be added."
 
 ;;; Headline
 
-(defcustom org-texinfo-format-headline-function nil
+(defcustom org-texinfo-format-headline-function 'ignore
   "Function to format headline text.
 
 This function will be called with 5 arguments:
@@ -316,7 +316,8 @@ returned as-is."
 
 ;;; Drawers
 
-(defcustom org-texinfo-format-drawer-function nil
+(defcustom org-texinfo-format-drawer-function
+  (lambda (name contents) contents)
   "Function called to format a drawer in Texinfo code.
 
 The function must accept two parameters:
@@ -325,18 +326,15 @@ The function must accept two parameters:
 
 The function should return the string to be exported.
 
-For example, the variable could be set to the following function
-in order to mimic default behaviour:
-
-\(defun org-texinfo-format-drawer-default \(name contents\)
-  \"Format a drawer element for Texinfo export.\"
-  contents\)"
+The default function simply returns the value of CONTENTS."
   :group 'org-export-texinfo
+  :version "24.4"
+  :package-version '(Org . "8.3")
   :type 'function)
 
 ;;; Inlinetasks
 
-(defcustom org-texinfo-format-inlinetask-function nil
+(defcustom org-texinfo-format-inlinetask-function 'ignore
   "Function called to format an inlinetask in Texinfo code.
 
 The function must accept six parameters:
@@ -409,6 +407,13 @@ set `org-texinfo-logfiles-extensions'."
   "Maximum depth for creation of detailed menu listings.  Beyond
   this depth Texinfo will not recognize the nodes and will cause
   errors.  Left as a constant in case this value ever changes.")
+
+(defconst org-texinfo-supported-coding-systems
+  '("US-ASCII" "UTF-8" "ISO-8859-15" "ISO-8859-1" "ISO-8859-2" "koi8-r" "koi8-u")
+  "List of coding systems supported by Texinfo, as strings.
+Specified coding system will be matched against these strings.
+If two strings share the same prefix (e.g. \"ISO-8859-1\" and
+\"ISO-8859-15\"), the most specific one has to be listed first.")
 
 
 ;;; Internal Functions
@@ -695,9 +700,7 @@ holding export options."
 	 ;; `.' in text.
 	 (dirspacing (- 29 (length dirtitle)))
 	 (menu (org-texinfo-make-menu info 'main))
-	 (detail-menu (org-texinfo-make-menu info 'detailed))
-	 (coding-system (or org-texinfo-coding-system
-			    buffer-file-coding-system)))
+	 (detail-menu (org-texinfo-make-menu info 'detailed)))
     (concat
      ;; Header
      header "\n"
@@ -705,8 +708,17 @@ holding export options."
      ;; Filename and Title
      "@setfilename " info-filename "\n"
      "@settitle " title "\n"
-     (format "@documentencoding %s\n"
-	     (upcase (symbol-name coding-system))) "\n"
+     ;; Coding system.
+     (format
+      "@documentencoding %s\n"
+      (catch 'coding-system
+	(let ((case-fold-search t)
+	      (name (symbol-name (or org-texinfo-coding-system
+				     buffer-file-coding-system))))
+	  (dolist (system org-texinfo-supported-coding-systems "UTF-8")
+	    (when (org-string-match-p (regexp-quote system) name)
+	      (throw 'coding-system system))))))
+     "\n"
      (format "@documentlanguage %s\n" lang)
      "\n\n"
      "@c Version and Contact Info\n"
@@ -868,12 +880,8 @@ contextual information."
 CONTENTS holds the contents of the block.  INFO is a plist
 holding contextual information."
   (let* ((name (org-element-property :drawer-name drawer))
-	 (output (if (functionp org-texinfo-format-drawer-function)
-		     (funcall org-texinfo-format-drawer-function
-			      name contents)
-		   ;; If there's no user defined function: simply
-		   ;; display contents of the drawer.
-		   contents)))
+	 (output (funcall org-texinfo-format-drawer-function
+			  name contents)))
     output))
 
 ;;; Dynamic Block
@@ -949,7 +957,7 @@ holding contextual information."
   (let* ((class (plist-get info :texinfo-class))
 	 (level (org-export-get-relative-level headline info))
 	 (numberedp (org-export-numbered-headline-p headline info))
-	 (class-sectionning (assoc class org-texinfo-classes))
+	 (class-sectioning (assoc class org-texinfo-classes))
 	 ;; Find the index type, if any
 	 (index (org-element-property :INDEX headline))
 	 ;; Check if it is an appendix
@@ -985,10 +993,10 @@ holding contextual information."
 	 ;; Section formatting will set two placeholders: one for the
 	 ;; title and the other for the contents.
 	 (section-fmt
-	  (let ((sec (if (and (symbolp (nth 2 class-sectionning))
-			      (fboundp (nth 2 class-sectionning)))
-			 (funcall (nth 2 class-sectionning) level numberedp)
-		       (nth (1+ level) class-sectionning))))
+	  (let ((sec (if (and (symbolp (nth 2 class-sectioning))
+			      (fboundp (nth 2 class-sectioning)))
+			 (funcall (nth 2 class-sectioning) level numberedp)
+		       (nth (1+ level) class-sectioning))))
 	    (cond
 	     ;; No section available for that LEVEL.
 	     ((not sec) nil)
@@ -1022,7 +1030,7 @@ holding contextual information."
 	 ;; Create the headline text along with a no-tag version.  The
 	 ;; latter is required to remove tags from table of contents.
 	 (full-text (org-texinfo--sanitize-content
-		     (if (functionp org-texinfo-format-headline-function)
+		     (if (not (eq org-texinfo-format-headline-function 'ignore))
 			 ;; User-defined formatting function.
 			 (funcall org-texinfo-format-headline-function
 				  todo todo-type priority text tags)
@@ -1037,7 +1045,7 @@ holding contextual information."
 				  (mapconcat 'identity tags ":")))))))
 	 (full-text-no-tag
 	  (org-texinfo--sanitize-content
-	   (if (functionp org-texinfo-format-headline-function)
+	   (if (not (eq org-texinfo-format-headline-function 'ignore))
 	       ;; User-defined formatting function.
 	       (funcall org-texinfo-format-headline-function
 			todo todo-type priority text nil)
@@ -1139,7 +1147,7 @@ holding contextual information."
 		       (org-element-property :priority inlinetask))))
     ;; If `org-texinfo-format-inlinetask-function' is provided, call it
     ;; with appropriate arguments.
-    (if (functionp org-texinfo-format-inlinetask-function)
+    (if (not (eq org-texinfo-format-inlinetask-function 'ignore))
 	(funcall org-texinfo-format-inlinetask-function
 		 todo todo-type priority title tags contents)
       ;; Otherwise, use a default template.

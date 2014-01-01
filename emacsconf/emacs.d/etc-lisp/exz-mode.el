@@ -147,10 +147,10 @@
 (auto-image-file-mode)
 
 ;; font-lock-mode 高亮
-(global-font-lock-mode t)
+;;(global-font-lock-mode t)
 
 ;; linum-mode 行号
-;;(setq linum-format " %d")
+(setq linum-format 'dynamic)
 (global-linum-mode 1)
 (add-hook 'speedbar-mode-hook (lambda () (linum-mode -1)))
 (add-hook 'sr-speedbar-mode-hook '(lambda () (linum-mode -1)))
