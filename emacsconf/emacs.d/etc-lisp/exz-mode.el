@@ -20,7 +20,16 @@
      (xterm-mouse-mode t))))
 (menu-bar-mode -1)                      ; menu-bar-mode
 
-;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; highlight-80+
+(exz-add-search-path "site-lisp/highlight-80+")
+(exz-load-file "site-lisp/highlight-80+/highlight-80+-autoloads.el")
+(add-hook 'lisp-interaction-mode-hook
+          (lambda()
+            (highlight-80+-mode)
+            ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; git
 (exz-add-search-path "site-lisp/git-gutter") ; git-gutter
 (exz-load-file "site-lisp/git-gutter/git-gutter-autoloads.el")
@@ -48,11 +57,20 @@
 (exz-add-search-path "site-lisp/go-mode")
 (exz-load-file "site-lisp/go-mode/go-mode-autoloads.el")
 (add-to-list 'auto-mode-alist (cons "\\.md\\'" 'markdown-mode))
+(add-hook 'go-mode-hook
+          (lambda()
+            (highlight-80+-mode)
+            ))
 
 ;; markdown-mode
 (exz-add-search-path "site-lisp/markdown-mode")
 (exz-load-file "site-lisp/markdown-mode/markdown-mode-autoloads.el")
+(add-hook 'markdown-mode-hook
+          (lambda()
+            (highlight-80+-mode)
+            ))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auto-complete
 (defun exz-load-auto-complete ()
   (interactive)
@@ -69,6 +87,7 @@
 ;;(if (display-graphic-p)
 ;;    (exz-load-auto-complete))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; company-mode
 (exz-add-search-path "site-lisp/company")
 (setq company-begin-commands '(self-insert-command))
@@ -91,6 +110,7 @@
             (local-set-key (kbd "M-?") 'company-complete)
             ))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck
 (defun exz-load-flycheck ()
   (interactive)
@@ -124,10 +144,12 @@
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.bash$" . sh-mode))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ido
 ;; (require 'ido)                          ; ido-mode
 ;; (ido-mode t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; tab
 (setq-default indent-tabs-mode nil)
 (setq default-tab-width 4)
@@ -135,33 +157,38 @@
 (setq-default c-basic-offset 4)
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
-(set-variable 'py-indent-offset 4)
-(set-variable 'python-indent-guess-indent-offset nil)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; window-number
 (exz-add-search-path "site-lisp/window-number")
 (require 'window-number)
 (window-number-meta-mode)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; show-paren-mode 括号匹配
 (setq show-paren-style 'parentheses)
 (show-paren-mode t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; mouse-avoidance-mode 鼠标自动让开
 ;;(mouse-avoidance-mode 'animate)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auto-image-file-mode 可自动打开图片
 (auto-image-file-mode)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; font-lock-mode 高亮
 ;;(global-font-lock-mode t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; linum-mode 行号
 (setq linum-format 'dynamic)
 (global-linum-mode 1)
 (add-hook 'speedbar-mode-hook (lambda () (linum-mode -1)))
 (add-hook 'sr-speedbar-mode-hook '(lambda () (linum-mode -1)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; speedbar
 (defun exz-load-sr-speedbar ()
   (interactive)
@@ -201,14 +228,8 @@
 (if (display-graphic-p)
     (exz-load-yasnippet))
 
-;; fill-column-indicator
-(exz-add-search-path "site-lisp/fill-column-indicator")
-(setq fci-rule-width 1)
-(setq fci-rule-color "darkblue")
-(exz-load-file "site-lisp/fill-column-indicator/fill-column-indicator.el")
-(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
-(global-fci-mode 1)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; tabbar
 (defun exz-load-tabbar ()
   "DOCSTRING"
@@ -236,6 +257,9 @@
 (setq py-install-directory "~/.emacs.d/site-lisp/python-mode")
 (exz-add-search-path "site-lisp/python-mode")
 
+(set-variable 'py-indent-offset 4)
+(set-variable 'python-indent-guess-indent-offset nil)
+
 ; use IPython
 (setq-default py-shell-name "ipython")
 (setq-default py-which-bufname "IPython")
@@ -256,12 +280,12 @@
           (lambda ()
             (define-key python-mode-map (kbd "C-c |")
               'py-execute-region-ipython)
+            (highlight-80+-mode)
             ))
 
 ;; pymacs
 (exz-add-search-path "site-lisp/pymacs")
 (exz-load-file "site-lisp/pymacs/pymacs-autoloads.el")
-
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)
