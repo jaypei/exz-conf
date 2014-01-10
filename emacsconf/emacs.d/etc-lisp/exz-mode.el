@@ -135,6 +135,8 @@
 (setq-default c-basic-offset 4)
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
+(set-variable 'py-indent-offset 4)
+(set-variable 'python-indent-guess-indent-offset nil)
 
 ;; window-number
 (exz-add-search-path "site-lisp/window-number")
@@ -255,6 +257,11 @@
             (define-key python-mode-map (kbd "C-c |")
               'py-execute-region-ipython)
             ))
+
+;; pymacs
+(exz-add-search-path "site-lisp/pymacs")
+(exz-load-file "site-lisp/pymacs/pymacs-autoloads.el")
+
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)
