@@ -47,6 +47,11 @@
 ;; go-mode
 (exz-add-search-path "site-lisp/go-mode")
 (exz-load-file "site-lisp/go-mode/go-mode-autoloads.el")
+(add-to-list 'auto-mode-alist (cons "\\.md\\'" 'markdown-mode))
+
+;; markdown-mode
+(exz-add-search-path "site-lisp/markdown-mode")
+(exz-load-file "site-lisp/markdown-mode/markdown-mode-autoloads.el")
 
 ;; auto-complete
 (defun exz-load-auto-complete ()
