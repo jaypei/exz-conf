@@ -41,9 +41,7 @@
 (if (display-graphic-p)
     (progn 
       (exz-add-search-path "site-lisp/color-theme-tomorrow")
-      (require 'color-theme-tomorrow)
-      (color-theme-tomorrow--define-theme night)
-      ;(color-theme-dark-laptop)
+      (color-theme-midnight)
       )
   (progn
     (color-theme-robin-hood)

@@ -160,9 +160,20 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; window-number
-(exz-add-search-path "site-lisp/window-number")
-(require 'window-number)
-(window-number-meta-mode)
+(if (boundp 'aquamacs-version)
+    (progn
+      (exz-add-search-path "site-lisp/window-numbering")
+      (require 'window-numbering)
+      (setq window-numbering-assign-func
+            (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
+      (window-numbering-mode)
+      )
+  (progn
+    (exz-add-search-path "site-lisp/window-number")
+    (require 'window-number)
+    (window-number-meta-mode)
+    )
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; show-paren-mode 括号匹配
