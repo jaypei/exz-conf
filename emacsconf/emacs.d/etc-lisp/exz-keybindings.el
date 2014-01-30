@@ -8,7 +8,7 @@
 (global-set-key (kbd "M-p") 'window-move-down)
 (global-set-key (kbd "M-N") 'other-window-move-up)
 (global-set-key (kbd "M-P") 'other-window-move-down)
-(global-set-key (kbd "RET") 'newline-and-indent)
+;;(global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-x C-m") 'execute-extended-command)
 (global-set-key (kbd "C-c C-m") 'execute-extended-command)
 
