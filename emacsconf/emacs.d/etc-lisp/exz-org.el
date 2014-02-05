@@ -63,6 +63,8 @@
                (perl . t)
                ))))
 
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "PROGRESSING(p)" "|" "DONE(d)" "CANCELED(c)")))
 
 ;;; exz-org.el ends here
 (provide 'exz-org)
