@@ -45,6 +45,9 @@
       ))
 (global-git-gutter-mode 1)
 
+(exz-add-search-path "site-lisp/magit") ; magit
+(exz-load-file "site-lisp/magit/magit-autoloads.el")
+
 ;; graphviz-dot-mode
 (exz-add-search-path "site-lisp/graphviz-dot-mode")
 (exz-load-file "site-lisp/graphviz-dot-mode/graphviz-dot-mode-autoloads.el")
@@ -56,7 +59,6 @@
 ;; go-mode
 (exz-add-search-path "site-lisp/go-mode")
 (exz-load-file "site-lisp/go-mode/go-mode-autoloads.el")
-(add-to-list 'auto-mode-alist (cons "\\.md\\'" 'markdown-mode))
 (add-hook 'go-mode-hook
           (lambda()
             (highlight-80+-mode)
@@ -65,6 +67,7 @@
 ;; markdown-mode
 (exz-add-search-path "site-lisp/markdown-mode")
 (exz-load-file "site-lisp/markdown-mode/markdown-mode-autoloads.el")
+(add-to-list 'auto-mode-alist (cons "\\.md\\'" 'markdown-mode))
 (add-hook 'markdown-mode-hook
           (lambda()
             (highlight-80+-mode)
@@ -75,40 +78,48 @@
 (defun exz-load-auto-complete ()
   (interactive)
   (exz-add-search-path "site-lisp/auto-complete")
-  (setq ac-auto-start nil)
-  (setq ac-show-menu-immediately-on-auto-complete t)
+  (exz-load-file "site-lisp/auto-complete/auto-complete-autoloads.el")
+  (setq ac-auto-start t)
+  (setq ac-show-menu-immediately-on-auto-complete nil)
+  (setq ac-auto-show-menu 0)
+  (setq ac-use-menu-map t)
   (require 'auto-complete)
   ;;(require 'go-autocomplete)
-  (add-to-list 'ac-dictionary-directories (concat conf-root-dir "auto-complete/dict"))
+  (add-to-list 'ac-dictionary-directories
+               (concat conf-root-dir "auto-complete/dict"))
   (require 'auto-complete-config)
   (ac-config-default)
+  (setq global-auto-complete-mode 1)
   )
 
-;;(if (display-graphic-p)
-;;    (exz-load-auto-complete))
+(exz-load-auto-complete)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; company-mode
-(exz-add-search-path "site-lisp/company")
-(setq company-begin-commands '(self-insert-command))
-(setq company-minimum-prefix-length 1)
-(setq company-tooltip-limit 20)
-(setq company-echo-delay 0)
-(setq company-idle-delay .3)
-(exz-load-file "site-lisp/company/company-autoloads.el")
-(exz-add-search-path "site-lisp/company-go")
-(add-hook 'go-mode-hook
-          (lambda ()
-            (require 'company-go)
-            (setq company-minimum-prefix-length 0)
-            (set (make-local-variable 'company-backends) '(company-go))
-            ))
-(add-hook 'after-init-hook 'global-company-mode)
-(add-hook 'company-mode-hook
-          (lambda ()
-            (local-set-key (kbd "M-/") 'company-dabbrev-code)
-            (local-set-key (kbd "M-?") 'company-complete)
-            ))
+(defun exz-load-company ()
+  (interactive)
+  (exz-add-search-path "site-lisp/company")
+  (setq company-begin-commands '(self-insert-command))
+  (setq company-minimum-prefix-length 1)
+  (setq company-tooltip-limit 20)
+  (setq company-echo-delay 0)
+  (setq company-idle-delay .3)
+  (exz-load-file "site-lisp/company/company-autoloads.el")
+  (exz-add-search-path "site-lisp/company-go")
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (require 'company-go)
+              (setq company-minimum-prefix-length 0)
+              (set (make-local-variable 'company-backends) '(company-go))
+              ))
+  (add-hook 'after-init-hook 'global-company-mode)
+  (add-hook 'company-mode-hook
+            (lambda ()
+              (local-set-key (kbd "M-/") 'company-dabbrev-code)
+              (local-set-key (kbd "M-?") 'company-complete)
+              ))
+  )
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck
@@ -181,16 +192,8 @@
 (show-paren-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; mouse-avoidance-mode 鼠标自动让开
-;;(mouse-avoidance-mode 'animate)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auto-image-file-mode 可自动打开图片
 (auto-image-file-mode)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; font-lock-mode 高亮
-;;(global-font-lock-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; linum-mode 行号
@@ -266,7 +269,65 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; python-mode
 (setq py-install-directory "~/.emacs.d/site-lisp/python-mode")
+(setenv "PYMACS_PYTHON" "/usr/local/bin/python")
+
 (exz-add-search-path "site-lisp/python-mode")
+(autoload 'python-mode "python-mode" "Python Mode." t)
+(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+
+;; pymacs
+(exz-add-search-path "site-lisp/pymacs")
+(exz-load-file "site-lisp/pymacs/pymacs-autoloads.el")
+
+;; Initialize Rope                                                                                             
+;;(pymacs-load "ropemacs" "rope-")
+;;(setq ropemacs-enable-autoimport t)
+
+(setq py-load-pymacs-p t)
+
+(defun prefix-list-elements (list prefix)
+  (let (value)
+    (nreverse
+     (dolist (element list value)
+       (setq value (cons (format "%s%s" prefix element) value))))))
+
+(defun ac-python-find ()
+  "Python `ac-find-function'."
+  (require 'thingatpt)
+  (let ((symbol (car-safe (bounds-of-thing-at-point 'symbol))))
+    (if (null symbol)
+        (if (string= "." (buffer-substring (- (point) 1) (point)))
+            (point)
+          nil)
+      symbol)))
+
+(defun ac-python-candidate ()
+  "Python `ac-candidates-function'"
+  (let (candidates)
+    (dolist (source ac-sources)
+      (if (symbolp source)
+          (setq source (symbol-value source)))
+      (let* ((ac-limit (or (cdr-safe (assq 'limit source)) ac-limit))
+             (requires (cdr-safe (assq 'requires source)))
+             cand)
+        (if (or (null requires)
+                (>= (length ac-target) requires))
+            (setq cand
+                  (delq nil
+                        (mapcar (lambda (candidate)
+                                  (propertize candidate 'source source))
+                                (funcall (cdr (assq 'candidates source)))))))
+        (if (and (> ac-limit 1)
+                 (> (length cand) ac-limit))
+            (setcdr (nthcdr (1- ac-limit) cand) nil))
+        (setq candidates (append candidates cand))))
+    (delete-dups candidates)))
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (set (make-local-variable 'ac-find-function) 'ac-python-find)
+            (set (make-local-variable 'ac-candidate-function) 'ac-python-candidate)))
 
 (set-variable 'py-indent-offset 4)
 (set-variable 'python-indent-guess-indent-offset nil)
@@ -293,10 +354,6 @@
               'py-execute-region-ipython)
             (highlight-80+-mode)
             ))
-
-;; pymacs
-(exz-add-search-path "site-lisp/pymacs")
-(exz-load-file "site-lisp/pymacs/pymacs-autoloads.el")
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)
