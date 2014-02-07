@@ -39,9 +39,9 @@
       (exz-add-search-path "site-lisp/fringe-helper")
       (exz-add-search-path "site-lisp/git-gutter-fringe")
       (require 'git-gutter-fringe)
-      (set-face-foreground 'git-gutter-fr:modified "yellow")
-      (set-face-foreground 'git-gutter-fr:added "blue")
-      (set-face-foreground 'git-gutter-fr:deleted "white")
+      (set-face-foreground 'git-gutter-fr:modified "red")
+      (set-face-foreground 'git-gutter-fr:added "red")
+      (set-face-foreground 'git-gutter-fr:deleted "red")
       ))
 (global-git-gutter-mode 1)
 
@@ -73,6 +73,8 @@
             (highlight-80+-mode)
             ))
 
+(setq abbrev-file-name
+      "~/.emacs.d/abbrev_defs")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auto-complete
 (defun exz-load-auto-complete ()
@@ -83,11 +85,10 @@
   (setq ac-show-menu-immediately-on-auto-complete nil)
   (setq ac-auto-show-menu 0)
   (setq ac-use-menu-map t)
-  (require 'auto-complete)
   ;;(require 'go-autocomplete)
+  (require 'auto-complete-config)
   (add-to-list 'ac-dictionary-directories
                (concat conf-root-dir "auto-complete/dict"))
-  (require 'auto-complete-config)
   (ac-config-default)
   (setq global-auto-complete-mode 1)
   )
@@ -135,8 +136,7 @@
               ))
   )
 
-(if (display-graphic-p)
-    (exz-load-flycheck))
+(exz-load-flycheck)
 
 ;; web mode
 (exz-add-search-path "site-lisp/web-mode")
@@ -218,8 +218,7 @@
   (require 'sr-speedbar)
   )
 
-(if (display-graphic-p)
-    (exz-load-sr-speedbar))
+(exz-load-sr-speedbar)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -231,7 +230,6 @@
   (setq yas/snippet-dirs '("~/.emacs.d/snippets"
                            "~/.emacs.d/site-lisp/yasnippet/snippets"))
   (yas-global-mode 1)
-  (yas-reload-all 1)
 
   (add-hook 'yas-minor-mode-hook
             (lambda ()
@@ -239,8 +237,7 @@
               ))
   )
 
-(if (display-graphic-p)
-    (exz-load-yasnippet))
+(exz-load-yasnippet)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -263,8 +260,7 @@
   (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
   )
 
-(if (display-graphic-p)
-    (exz-load-tabbar))
+(exz-load-tabbar)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; python-mode
@@ -272,9 +268,6 @@
 (setenv "PYMACS_PYTHON" "/usr/local/bin/python")
 
 (exz-add-search-path "site-lisp/python-mode")
-(autoload 'python-mode "python-mode" "Python Mode." t)
-(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-(add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
 ;; pymacs
 (exz-add-search-path "site-lisp/pymacs")

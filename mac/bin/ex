@@ -1,32 +1,4 @@
 #!/bin/bash
  
-# Get first argument
+nohup /Applications/Emacs.app/Contents/MacOS/Emacs "$@" >> /dev/null &
  
-if [ $1 ]
-then 
-  FILE=$1 
-else 
-  FILE=$HOME
-fi
- 
-# Get realpath
- 
-FILE=`python -c "import os,sys; print os.path.realpath(sys.argv[1])" $FILE`
- 
-# Get directory path.
- 
-if [ -f $FILE ]
-then
-  cd `dirname $FILE`
-else
-  cd $FILE
-fi
- 
-# Opens Emacs without a Dired window, useful with speedbar or sr-speedbar
- 
-nohup /Applications/Emacs.app/Contents/MacOS/Emacs --name `basename $FILE` >> /dev/null &
- 
-# Opens Emacs with a Dired window for the directory specified
- 
-# nohup /Applications/Emacs.app/Contents/MacOS/Emacs --name `basename $FILE` $FILE >> /dev/null &
-
