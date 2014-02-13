@@ -1,0 +1,9 @@
+(:name ess
+       :description "Emacs Speaks Statistics: statistical programming within Emacs"
+       :type github
+       :pkgname "emacs-ess/ESS"
+       :website "http://ess.r-project.org/"
+       :info "doc/info/"
+       :build `(("make" "clean" "all" ,(concat "EMACS=" (shell-quote-argument
+                                                         el-get-emacs))))
+       :load "ess-autoloads.el")

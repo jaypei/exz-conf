@@ -1,0 +1,5 @@
+(:name darcsum
+       :website "http://joyful.com/darcsum/"
+       :description "A pcl-cvs like interface for managing darcs patches"
+       :type http
+       :url "http://hub.darcs.net/simon/darcsum/raw-file/darcsum.el")

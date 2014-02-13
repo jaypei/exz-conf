@@ -1,0 +1,7 @@
+(:name color-theme-zenburn
+       :description "Just some alien fruit salad to keep you in the zone"
+       :website "https://github.com/bbatsov/zenburn-emacs"
+       :type github
+       :pkgname "bbatsov/zenburn-emacs"
+       :post-init (add-to-list 'custom-theme-load-path
+			       default-directory))

@@ -1,0 +1,14 @@
+(:name slime
+       :description "Superior Lisp Interaction Mode for Emacs"
+       :type github
+       :autoloads "slime-autoloads"
+       :info "doc"
+       :pkgname "slime/slime"
+       :depends cl-lib
+       :load-path ("." "contrib")
+       :build '(("sed" "-i" "s/@itemx INIT-FUNCTION/@item INIT-FUNCTION/"
+                 "doc/slime.texi")
+                ("make" "-C" "doc" "slime.info"))
+       :build/darwin '(("make" "-C" "doc" "slime.info"))
+       :build/berkeley-unix '(("gmake" "-C" "doc" "slime.info"))
+       :post-init (slime-setup))
