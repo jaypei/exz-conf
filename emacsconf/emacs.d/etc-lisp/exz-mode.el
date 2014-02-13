@@ -265,7 +265,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; python-mode
 (setq py-install-directory "~/.emacs.d/site-lisp/python-mode")
-(setenv "PYMACS_PYTHON" "/usr/local/bin/python")
 
 (exz-add-search-path "site-lisp/python-mode")
 
