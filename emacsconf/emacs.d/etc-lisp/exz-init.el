@@ -32,6 +32,9 @@
     (progn
       (setq exec-path (append exec-path '("/usr/local/bin")))
       (setq exec-path (append exec-path '("/Users/jaypei/gocode/bin")))
+      (setenv "PATH"
+              (concat (getenv "PATH") ":"
+                      "/usr/local/bin"))
       (setenv "GOPATH" "/Users/jaypei/gocode")
       (setenv "PYMACS_PYTHON" "/usr/local/bin/python")
       ))

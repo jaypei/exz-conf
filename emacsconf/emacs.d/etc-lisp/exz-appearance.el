@@ -21,12 +21,12 @@
        (exz-set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
       (darwin
        (create-fontset-from-fontset-spec
-        "-apple-Hannotate ST-medium-r-normal-*-20-*-*-*-*-*-fontset-mymonaco,
-         ascii:-apple-Anonymous Pro-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1,
-         chinese-utf8:-apple-Hannotate SC-medium-normal-normal-20-*-*-*-*-p-0-iso10646-1,
-         chinese-gb2312:-apple-Hannotate SC-medium-normal-normal-20-*-*-*-*-p-0-iso10646-1,
-         latin-iso8859-1:-apple-Hannotate SC-medium-normal-normal-*-20-*-*-*-m-0-iso10646-1,
-         mule-unicode-0100-24ff:-apple-Hannotate SC-medium-normal-normal-*-20-*-*-*-m-0-iso10646-1")
+        "-apple-Hannotate ST-medium-r-normal-*-14-*-*-*-*-*-fontset-mymonaco,
+         ascii:-apple-Fantasque Sans Mono-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1,
+         chinese-utf8:-apple-Hannotate SC-medium-normal-normal-14-*-*-*-*-p-0-iso10646-1,
+         chinese-gb2312:-apple-Hannotate SC-medium-normal-normal-14-*-*-*-*-p-0-iso10646-1,
+         latin-iso8859-1:-apple-Hannotate SC-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1,
+         mule-unicode-0100-24ff:-apple-Hannotate SC-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
        
        (setq default-frame-alist (append '((font . "fontset-mymonaco")) default-frame-alist))
        (set-default-font "fontset-mymonaco")

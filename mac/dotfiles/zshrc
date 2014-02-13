@@ -48,17 +48,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
-mkdir -p /tmp/ssh
-export GOPATH="/Users/jaypei/gocode"
-export PATH=/Users/jaypei/bin:/usr/local/sbin:/usr/local/bin:$PATH:/Users/jaypei/work/vimwiki/bin
-export HOMEBREW_TEMP=/tmp/homebrew
-export ANDROID_SDK_ROOT=/usr/local/opt/android-sdk
-export EDITOR=emacs
-
-LANG=en_US.UTF-8
-alias ls="ls -G"
-alias tree="tree -C"
-alias e="emacs"
+[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
 
 if [[ "$TERM" == "dumb" ]]
 then
