@@ -130,10 +130,6 @@
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (setq flycheck-idle-change-delay 0)
   (exz-load-file "site-lisp/flycheck/flycheck-autoloads.el")
-  (add-hook 'python-mode-hook
-            (lambda()
-              (flycheck-mode)
-              ))
   )
 
 (exz-load-flycheck)
@@ -197,10 +193,11 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; linum-mode 行号
-(setq linum-format 'dynamic)
-(global-linum-mode 1)
-(add-hook 'speedbar-mode-hook (lambda () (linum-mode -1)))
-(add-hook 'sr-speedbar-mode-hook '(lambda () (linum-mode -1)))
+;; (setq linum-format 'dynamic)
+;; (global-linum-mode 1)
+
+;; (add-hook 'speedbar-mode-hook (lambda () (linum-mode -1)))
+;; (add-hook 'sr-speedbar-mode-hook '(lambda () (linum-mode -1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; speedbar
@@ -242,110 +239,25 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; tabbar
-(defun exz-load-tabbar ()
-  "DOCSTRING"
-  (interactive)
-  (exz-add-search-path "site-lisp/tabbar")
-  (exz-add-search-path "site-lisp/tabbar-ruler")
-  (setq tabbar-ruller-global-tabbar t)
-  (require 'tabbar-ruler)
-  (defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
-    "Returns the name of the tab group names the current buffer belongs to.
-           There are two groups: Emacs buffers (those whose name starts with '*', plus
-           dired buffers), and the rest.  This works at least with Emacs v24.2 using
-           tabbar.el v1.7."
-    (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
-                ((eq major-mode 'dired-mode) "emacs")
-                (t "user"))))
-  (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
-  )
+;; (defun exz-load-tabbar ()
+;;   "DOCSTRING"
+;;   (interactive)
+;;   (exz-add-search-path "site-lisp/tabbar")
+;;   (exz-add-search-path "site-lisp/tabbar-ruler")
+;;   (setq tabbar-ruller-global-tabbar t)
+;;   (require 'tabbar-ruler)
+;;   (defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
+;;     "Returns the name of the tab group names the current buffer belongs to.
+;;            There are two groups: Emacs buffers (those whose name starts with '*', plus
+;;            dired buffers), and the rest.  This works at least with Emacs v24.2 using
+;;            tabbar.el v1.7."
+;;     (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
+;;                 ((eq major-mode 'dired-mode) "emacs")
+;;                 (t "user"))))
+;;   (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
+;;   )
+;; (exz-load-tabbar)
 
-(exz-load-tabbar)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; python-mode
-(setq py-install-directory "~/.emacs.d/site-lisp/python-mode")
-
-(exz-add-search-path "site-lisp/python-mode")
-
-;; pymacs
-(exz-add-search-path "site-lisp/pymacs")
-(exz-load-file "site-lisp/pymacs/pymacs-autoloads.el")
-
-;; Initialize Rope                                                                                             
-;;(pymacs-load "ropemacs" "rope-")
-;;(setq ropemacs-enable-autoimport t)
-
-(setq py-load-pymacs-p t)
-
-(defun prefix-list-elements (list prefix)
-  (let (value)
-    (nreverse
-     (dolist (element list value)
-       (setq value (cons (format "%s%s" prefix element) value))))))
-
-(defun ac-python-find ()
-  "Python `ac-find-function'."
-  (require 'thingatpt)
-  (let ((symbol (car-safe (bounds-of-thing-at-point 'symbol))))
-    (if (null symbol)
-        (if (string= "." (buffer-substring (- (point) 1) (point)))
-            (point)
-          nil)
-      symbol)))
-
-(defun ac-python-candidate ()
-  "Python `ac-candidates-function'"
-  (let (candidates)
-    (dolist (source ac-sources)
-      (if (symbolp source)
-          (setq source (symbol-value source)))
-      (let* ((ac-limit (or (cdr-safe (assq 'limit source)) ac-limit))
-             (requires (cdr-safe (assq 'requires source)))
-             cand)
-        (if (or (null requires)
-                (>= (length ac-target) requires))
-            (setq cand
-                  (delq nil
-                        (mapcar (lambda (candidate)
-                                  (propertize candidate 'source source))
-                                (funcall (cdr (assq 'candidates source)))))))
-        (if (and (> ac-limit 1)
-                 (> (length cand) ac-limit))
-            (setcdr (nthcdr (1- ac-limit) cand) nil))
-        (setq candidates (append candidates cand))))
-    (delete-dups candidates)))
-
-(add-hook 'python-mode-hook
-          (lambda ()
-            (set (make-local-variable 'ac-find-function) 'ac-python-find)
-            (set (make-local-variable 'ac-candidate-function) 'ac-python-candidate)))
-
-(set-variable 'py-indent-offset 4)
-(set-variable 'python-indent-guess-indent-offset nil)
-
-; use IPython
-(setq-default py-shell-name "ipython")
-(setq-default py-which-bufname "IPython")
-; use the wx backend, for both mayavi and matplotlib
-(setq py-python-command-args
-        '("--gui=wx" "--pylab=wx" "-colors" "Linux"))
-(setq py-force-py-shell-name-p t)
-
-; switch to the interpreter after executing code
-(setq py-shell-switch-buffers-on-execute-p t)
-(setq py-switch-buffers-on-execute-p t)
-; don't split windows
-(setq py-split-windows-on-execute-p nil)
-; try to automagically figure out indentation
-(setq py-smart-indentation t)
-
-(add-hook 'python-mode-hook
-          (lambda ()
-            (define-key python-mode-map (kbd "C-c |")
-              'py-execute-region-ipython)
-            (highlight-80+-mode)
-            ))
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)

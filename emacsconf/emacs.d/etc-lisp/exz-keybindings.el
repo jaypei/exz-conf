@@ -52,6 +52,7 @@
             (global-set-key (kbd "C-z w c") 'ecb-goto-window-compilation)
             (global-set-key (kbd "C-z w h") 'ecb-goto-window-history)
             (global-set-key (kbd "C-z w s") 'ecb-goto-window-speedbar)
+            (global-set-key [f4] 'exz-ecb-add-source-path)
             (local-set-key (kbd "p") 'previous-line)
             (local-set-key (kbd "n") 'next-line)
             ))

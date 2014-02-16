@@ -21,6 +21,7 @@
 (if (file-exists-p user-info-file)
     (load-file user-info-file))
 (require 'exz-mode)
+(require 'exz-python)
 (require 'exz-appearance)
 (require 'exz-dired)
 (require 'exz-ecb)

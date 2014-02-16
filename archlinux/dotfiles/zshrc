@@ -60,6 +60,7 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export PATH=~/bin:~/gocode/bin:~/work/vimwiki/bin:$PATH
 export GOPATH=/home/jaypei/gocode
+export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
 alias ls='ls --color'
 alias ack='/usr/bin/vendor_perl/ack'

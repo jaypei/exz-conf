@@ -4,6 +4,7 @@ export PATH=/Users/jaypei/bin:/usr/local/sbin:/usr/local/bin:$PATH:/Users/jaypei
 export HOMEBREW_TEMP=/tmp/homebrew
 export ANDROID_SDK_ROOT=/usr/local/opt/android-sdk
 export EDITOR=emacs
+export PIP_DOWNLOAD_CACHE=$HOME/Library/Caches/pip-downloads
 
 LANG=en_US.UTF-8
 alias ls="ls -G"

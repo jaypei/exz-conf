@@ -28,6 +28,11 @@
 (setq scroll-margin 3
       scroll-conservatively 10000)
 
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (setq scroll-margin 0)
+            ))
+
 (setq ns-pop-up-frames nil)
 
 ;; 把这些缺省禁用的功能打开
