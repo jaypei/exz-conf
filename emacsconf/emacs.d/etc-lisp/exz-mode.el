@@ -259,5 +259,11 @@
 ;; (exz-load-tabbar)
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; anything
+(exz-add-search-path "site-lisp/anything")
+(require 'anything-match-plugin)
+(require 'anything-config)
+
 ;;; exz-mode.el ends here
 (provide 'exz-mode)

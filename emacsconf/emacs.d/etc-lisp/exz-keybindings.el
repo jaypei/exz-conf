@@ -20,6 +20,7 @@
 ;; copy & cut
 (global-set-key (kbd "C-w") 'cut-line-or-region)
 (global-set-key (kbd "M-w") 'copy-line-or-region)
+(global-set-key (kbd "C-z C-c") 'copy-line-or-region)
 
 ;; goto char
 (define-key global-map (kbd "C-z f") 'exz-goto-char)
@@ -103,21 +104,14 @@
             ))
 
 ;; tabbar
-(global-set-key [M-left] 'tabbar-ruler-tabbar-backward-tab)
-(global-set-key [M-right] 'tabbar-ruler-tabbar-forward-tab)
-(global-set-key [M-up] 'tabbar-ruler-up)
-(global-set-key [M-down] 'tabbar-ruler-up)
-(add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key [M-left] 'tabbar-ruler-tabbar-backward-tab)
-            (local-set-key [M-right] 'tabbar-ruler-tabbar-forward-tab)
-            (local-set-key [M-up] 'tabbar-ruler-up)
-            (local-set-key [M-down] 'tabbar-ruler-up)
-            ))
 (global-set-key (kbd "C-z <left>") 'tabbar-ruler-tabbar-backward-tab)
 (global-set-key (kbd "C-z <right>") 'tabbar-ruler-tabbar-forward-tab)
 (global-set-key (kbd "C-z <up>") 'tabbar-ruler-up)
 (global-set-key (kbd "C-z <down>") 'tabbar-ruler-up)
+
+;; anything
+(global-set-key (kbd "M-x") 'anything-M-x)
+(global-set-key (kbd "C-x b") 'anything-buffers+)
 
 ;;; exz-keybindings.el ends here
 (provide 'exz-keybindings)
