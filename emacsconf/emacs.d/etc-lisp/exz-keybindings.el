@@ -53,7 +53,6 @@
             (global-set-key (kbd "C-z w c") 'ecb-goto-window-compilation)
             (global-set-key (kbd "C-z w h") 'ecb-goto-window-history)
             (global-set-key (kbd "C-z w s") 'ecb-goto-window-speedbar)
-            (global-set-key [f4] 'exz-ecb-add-source-path)
             (local-set-key (kbd "p") 'previous-line)
             (local-set-key (kbd "n") 'next-line)
             ))
@@ -66,6 +65,7 @@
             (local-set-key (kbd "3") 'ecb-open-source-in-editwin3)
             (local-set-key (kbd "4") 'ecb-open-source-in-editwin4)
             (local-set-key (kbd "5") 'ecb-open-source-in-editwin5)
+            (local-set-key [f4] 'exz-ecb-add-source-path)
             ))
 
 (add-hook 'ecb-methods-buffer-after-create-hook
@@ -110,7 +110,6 @@
 (global-set-key (kbd "C-z <down>") 'tabbar-ruler-up)
 
 ;; anything
-(global-set-key (kbd "M-x") 'anything-M-x)
 (global-set-key (kbd "C-x b") 'anything-buffers+)
 
 ;;; exz-keybindings.el ends here
