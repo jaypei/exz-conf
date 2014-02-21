@@ -1,7 +1,13 @@
-# name: shebang-line
+# name: python shebang qunar version
 # key: shebang-qunar
 # --
-#!/usr/bin/q-python27
+#!/usr/bin/env q-python27
 # -*- coding: utf-8 -*-
+# vim: tabstop=4 shiftwidth=4 softtabstop=4 et
+#
+# Copyright @ 2014 OPS, Qunar Inc. (qunar.com)
+#
+# Author: zhen.pei <zhen.pei@qunar.com>
+#
 
 $0
