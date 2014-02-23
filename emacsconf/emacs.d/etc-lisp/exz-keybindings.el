@@ -32,7 +32,7 @@
 (global-set-key [f9] 'exz-ecb-load)
 (global-set-key [f10] 'menu-bar-mode)
 (global-set-key [f11] 'fullscreen)
-(global-set-key [f12] 'sr-speedbar-toggle)
+(global-set-key [f12] 'org-agenda)
 
 ;; ecb
 (add-hook 'ecb-common-tree-buffer-after-create-hook
@@ -84,12 +84,6 @@
 (global-set-key (kbd "C-z w n") 'windmove-down)
 (global-set-key (kbd "C-z w p") 'windmove-up)
 (global-set-key (kbd "C-z k") 'delete-window)
-
-;; org
-(add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-z o p") 'exz-org-publish)
-            (local-set-key (kbd "C-z c") 'org-publish-current-file)))
 
 ;; python
 (add-hook 'python-mode-hook
