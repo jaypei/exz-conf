@@ -88,10 +88,9 @@
             (define-key python-mode-map (kbd "C-c |")
               'py-execute-region-ipython)
             (highlight-80+-mode)
-            (lambda()
-              (if (functionp 'flycheck-mode)
-                  (flycheck-mode)))
-            ))
+            (if (functionp 'flycheck-mode)
+                (flycheck-mode)))
+          )
 
 ;;; exz-python.el ends here
 (provide 'exz-python)
