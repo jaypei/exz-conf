@@ -39,6 +39,8 @@
 (exz-add-search-path "site-lisp/git-gutter") ; git-gutter
 (exz-load-file "site-lisp/git-gutter/git-gutter-autoloads.el")
 
+(exz-add-search-path "site-lisp/git-modes") ; git-gutter
+
 (if (display-graphic-p)
     (progn
       (exz-add-search-path "site-lisp/fringe-helper")
