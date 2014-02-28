@@ -8,7 +8,8 @@
 
 ;;; Code:
 
-(exz-add-search-path "site-lisp/cedet")
+(if (not (boundp 'aquamacs-version))
+    (exz-add-search-path "site-lisp/cedet"))
 (exz-add-search-path "site-lisp/ecb")
 
 (defun exz-ecb-add-source-path (&optional dir)
@@ -28,8 +29,10 @@
 
 (defun exz-ecb-load ()
   (interactive)
-  (exz-load-file "site-lisp/cedet/common/cedet.el")
-  (require 'cedet)
+  (if (not (boundp 'aquamacs-version))
+      (progn
+        (exz-load-file "site-lisp/cedet/common/cedet.el")
+        (require 'cedet)))
   (global-ede-mode 1)
   (exz-load-file "site-lisp/ecb/ecb.el")
 

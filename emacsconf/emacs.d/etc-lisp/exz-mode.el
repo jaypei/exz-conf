@@ -10,6 +10,11 @@
 
 ;; default mode
 (setq default-major-mode 'text-mode)    ; text-mode by default
+(setq
+ aquamacs-scratch-file "/tmp/aquamacs-scratch-file"
+ initial-major-mode 'lisp-interaction-mode
+ initial-scratch-message ";; *scratch*\n\n"
+ )
 
 ;; disable menubar / scrollbar
 (if (display-graphic-p)
