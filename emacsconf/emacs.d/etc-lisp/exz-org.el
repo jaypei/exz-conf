@@ -121,7 +121,9 @@
   (switch-to-buffer "*scratch*"))
 
 ;; I use C-c c to start capture mode
-(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c c")
+                (lambda ()
+                  (find-file "~/work/org/todo/index.org")))
 
 ;; org
 (add-hook 'org-mode-hook
