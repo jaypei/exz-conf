@@ -10,10 +10,16 @@
       (if (boundp 'aquamacs-version)
           (progn
             (custom-set-variables
+             '(aquamacs-customization-version-id 0 t)
+             '(cursor-type (quote box))
+             '(indicate-empty-lines nil)
              '(default-frame-alist
                 (quote
                  ((foreground-color . "White")
-                  (background-color . "Black"))))
+                  (background-color . "Black")
+                  (cursor-color . "White")
+                  (cursor-type (quote box))
+                  )))
              )
             (set-fringe-mode '(10 . 10))
             (exz-add-search-path "site-lisp/color-theme-tomorrow")
@@ -79,6 +85,8 @@
       (add-hook 'shell-mode-hook
                 'ansi-color-for-comint-mode-on) ; color shell
       ))
+
+
 
 ;;; exz-appearance.el ends here
 (provide 'exz-appearance)
