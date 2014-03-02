@@ -9,7 +9,12 @@
 (exz-add-search-path "site-lisp/popup")
 
 ;; default mode
-(setq default-major-mode 'text-mode)    ; text-mode by default
+(setq default-major-mode 'fundamental-mode)
+(setq
+ aquamacs-scratch-file "/tmp/aquamacs-scratch-file"
+ initial-major-mode 'lisp-interaction-mode
+ initial-scratch-message ";; *scratch*\n\n"
+ )
 
 ;; disable menubar / scrollbar
 (if (display-graphic-p)
@@ -34,6 +39,9 @@
 (exz-add-search-path "site-lisp/git-gutter") ; git-gutter
 (exz-load-file "site-lisp/git-gutter/git-gutter-autoloads.el")
 
+(exz-add-search-path "site-lisp/git-modes")
+(exz-load-file "site-lisp/git-modes/git-modes-autoloads.el")
+
 (if (display-graphic-p)
     (progn
       (exz-add-search-path "site-lisp/fringe-helper")
@@ -46,6 +54,7 @@
 (global-git-gutter-mode 1)
 
 (exz-add-search-path "site-lisp/magit") ; magit
+(defconst magit-log-header-end "-- End of Magit header --\n")
 (exz-load-file "site-lisp/magit/magit-autoloads.el")
 
 ;; graphviz-dot-mode
