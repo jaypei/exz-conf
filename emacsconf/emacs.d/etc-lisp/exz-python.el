@@ -19,6 +19,12 @@
 ;;(pymacs-load "ropemacs" "rope-")
 ;;(setq ropemacs-enable-autoimport t)
 
+(defun exz/eval-buffer-as-python ()
+  "Run buffer content as python program."
+  (interactive)
+  (save-buffer t)
+  (shell-command (concat python-shell-interpreter " " (buffer-file-name))))
+
 (setq py-load-pymacs-p t)
 
 (defun prefix-list-elements (list prefix)
@@ -87,6 +93,8 @@
           (lambda ()
             (define-key python-mode-map (kbd "C-c |")
               'py-execute-region-ipython)
+            (define-key python-mode-map (kbd "C-c C-c")
+              'exz/eval-buffer-as-python)
             (highlight-80+-mode)
             (if (functionp 'flycheck-mode)
                 (flycheck-mode)))

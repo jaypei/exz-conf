@@ -34,12 +34,11 @@
   (progn
     (exz-add-search-path "site-lisp/color-theme")
     (require 'color-theme)
-    (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-    (color-theme-initialize)
-    (color-theme-robin-hood)
-    (color-theme-midnight)
-    )
+    (exz-add-search-path "site-lisp/color-theme-tomorrow")
+    (require 'color-theme-tomorrow)
+    (color-theme-tomorrow-night)
   )
+)
 
 
 ;; font
