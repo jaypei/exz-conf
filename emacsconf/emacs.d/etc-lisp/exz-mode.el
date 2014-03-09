@@ -274,5 +274,14 @@
 (require 'anything-match-plugin)
 (require 'anything-config)
 
+;; nav
+(exz-add-search-path "site-lisp/nav")
+(defvar ack-history nil)
+(autoload 'nav "nav/nav" "\
+Opens Nav in a new window to the left of the current one.
+
+\(fn)" t nil)
+
+
 ;;; exz-mode.el ends here
 (provide 'exz-mode)
