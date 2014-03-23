@@ -69,6 +69,11 @@ alias gd='git diff --color'
 
 mkdir -p /tmp/ssh
 
+if [[ "$DESKTOP_SESSION" == "xfce" ]]; then
+    /usr/bin/xfconf-query -c xsettings -p /Gtk/KeyThemeName -s Emacs
+    /usr/bin/setxkbmap -option 'ctrl:nocaps'
+fi
+
 if [[ "$TERM" == "dumb" ]]
 then
     unsetopt zle
