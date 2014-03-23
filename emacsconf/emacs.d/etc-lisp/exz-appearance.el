@@ -24,11 +24,11 @@
             (set-fringe-mode '(10 . 10))
             (exz-add-search-path "site-lisp/color-theme-tomorrow")
             (require 'color-theme-tomorrow)
-            (color-theme-tomorrow-night))
+            (color-theme-tomorrow-night-bright))
         (progn
           (exz-add-search-path "site-lisp/color-theme-tomorrow")
           (require 'color-theme-tomorrow)
-          (color-theme-tomorrow-night)
+          (color-theme-tomorrow-night-bright)
           ))
       )
   (progn

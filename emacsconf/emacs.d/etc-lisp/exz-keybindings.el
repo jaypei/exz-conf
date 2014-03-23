@@ -106,5 +106,14 @@
 ;; anything
 (global-set-key (kbd "C-x b") 'anything-buffers+)
 
+;; window size
+(global-set-key (kbd "M--") 'shrink-window-horizontally)
+(global-set-key (kbd "M-=") 'enlarge-window-horizontally)
+
+(global-set-key (kbd "C-1") 'move-beginning-of-line)
+(global-set-key (kbd "C-2") 'set-mark-command)
+(global-set-key (kbd "C-3") 'move-end-of-line)
+(global-set-key (kbd "M-<return>") 'newline-and-indent)
+
 ;;; exz-keybindings.el ends here
 (provide 'exz-keybindings)

@@ -91,8 +91,8 @@
   (exz-add-search-path "site-lisp/auto-complete")
   (exz-load-file "site-lisp/auto-complete/auto-complete-autoloads.el")
   (setq ac-auto-start t)
-  (setq ac-show-menu-immediately-on-auto-complete nil)
-  (setq ac-auto-show-menu 0)
+  (setq ac-show-menu-immediately-on-auto-complete t)
+  (setq ac-auto-show-menu 1)
   (setq ac-use-menu-map t)
   ;;(require 'go-autocomplete)
   (require 'auto-complete-config)
@@ -102,33 +102,41 @@
   (setq global-auto-complete-mode 1)
   )
 
-(exz-load-auto-complete)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; company-mode
+(defun company-my-backend (command &optional arg &rest ignored)
+  (case concat      (prefix (when (looking-back "foo\\>")
+                              (match-string 0)))
+        (candidates (when (equal arg "foo")
+                      (list "foobar" "foobaz" "foobarbaz")))
+        (meta (format "This value is named %s" arg))))
+
 (defun exz-load-company ()
   (interactive)
   (exz-add-search-path "site-lisp/company")
+  (exz-load-file "site-lisp/company/company-autoloads.el")
+  (exz-add-search-path "site-lisp/company-go")
   (setq company-begin-commands '(self-insert-command))
   (setq company-minimum-prefix-length 1)
   (setq company-tooltip-limit 20)
   (setq company-echo-delay 0)
-  (setq company-idle-delay .3)
-  (exz-load-file "site-lisp/company/company-autoloads.el")
-  (exz-add-search-path "site-lisp/company-go")
+  (setq company-idle-delay t)
+  (add-hook 'after-init-hook 'global-company-mode)
   (add-hook 'go-mode-hook
             (lambda ()
               (require 'company-go)
               (setq company-minimum-prefix-length 0)
               (set (make-local-variable 'company-backends) '(company-go))
               ))
-  (add-hook 'after-init-hook 'global-company-mode)
   (add-hook 'company-mode-hook
             (lambda ()
-              (local-set-key (kbd "M-/") 'company-dabbrev-code)
-              (local-set-key (kbd "M-?") 'company-complete)
+              (local-set-key (kbd "M-?") 'company-dabbrev-code)
+              (local-set-key (kbd "M-/") 'company-complete)
               ))
   )
+
+(exz-load-company)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
