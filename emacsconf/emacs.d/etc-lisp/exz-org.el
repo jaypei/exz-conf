@@ -10,7 +10,7 @@
 (defvar exz/org-default-notes-file "~/work/org/refile.org")
 (defvar exz/org-agenda-files (quote ("~/work/org/todo")))
 
-;; (exz-add-search-path "site-lisp/org")
+(exz-add-search-path "site-lisp/org")
 
 ;; fontify code in code blocks
 (setq org-src-fontify-natively t)
