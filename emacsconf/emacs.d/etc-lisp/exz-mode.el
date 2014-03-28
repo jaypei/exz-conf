@@ -286,6 +286,8 @@
 (exz-add-search-path "site-lisp/neotree")
 (exz-load-file "site-lisp/neotree/neotree-autoloads.el")
 
+;; ztree-dir
+(exz-add-search-path "site-lisp/ztree")
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)
