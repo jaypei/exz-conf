@@ -54,7 +54,11 @@
                (octave . t)
                (sqlite . t)
                (perl . t)
+               (plantuml . t)
                ))))
+
+(setq org-plantuml-jar-path
+      (expand-file-name "/usr/local/Cellar/plantuml/7987/plantuml.7987.jar"))
 
 (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -131,8 +135,10 @@
 (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (kbd "C-z o p") 'exz-org-publish)
-            (local-set-key (kbd "C-z c") 'exz/org-compile-and-open-html)))
+            (local-set-key (kbd "C-z c") 'exz/org-compile-and-open-html)
+            (org-display-inline-images t)))
 
+(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 
 ;;; exz-org.el ends here
 (provide 'exz-org)
