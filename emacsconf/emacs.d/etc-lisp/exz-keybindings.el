@@ -29,6 +29,7 @@
 (define-key global-map (kbd "C-S-o") 'exz-new-line-previous)
 
 (global-set-key [(f7)] 'cua-mode)
+(global-set-key [f8] 'neotree)
 (global-set-key [f9] 'exz-ecb-load)
 (global-set-key [f10] 'menu-bar-mode)
 (global-set-key [f11] 'fullscreen)
@@ -114,6 +115,10 @@
 (global-set-key (kbd "C-2") 'set-mark-command)
 (global-set-key (kbd "C-3") 'move-end-of-line)
 (global-set-key (kbd "M-<return>") 'newline-and-indent)
+
+;; font size
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
 
 ;;; exz-keybindings.el ends here
 (provide 'exz-keybindings)

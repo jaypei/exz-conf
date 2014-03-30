@@ -18,6 +18,7 @@
 
 ;; import submodules
 (require 'exz-init)
+(require 'exz-util)
 (if (file-exists-p user-info-file)
     (load-file user-info-file))
 (require 'exz-mode)
