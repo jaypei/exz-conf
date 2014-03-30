@@ -1,11 +1,12 @@
 [global_config]
   geometry_hinting = False
   enabled_plugins = ,
+  handle_size = 1
   inactive_color_offset = 0.92
 [keybindings]
   switch_to_tab_10 = <Super>0
-  go_right = <Super>f
-  go_left = <Super>b
+  go_right = <Super>Right
+  go_left = <Super>Left
   switch_to_tab_6 = <Super>6
   switch_to_tab_7 = <Super>7
   switch_to_tab_4 = <Super>4
@@ -22,15 +23,16 @@
   copy = <Super>c
   paste = <Super>v
   search = <Super>f
-  go_up = <Super>p
+  go_up = <Super>Up
   next_tab = <Primary>equal
   split_horiz = <Super>minus
-  go_down = <Super>n
+  go_down = <Super>Down
+  go_next = <Super>a
 [profiles]
   [[default]]
     scrollbar_position = hidden
     palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
-    font = Inconsolata-dz for Powerline Medium 12
+    font = Inconsolata-dz for Powerline Medium 11
     background_image = None
     use_system_font = False
     cursor_color = "#eee8d5"

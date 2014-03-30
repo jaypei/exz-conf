@@ -54,7 +54,8 @@
 (if (display-graphic-p)
     (ecase system-type 
       (gnu/linux
-       (exz/set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
+       ;; (exz/set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
+       (exz/set-font "Fantasque Sans Mono" "文泉驿等宽微米黑" 16 16))
       (darwin
        (if (boundp 'aquamacs-version)
            (progn
