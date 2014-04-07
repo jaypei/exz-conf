@@ -86,6 +86,8 @@
                 'ansi-color-for-comint-mode-on) ; color shell
       ))
 
+;; enable highlight current line
+(global-hl-line-mode 1)
 
 
 ;;; exz-appearance.el ends here
