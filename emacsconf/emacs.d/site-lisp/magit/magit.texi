@@ -329,10 +329,6 @@ configure Magit to do something more useful by customizing the
 to instruct the subsequent @kbd{C-c C-c} to commit all changes.
 Another choice is stage everything at the time of hitting @kbd{c c}.
 
-You can type @kbd{C-c C-a} in the buffer with the change description
-to toggle a flag that determines whether the next commit will
-@emph{amend} the current commit in HEAD.
-
 Typing @kbd{M-n} or @kbd{M-p} will cycle through the
 @code{log-edit-comment-ring}, which will have your previous log
 messages. This is particularly useful if you have a hook that
@@ -846,13 +842,13 @@ Magit shows them in a section called @emph{Unpulled changes}.  Typing
 
 @table @kbd
 @item o u
-Update the submodules, with a prefix argument it will initializing.
+Update the submodules, with a prefix argument it will also initialize them.
 
 @item o i
 Initialize the submodules.
 
 @item o b
-Update and initialize the submodules in one go.
+Update and initialize the submodules in one go (same as C-u o u).
 
 @item o s
 Synchronizes submodules' remote URL configuration setting to the value
