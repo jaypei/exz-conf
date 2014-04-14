@@ -86,6 +86,8 @@
       (add-hook 'shell-mode-hook
                 'ansi-color-for-comint-mode-on)))
 
+;; enable highlight current line
+(global-hl-line-mode 1)
 
 
 ;;; exz-appearance.el ends here
