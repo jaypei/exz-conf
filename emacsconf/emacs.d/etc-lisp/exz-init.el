@@ -39,6 +39,8 @@
                       "/usr/local/bin"))
       (setenv "GOPATH" "/Users/jaypei/gocode")
       (setenv "PYMACS_PYTHON" "/usr/local/bin/python")
+      (if (file-executable-p "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
+        (setq magit-emacsclient-executable "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"))
       ))
 
 ;;; exz-init.el ends here

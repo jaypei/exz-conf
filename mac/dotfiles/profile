@@ -7,6 +7,8 @@ export ANDROID_SDK_ROOT=/usr/local/opt/android-sdk
 export EDITOR=emacs
 export PIP_DOWNLOAD_CACHE=$HOME/Library/Caches/pip-downloads
 
+source /usr/local/bin/virtualenvwrapper.sh
+
 LANG=en_US.UTF-8
 alias ls="ls -G"
 alias tree="tree -C"

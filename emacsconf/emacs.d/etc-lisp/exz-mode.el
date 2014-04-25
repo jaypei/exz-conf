@@ -127,14 +127,11 @@
             (lambda ()
               (require 'company-go)
               (setq company-minimum-prefix-length 0)
-              (set (make-local-variable 'company-backends) '(company-go))
-              ))
+              (set (make-local-variable 'company-backends) '(company-go))))
   (add-hook 'company-mode-hook
             (lambda ()
               (local-set-key (kbd "M-?") 'company-dabbrev-code)
-              (local-set-key (kbd "M-/") 'company-complete)
-              ))
-  )
+              (local-set-key (kbd "M-/") 'company-complete))))
 
 (exz-load-company)
 
