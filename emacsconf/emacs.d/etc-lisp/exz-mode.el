@@ -79,8 +79,11 @@
 (add-to-list 'auto-mode-alist (cons "\\.md\\'" 'markdown-mode))
 (add-hook 'markdown-mode-hook
           (lambda()
-            (highlight-80+-mode)
-            ))
+            (highlight-80+-mode)))
+
+;; lua-mode
+(exz-add-search-path "site-lisp/lua-mode")
+(exz-load-file "site-lisp/lua-mode/lua-mode-autoloads.el")
 
 (setq abbrev-file-name
       "~/.emacs.d/abbrev_defs")
