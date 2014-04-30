@@ -25,8 +25,10 @@
 (exz-add-search-path "site-lisp")
 (exz-add-search-path "site-lisp/extra")
 
-(if (equal (system-name) "jaypei-home")
-    (setenv "GOPATH" "/home/jaypei/gocode"))
+(when (equal (system-name) "jaypei-home")
+  (setenv "GOPATH" "/home/jaypei/gocode")
+  (setenv "PATH" (concat "/home/jaypei/bin:" (getenv "PATH")))
+  (add-to-list 'exec-path "/home/jaypei/bin"))
 
 (if (equal (system-name) "jaypei-mbp.local")
     (progn

@@ -1,0 +1,9 @@
+# name: pdb
+# contributor: zhen.pei
+# key: pdb
+# --
+# --- PDB BEGIN ---
+import pdb
+pdb.set_trace()
+# --- PDB END ---
+$0

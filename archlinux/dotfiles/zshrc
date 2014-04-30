@@ -67,6 +67,10 @@ alias ack='/usr/bin/vendor_perl/ack'
 alias ack-grep='ack'
 alias gd='git diff --color'
 
+export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python2"
+export VIRTUALENVWRAPPER_VIRTUALENV="/usr/bin/virtualenv2"
+. /usr/bin/virtualenvwrapper.sh
+
 mkdir -p /tmp/ssh
 
 if [[ "$DESKTOP_SESSION" == "xfce" ]]; then
