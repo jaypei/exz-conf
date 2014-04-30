@@ -35,7 +35,7 @@
         (progn
           (exz-add-search-path "site-lisp/color-theme-tomorrow")
           (require 'color-theme-tomorrow)
-          (color-theme-tomorrow-night-bright)
+          (color-theme-tomorrow-night)
           )))
   (progn
     (exz-add-search-path "site-lisp/color-theme")
