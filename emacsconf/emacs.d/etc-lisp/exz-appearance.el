@@ -33,6 +33,8 @@
             (require 'color-theme-tomorrow)
             (color-theme-tomorrow-night-bright))
         (progn
+          (custom-set-faces
+           '(default ((t (:inherit nil :stipple nil :background "#1d1f21" :foreground "White" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "apple" :family "Fantasque_Sans_Mono")))))
           (exz-add-search-path "site-lisp/color-theme-tomorrow")
           (require 'color-theme-tomorrow)
           (color-theme-tomorrow-night)

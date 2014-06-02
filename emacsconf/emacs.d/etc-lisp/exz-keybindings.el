@@ -29,7 +29,7 @@
 (define-key global-map (kbd "C-S-o") 'exz-new-line-previous)
 
 (global-set-key [(f7)] 'cua-mode)
-(global-set-key [f8] 'neotree)
+(global-set-key [f8] 'neotree-toggle)
 (global-set-key [f9] 'exz-ecb-load)
 (global-set-key [f10] 'menu-bar-mode)
 (global-set-key [f11] 'fullscreen)
