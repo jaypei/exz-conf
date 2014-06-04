@@ -53,17 +53,9 @@
       ))
 (global-git-gutter-mode 1)
 
-(exz-add-search-path "site-lisp/magit") ; magit
-(defconst magit-log-header-end "-- End of Magit header --\n")
-(exz-load-file "site-lisp/magit/magit-autoloads.el")
-
 ;; graphviz-dot-mode
 (exz-add-search-path "site-lisp/graphviz-dot-mode")
 (exz-load-file "site-lisp/graphviz-dot-mode/graphviz-dot-mode-autoloads.el")
-
-;; git-commit-mode
-(exz-add-search-path "site-lisp/git-commit-mode")
-(exz-load-file "site-lisp/git-commit-mode/git-commit-mode-autoloads.el")
 
 ;; go-mode
 (exz-add-search-path "site-lisp/go-mode")

@@ -252,7 +252,11 @@ aborts and returns that value."
                           (file-executable-p alt))
                      alt
                    exe)))))
-      (executable-find "git") "git")
+      ;; When the only cost is finding the executable, then it it
+      ;; better not to cache the full path.  It might not be installed
+      ;; in the same location on machines whose repositories are
+      ;; accessed using Tramp.
+      "git")
   "The Git executable used by Magit."
   :group 'magit-process
   :type 'string)
@@ -282,9 +286,15 @@ tramp to connect to servers with ancient Git versions."
      (let ((version
             (format "%s.%s" emacs-major-version emacs-minor-version)))
        (or (and (eq system-type 'darwin)
-                (let ((exec-path
-                       (list (expand-file-name "bin" invocation-directory))))
-                  (executable-find "emacsclient")))
+                (let ((emacsapp
+                       ;; /Application/Emacs.app/Contents/MacOS/bin/emacsclient
+                       (expand-file-name "bin/emacsclient" invocation-directory))
+                      (homebrew
+                       ;; /usr/local/Cellar/emacs/VERSION/bin/emacsclient
+                       (expand-file-name "../../../bin/emacsclient"
+                                         invocation-directory)))
+                  (or (and (file-executable-p emacsapp) emacsapp)
+                      (and (file-executable-p homebrew) homebrew))))
            (executable-find (format "emacsclient%s"   version))
            (executable-find (format "emacsclient-%s"   version))
            (executable-find (format "emacsclient%s.exe" version))
@@ -1825,8 +1835,8 @@ Read `completing-read' documentation for the meaning of the argument."
                                id-str
                              (epg-decode-dn id-obj))))))
                (epg-list-keys (epg-make-context epa-protocol) nil t))))
-  (magit-completing-read prompt keys nil t nil nil
-                         (or (car magit-gpg-secret-key-hist) (car keys)))))
+    (magit-completing-read prompt keys nil nil nil 'magit-gpg-secret-key-hist
+                           (car (or magit-gpg-secret-key-hist keys)))))
 
 ;;;; Various Utilities
 
@@ -3528,8 +3538,6 @@ tracked in the current repository are reverted if
                              (mapconcat 'identity (cons program args) " "))
                   (insert "\n"))))
         (set-marker-insertion-type (magit-section-content-beginning s) nil)
-        (unless (get-buffer-window (current-buffer) t)
-          (magit-section-set-hidden s t))
         (insert "\n")
         (backward-char 2)
         (cons (current-buffer) s)))))
@@ -3726,7 +3734,7 @@ of the Windows \"Powershell\"."
   (if magit-process-quote-curly-braces
       (mapcar (apply-partially 'replace-regexp-in-string
                                "{\\([0-9]+\\)}" "\\\\{\\1\\\\}")
-              args)
+              (magit-flatten-onelevel args))
     args))
 
 ;;;; Mode Api
@@ -4062,7 +4070,8 @@ the current repository."
                    (not (string-prefix-p gitdir file))
                    (member (file-relative-name file topdir) tracked)
                    (let ((auto-revert-mode t))
-                     (auto-revert-handler))))))))))
+                     (auto-revert-handler)
+                     (run-hooks 'magit-revert-buffer-hook))))))))))
 
 ;;; (misplaced)
 ;;;; Diff Options
@@ -7104,7 +7113,7 @@ If there is no commit at point, then prompt for one."
                                (default-value 'magit-highlight-indentation)
                                :from-end t))))))
       (when (and magit-highlight-trailing-whitespace
-                 (looking-at (concat prefix ".*\\([ \t]+\\)$")))
+                 (looking-at (concat prefix ".*?\\([ \t]+\\)$")))
         (magit-put-face-property (match-beginning 1) (match-end 1)
                                  'magit-whitespace-warning-face))
       (when (or (and (eq indent 'tabs)
