@@ -28,5 +28,30 @@
     (push format-string other-args)
     (apply 'message other-args)))
 
+(defmacro exz/when-aquamacs (&rest body)
+  (declare (indent 1) (debug t))
+  `(when (boundp 'aquamacs-version)
+     ,@body))
+
+(defmacro exz/when-gui (&rest body)
+  (declare (indent 1) (debug t))
+  `(when (display-graphic-p)
+     ,@body))
+
+(defmacro exz/when-console (&rest body)
+  (declare (indent 1) (debug t))
+  `(unless (display-graphic-p)
+     ,@body))
+
+(defmacro exz/when-gnu-emacs (&rest body)
+  (declare (indent 1) (debug t))
+  `(unless (display-graphic-p)
+     ,@body))
+
+(defmacro exz/when-osx (&rest body)
+  (declare (indent 1) (debug t))
+  `(when (eq system-type 'darwin)
+     ,@body))
+
 (provide 'exz-util)
 ;;; exz-util.el ends here

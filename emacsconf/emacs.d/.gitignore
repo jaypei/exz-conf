@@ -4,3 +4,4 @@ eshell/*
 auto-save-list
 ac-comphist.dat
 url/*
+.python-environments/*
