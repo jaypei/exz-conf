@@ -87,15 +87,13 @@
 
 (setq abbrev-file-name
       "~/.emacs.d/abbrev_defs")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auto-complete
 (defun exz-load-auto-complete ()
-  (interactive)
-  (exz-add-search-path "site-lisp/auto-complete")
-  (exz-load-file "site-lisp/auto-complete/auto-complete-autoloads.el")
   (setq ac-auto-start t)
   (setq ac-show-menu-immediately-on-auto-complete t)
-  (setq ac-auto-show-menu 1)
+  (setq ac-auto-show-menu t)
   (setq ac-use-menu-map t)
   ;;(require 'go-autocomplete)
   (require 'auto-complete-config)
@@ -103,11 +101,10 @@
                (concat conf-root-dir "auto-complete/dict"))
   (ac-config-default)
   (setq global-auto-complete-mode 1)
-  )
+  (add-hook 'python-mode-hook 'jedi:setup)
+  (setq jedi:complete-on-dot t))
+(exz-load-auto-complete)
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; company-mode
 (defun company-my-backend (command &optional arg &rest ignored)
   (case concat      (prefix (when (looking-back "foo\\>")
                               (match-string 0)))
@@ -135,9 +132,6 @@
             (lambda ()
               (local-set-key (kbd "M-?") 'company-dabbrev-code)
               (local-set-key (kbd "M-/") 'company-complete))))
-
-(exz-load-company)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck

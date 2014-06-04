@@ -19,6 +19,8 @@
   (unless (file-exists-p el-get-user-package-directory)
     (make-directory el-get-user-package-directory)))
 
+(package-initialize)
+
 ;;; exz-package.el ends here
 (provide 'exz-package)
 
