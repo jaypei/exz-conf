@@ -34,23 +34,13 @@
             (highlight-80+-mode)
             ))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; git
-(exz-add-search-path "site-lisp/git-gutter") ; git-gutter
-(exz-load-file "site-lisp/git-gutter/git-gutter-autoloads.el")
-
-(exz-add-search-path "site-lisp/git-modes")
-(exz-load-file "site-lisp/git-modes/git-modes-autoloads.el")
-
-(if (display-graphic-p)
-    (progn
-      (exz-add-search-path "site-lisp/fringe-helper")
-      (exz-add-search-path "site-lisp/git-gutter-fringe")
-      (require 'git-gutter-fringe)
-      (set-face-foreground 'git-gutter-fr:modified "red")
-      (set-face-foreground 'git-gutter-fr:added "red")
-      (set-face-foreground 'git-gutter-fr:deleted "red")
-      ))
+(when (display-graphic-p)
+  (exz-add-search-path "site-lisp/fringe-helper")
+  (exz-add-search-path "site-lisp/git-gutter-fringe")
+  (require 'git-gutter-fringe)
+  (set-face-foreground 'git-gutter-fr:modified "red")
+  (set-face-foreground 'git-gutter-fr:added "red")
+  (set-face-foreground 'git-gutter-fr:deleted "red"))
 (global-git-gutter-mode 1)
 
 ;; graphviz-dot-mode
@@ -80,7 +70,6 @@
 (setq abbrev-file-name
       "~/.emacs.d/abbrev_defs")
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auto-complete
 (defun exz-load-auto-complete ()
   (setq ac-auto-start t)
@@ -96,34 +85,6 @@
   (add-hook 'python-mode-hook 'jedi:setup)
   (setq jedi:complete-on-dot t))
 (exz-load-auto-complete)
-
-(defun company-my-backend (command &optional arg &rest ignored)
-  (case concat      (prefix (when (looking-back "foo\\>")
-                              (match-string 0)))
-        (candidates (when (equal arg "foo")
-                      (list "foobar" "foobaz" "foobarbaz")))
-        (meta (format "This value is named %s" arg))))
-
-(defun exz-load-company ()
-  (interactive)
-  (exz-add-search-path "site-lisp/company")
-  (exz-load-file "site-lisp/company/company-autoloads.el")
-  (exz-add-search-path "site-lisp/company-go")
-  (setq company-begin-commands '(self-insert-command))
-  (setq company-minimum-prefix-length 1)
-  (setq company-tooltip-limit 20)
-  (setq company-echo-delay 0)
-  (setq company-idle-delay t)
-  (add-hook 'after-init-hook 'global-company-mode)
-  (add-hook 'go-mode-hook
-            (lambda ()
-              (require 'company-go)
-              (setq company-minimum-prefix-length 0)
-              (set (make-local-variable 'company-backends) '(company-go))))
-  (add-hook 'company-mode-hook
-            (lambda ()
-              (local-set-key (kbd "M-?") 'company-dabbrev-code)
-              (local-set-key (kbd "M-/") 'company-complete))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck

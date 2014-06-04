@@ -5,8 +5,9 @@
 
 ;;;### (autoloads (git-gutter:toggle git-gutter:clear git-gutter
 ;;;;;;  git-gutter:previous-hunk git-gutter:next-hunk git-gutter:popup-hunk
-;;;;;;  git-gutter:revert-hunk global-git-gutter-mode git-gutter-mode)
-;;;;;;  "git-gutter" "git-gutter.el" (21124 19491 0 0))
+;;;;;;  git-gutter:stage-hunk git-gutter:revert-hunk global-git-gutter-mode
+;;;;;;  git-gutter-mode) "git-gutter" "git-gutter.el" (21391 6571
+;;;;;;  0 0))
 ;;; Generated autoloads from git-gutter.el
 
 (autoload 'git-gutter-mode "git-gutter" "\
@@ -30,7 +31,7 @@ otherwise, disable it.  If called from Lisp, enable the mode if
 ARG is omitted or nil.
 
 Git-Gutter mode is enabled in all buffers where
-`(lambda nil (when (and (buffer-file-name) (not (memq major-mode git-gutter:disabled-modes))) (git-gutter-mode 1)))' would do it.
+`git-gutter--turn-on' would do it.
 See `git-gutter-mode' for more information on Git-Gutter mode.
 
 \(fn &optional ARG)" t nil)
@@ -40,8 +41,13 @@ Revert current hunk.
 
 \(fn)" t nil)
 
+(autoload 'git-gutter:stage-hunk "git-gutter" "\
+Stage this hunk like 'git add -p'.
+
+\(fn)" t nil)
+
 (autoload 'git-gutter:popup-hunk "git-gutter" "\
-popup current diff hunk
+Popup current diff hunk.
 
 \(fn &optional DIFFINFO)" t nil)
 
@@ -61,18 +67,18 @@ Show diff information in gutter
 \(fn)" t nil)
 
 (autoload 'git-gutter:clear "git-gutter" "\
-clear diff information in gutter
+Clear diff information in gutter.
 
 \(fn)" t nil)
 
 (autoload 'git-gutter:toggle "git-gutter" "\
-toggle to show diff information
+Toggle to show diff information.
 
 \(fn)" t nil)
 
 ;;;***
 
-;;;### (autoloads nil nil ("git-gutter-pkg.el") (21124 19491 251625
+;;;### (autoloads nil nil ("git-gutter-pkg.el") (21391 6571 469449
 ;;;;;;  0))
 
 ;;;***

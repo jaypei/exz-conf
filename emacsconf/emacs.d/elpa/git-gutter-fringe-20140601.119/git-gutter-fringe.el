@@ -1,11 +1,12 @@
-;;; git-gutter-fringe.el --- Fringe version of git-gutter.el
+;;; git-gutter-fringe.el --- Fringe version of git-gutter.el -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2013 by Syohei YOSHIDA
+;; Copyright (C) 2014 by Syohei YOSHIDA
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-git-gutter-fringe
-;; Version: 0.12
-;; Package-Requires: ((git-gutter "0.42") (fringe-helper "0.1.1"))
+;; Version: 20140601.119
+;; X-Original-Version: 0.14
+;; Package-Requires: ((git-gutter "0.60") (fringe-helper "0.1.1") (cl-lib "0.5") (emacs "24"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,10 +23,21 @@
 
 ;;; Commentary:
 
+;; Show git diff information in fringe. You can use this package
+;; only GUI Emacs, not working no window emacs.
+
+;; To use this package, add following code to your init.el or .emacs
+;;
+;; (require 'git-gutter-fringe)
+;; (global-git-gutter-mode t)
+;;
+;; ; If you want to show git diff information at right fringe
+;; (setq git-gutter-fr:side 'right-fringe)
+;;
+
 ;;; Code:
 
-(eval-when-compile
-  (require 'cl))
+(require 'cl-lib)
 
 (require 'git-gutter)
 (require 'fringe-helper)
@@ -84,13 +96,13 @@
 (defvar git-gutter-fr:bitmap-references nil)
 
 (defsubst git-gutter-fr:select-sign (type)
-  (case type
+  (cl-case type
     (modified 'git-gutter-fr:modified)
     (added    'git-gutter-fr:added)
     (deleted  'git-gutter-fr:deleted)))
 
 (defsubst git-gutter-fr:select-face (type)
-  (case type
+  (cl-case type
     (modified 'git-gutter-fr:modified)
     (added    'git-gutter-fr:added)
     (deleted  'git-gutter-fr:deleted)))
