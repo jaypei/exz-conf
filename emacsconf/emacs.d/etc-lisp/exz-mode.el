@@ -3,11 +3,6 @@
 
 ;;; Code:
 
-(exz-add-search-path "site-lisp/s")
-(exz-add-search-path "site-lisp/dash")
-(exz-add-search-path "site-lisp/f")
-(exz-add-search-path "site-lisp/popup")
-
 ;; default mode
 (setq default-major-mode 'fundamental-mode)
 (setq
@@ -88,15 +83,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck
-(defun exz-load-flycheck ()
-  (interactive)
-  (exz-add-search-path "site-lisp/flycheck")
-  (setq flycheck-check-syntax-automatically '(mode-enabled save))
-  (setq flycheck-idle-change-delay 0)
-  (exz-load-file "site-lisp/flycheck/flycheck-autoloads.el")
-  )
+(setq flycheck-check-syntax-automatically '(mode-enabled save))
+(setq flycheck-idle-change-delay 0)
 
-(exz-load-flycheck)
 
 ;; web mode
 (exz-add-search-path "site-lisp/web-mode")
