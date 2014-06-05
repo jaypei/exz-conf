@@ -29,14 +29,21 @@
             (highlight-80+-mode)
             ))
 
-(when (display-graphic-p)
+;; git-gutter
+;; (global-git-gutter-mode 1)
+(add-hook 'ruby-mode-hook 'git-gutter-mode)
+(add-hook 'python-mode-hook 'git-gutter-mode)
+(add-hook 'org-mode-hook 'git-gutter-mode)
+
+
+(exz/when-gui
   (exz-add-search-path "site-lisp/fringe-helper")
   (exz-add-search-path "site-lisp/git-gutter-fringe")
   (require 'git-gutter-fringe)
   (set-face-foreground 'git-gutter-fr:modified "red")
   (set-face-foreground 'git-gutter-fr:added "red")
   (set-face-foreground 'git-gutter-fr:deleted "red"))
-(global-git-gutter-mode 1)
+
 
 ;; graphviz-dot-mode
 (exz-add-search-path "site-lisp/graphviz-dot-mode")
@@ -175,8 +182,6 @@
 ;; yasnippet
 (defun exz-load-yasnippet ()
   (interactive)
-  (exz-add-search-path "site-lisp/yasnippet")
-  (exz-load-file "site-lisp/yasnippet/yasnippet-autoloads.el")
   (setq yas/snippet-dirs '("~/.emacs.d/snippets"
                            "~/.emacs.d/site-lisp/yasnippet/snippets"))
   (yas-global-mode 1)
