@@ -30,11 +30,7 @@
             ))
 
 ;; git-gutter
-;; (global-git-gutter-mode 1)
-(add-hook 'ruby-mode-hook 'git-gutter-mode)
-(add-hook 'python-mode-hook 'git-gutter-mode)
-(add-hook 'org-mode-hook 'git-gutter-mode)
-
+(global-git-gutter-mode +1)
 
 (exz/when-gui
   (exz-add-search-path "site-lisp/fringe-helper")
@@ -43,6 +39,10 @@
   (set-face-foreground 'git-gutter-fr:modified "red")
   (set-face-foreground 'git-gutter-fr:added "red")
   (set-face-foreground 'git-gutter-fr:deleted "red"))
+
+;; inactivate git-gutter-mode in asm-mode and image-mode
+;; (custom-set-variables
+;;  '(git-gutter:disabled-modes '(org-mode image-mode)))
 
 
 ;; graphviz-dot-mode
