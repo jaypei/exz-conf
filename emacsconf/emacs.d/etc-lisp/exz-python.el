@@ -7,6 +7,10 @@
 
 ;;; Code:
 
+(exz/when-my-dell-bjhome
+ (custom-set-variables
+  '(python-shell-interpreter "python2")))
+
 ;; python-mode
 (setq py-install-directory "~/.emacs.d/site-lisp/python-mode")
 (exz-add-search-path "site-lisp/python-mode")

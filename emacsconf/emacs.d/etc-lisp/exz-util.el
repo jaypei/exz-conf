@@ -53,5 +53,16 @@
   `(when (eq system-type 'darwin)
      ,@body))
 
+(defmacro exz/when-my-mbp (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (equal (system-name) "jaypei-mbp.local")
+     ,@body))
+
+(defmacro exz/when-my-dell-bjhome (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (equal (system-name) "jaypei-home")
+     ,@body))
+
+
 (provide 'exz-util)
 ;;; exz-util.el ends here
