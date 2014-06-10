@@ -7,17 +7,11 @@
 
 ;;; Code:
 
-;; python-mode
-(setq py-install-directory "~/.emacs.d/site-lisp/python-mode")
-(exz-add-search-path "site-lisp/python-mode")
-
 (defun exz/eval-buffer-as-python ()
   "Run buffer content as python program."
   (interactive)
   (save-buffer t)
   (shell-command (concat python-shell-interpreter " " (buffer-file-name))))
-
-(setq py-load-pymacs-p t)
 
 (defun prefix-list-elements (list prefix)
   (let (value)
@@ -89,8 +83,7 @@
               'exz/eval-buffer-as-python)
             (highlight-80+-mode)
             (if (functionp 'flycheck-mode)
-                (flycheck-mode)))
-          )
+                (flycheck-mode))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
