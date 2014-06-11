@@ -7,6 +7,10 @@
 
 ;;; Code:
 
+(exz/when-my-dell-bjhome
+ (custom-set-variables
+  '(python-shell-interpreter "python2")))
+
 (defun exz/eval-buffer-as-python ()
   "Run buffer content as python program."
   (interactive)
