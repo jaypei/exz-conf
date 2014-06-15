@@ -9,6 +9,8 @@
 
 (exz/when-my-dell-bjhome
  (custom-set-variables
+  '(python-environment-virtualenv
+    (list "virtualenv2" "--system-site-packages" "--quiet"))
   '(python-shell-interpreter "python2")))
 
 (defun exz/eval-buffer-as-python ()
