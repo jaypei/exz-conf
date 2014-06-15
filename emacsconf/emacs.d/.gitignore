@@ -6,3 +6,4 @@ ac-comphist.dat
 url/*
 .python-environments/*
 session.*
+.yas-compiled-snippets.el
