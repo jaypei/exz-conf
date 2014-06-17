@@ -115,6 +115,7 @@
 ;; ido
 (require 'ido)                          ; ido-mode
 (ido-mode t)
+(ido-vertical-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; tab
