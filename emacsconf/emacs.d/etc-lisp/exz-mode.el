@@ -231,5 +231,9 @@
 ;; ztree-dir
 (exz-add-search-path "site-lisp/ztree")
 
+;; EasyPG
+(setq epa-file-cache-passphrase-for-symmetric-encryption t)
+(setq epa-file-inhibit-auto-save nil)
+
 ;;; exz-mode.el ends here
 (provide 'exz-mode)
