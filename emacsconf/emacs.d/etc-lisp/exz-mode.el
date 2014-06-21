@@ -4,12 +4,10 @@
 ;;; Code:
 
 ;; default mode
-(setq default-major-mode 'fundamental-mode)
-(setq
- aquamacs-scratch-file "/tmp/aquamacs-scratch-file"
- initial-major-mode 'lisp-interaction-mode
- initial-scratch-message ";; *scratch*\n\n"
- )
+(setq default-major-mode 'fundamental-mode
+      aquamacs-scratch-file "/tmp/aquamacs-scratch-file"
+      initial-major-mode 'lisp-interaction-mode
+      initial-scratch-message ";; *scratch*\n\n")
 
 ;; disable menubar / scrollbar
 (if (display-graphic-p)
@@ -26,8 +24,7 @@
 (exz-load-file "site-lisp/highlight-80+/highlight-80+-autoloads.el")
 (add-hook 'lisp-interaction-mode-hook
           (lambda()
-            (highlight-80+-mode)
-            ))
+            (highlight-80+-mode)))
 
 ;; git-gutter
 (global-git-gutter-mode +1)
@@ -54,8 +51,7 @@
 (exz-load-file "site-lisp/go-mode/go-mode-autoloads.el")
 (add-hook 'go-mode-hook
           (lambda()
-            (highlight-80+-mode)
-            ))
+            (highlight-80+-mode)))
 
 ;; markdown-mode
 (exz-add-search-path "site-lisp/markdown-mode")
@@ -115,6 +111,7 @@
 ;; ido
 (require 'ido)                          ; ido-mode
 (ido-mode t)
+(ido-vertical-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; tab
@@ -133,14 +130,11 @@
       (require 'window-numbering)
       (setq window-numbering-assign-func
             (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
-      (window-numbering-mode)
-      )
+      (window-numbering-mode))
   (progn
     (exz-add-search-path "site-lisp/window-number")
     (require 'window-number)
-    (window-number-meta-mode)
-    )
-  )
+    (window-number-meta-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; show-paren-mode 括号匹配
@@ -172,8 +166,7 @@
   (setq sr-speedbar-right-side nil)
   ;; don't refresh on buffer changes
   (setq sr-speedbar-auto-refresh nil)
-  (require 'sr-speedbar)
-  )
+  (require 'sr-speedbar))
 
 (exz-load-sr-speedbar)
 
@@ -185,12 +178,9 @@
   (setq yas/snippet-dirs '("~/.emacs.d/snippets"
                            "~/.emacs.d/site-lisp/yasnippet/snippets"))
   (yas-global-mode 1)
-
   (add-hook 'yas-minor-mode-hook
             (lambda ()
-              (local-set-key (kbd "C-z TAB") 'yas-expand)
-              ))
-  )
+              (local-set-key (kbd "C-z TAB") 'yas-expand))))
 
 (exz-load-yasnippet)
 
@@ -243,6 +233,10 @@
 
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; EasyPG
+(setq epa-file-cache-passphrase-for-symmetric-encryption t)
+(setq epa-file-inhibit-auto-save nil)
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)
