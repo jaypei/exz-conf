@@ -46,5 +46,49 @@
       (if (file-executable-p "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
           (setq magit-emacsclient-executable "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"))))
 
+;; utils
+(defun exz/debug (&rest args)
+  (let ((format-string (car args))
+        (other-args (cdr args)))
+    (setf format-string (concat "[DEBUG] " format-string))
+    (push format-string other-args)
+    (apply 'message other-args)))
+
+(defmacro exz/when-aquamacs (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (boundp 'aquamacs-version)
+     ,@body))
+
+(defmacro exz/when-gui (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (display-graphic-p)
+     ,@body))
+
+(defmacro exz/when-console (&rest body)
+  (declare (indent 0) (debug t))
+  `(unless (display-graphic-p)
+     ,@body))
+
+(defmacro exz/when-gnu-emacs (&rest body)
+  (declare (indent 0) (debug t))
+  `(unless (display-graphic-p)
+     ,@body))
+
+(defmacro exz/when-osx (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (eq system-type 'darwin)
+     ,@body))
+
+(defmacro exz/when-my-mbp (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (equal (system-name) "jaypei-mbp.local")
+     ,@body))
+
+(defmacro exz/when-my-dell-bjhome (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (equal (system-name) "jaypei-home")
+     ,@body))
+
+
 ;;; exz-init.el ends here
 (provide 'exz-init)

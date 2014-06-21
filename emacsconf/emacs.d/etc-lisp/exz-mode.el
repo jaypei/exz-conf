@@ -238,5 +238,8 @@
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 (setq epa-file-inhibit-auto-save nil)
 
+;; tramp
+(setq tramp-chunksize 500)
+
 ;;; exz-mode.el ends here
 (provide 'exz-mode)
