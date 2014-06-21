@@ -55,8 +55,7 @@
             (global-set-key (kbd "C-z w h") 'ecb-goto-window-history)
             (global-set-key (kbd "C-z w s") 'ecb-goto-window-speedbar)
             (local-set-key (kbd "p") 'previous-line)
-            (local-set-key (kbd "n") 'next-line)
-            ))
+            (local-set-key (kbd "n") 'next-line)))
 
 (add-hook 'ecb-directories-buffer-after-create-hook
           (lambda ()
@@ -66,8 +65,7 @@
             (local-set-key (kbd "3") 'ecb-open-source-in-editwin3)
             (local-set-key (kbd "4") 'ecb-open-source-in-editwin4)
             (local-set-key (kbd "5") 'ecb-open-source-in-editwin5)
-            (local-set-key [f4] 'exz-ecb-add-source-path)
-            ))
+            (local-set-key [f4] 'exz-ecb-add-source-path)))
 
 (add-hook 'ecb-methods-buffer-after-create-hook
           (lambda ()
@@ -76,8 +74,7 @@
             (local-set-key (kbd "2") 'ecb-jump-to-tag-in-editwin2)
             (local-set-key (kbd "3") 'ecb-jump-to-tag-in-editwin3)
             (local-set-key (kbd "4") 'ecb-jump-to-tag-in-editwin4)
-            (local-set-key (kbd "5") 'ecb-jump-to-tag-in-editwin5)
-            ))
+            (local-set-key (kbd "5") 'ecb-jump-to-tag-in-editwin5)))
 
 ;; window move
 (global-set-key (kbd "C-z w b") 'windmove-left)
@@ -89,14 +86,12 @@
 ;; python
 (add-hook 'python-mode-hook
           (lambda ()
-            (local-set-key [backtab] 'indent-for-tab-command)
-            ))
+            (local-set-key [backtab] 'indent-for-tab-command)))
 
 ;; auto-complete
 (add-hook 'auto-complete-mode-hook
           (lambda()
-            (local-set-key (kbd "M-/") 'auto-complete)
-            ))
+            (local-set-key (kbd "M-/") 'auto-complete)))
 
 ;; tabbar
 (global-set-key (kbd "C-z <left>") 'tabbar-ruler-tabbar-backward-tab)
