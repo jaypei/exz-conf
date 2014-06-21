@@ -30,21 +30,20 @@
   (setenv "PATH" (concat "/home/jaypei/bin:" (getenv "PATH")))
   (add-to-list 'exec-path "/home/jaypei/bin"))
 
-(if (equal (system-name) "jaypei-mbp.local")
-    (progn
-      (setq exec-path (append exec-path '("/usr/local/bin")))
-      (setq exec-path (append exec-path '("/Users/jaypei/gocode/bin")))
-      (setenv "PATH"
-              (concat (getenv "PATH") ":"
-                      "/usr/local/bin"))
-      (setenv "GOPATH" "/Users/jaypei/gocode")
-      (setenv "PYMACS_PYTHON" "/usr/local/bin/python")
-      (if (file-executable-p "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
-        (setq magit-emacsclient-executable "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"))
-      (if (file-executable-p "/usr/local/Cellar/emacs/bin/emacsclient")
-          (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/bin/emacsclient"))
-      (if (file-executable-p "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
-          (setq magit-emacsclient-executable "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"))))
+(when (equal (system-name) "jaypei-mbp.local")
+  (setenv "PATH" (concat "/Users/jaypei/bin:"
+                         "/usr/local/bin:"
+                         "/Users/jaypei/gocode/bin:"
+                         (getenv "PATH")))
+  (setenv "LC_ALL" "en_US.UTF-8")
+  (setenv "GOPATH" "/Users/jaypei/gocode")
+  (setenv "PYMACS_PYTHON" "/usr/local/bin/python")
+  (if (file-executable-p "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
+      (setq magit-emacsclient-executable "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"))
+  (if (file-executable-p "/usr/local/Cellar/emacs/bin/emacsclient")
+      (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/bin/emacsclient"))
+  (if (file-executable-p "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
+      (setq magit-emacsclient-executable "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")))
 
 ;;; exz-init.el ends here
 (provide 'exz-init)
