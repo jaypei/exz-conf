@@ -220,9 +220,26 @@
 ;; ztree-dir
 (exz-add-search-path "site-lisp/ztree")
 
+;; multi-term-mode
+(add-hook 'term-mode-hook
+          (lambda ()
+            (yas-minor-mode -1)))
+
+(defun exz/term-switch-line-char-mode ()
+  (interactive)
+  (if (term-in-line-mode)
+      (term-char-mode)
+    (term-line-mode)))
+
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
 ;; EasyPG
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 (setq epa-file-inhibit-auto-save nil)
+
+;; tramp
+(setq tramp-chunksize 500)
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)

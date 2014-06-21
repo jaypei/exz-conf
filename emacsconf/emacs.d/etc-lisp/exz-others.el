@@ -28,11 +28,6 @@
 (setq scroll-margin 3
       scroll-conservatively 10000)
 
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            (setq scroll-margin 0)
-            ))
-
 (setq ns-pop-up-frames nil)
 
 ;; 把这些缺省禁用的功能打开
@@ -91,11 +86,11 @@ occurence of CHAR."
 
 ;; window move
 (defun window-move-up (&optional arg)
-  "Current window move-up 2 lines."
+  "Current window move-up 3 lines."
   (interactive "P")
   (if arg
       (scroll-up arg)
-    (scroll-up 2)))
+    (scroll-up 3)))
 
 (defun window-move-down (&optional arg)
   "Current window move-down 3 lines."
@@ -130,9 +125,6 @@ occurence of CHAR."
   (if (region-active-p)
       (kill-region (region-beginning) (region-end))
     (kill-region (line-beginning-position) (line-beginning-position 2)) ) )
-
-;; tramp
-(setq tramp-chunksize 500)
 
 ;;; exz-others.el ends here
 (provide 'exz-others)

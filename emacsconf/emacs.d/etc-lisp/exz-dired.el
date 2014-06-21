@@ -19,8 +19,7 @@
        (list "//.wmv$" "gmplayer")
        (list "//.htm$" "w3m")
        (list "//.html$" "w3m")
-       (list "//.mpg$" "gmplayer"))
-      )
+       (list "//.mpg$" "gmplayer")))
 
 ;;; exz-dired.el ends here
 (provide 'exz-dired)

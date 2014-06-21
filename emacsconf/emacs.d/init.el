@@ -18,7 +18,6 @@
 
 ;; import submodules
 (require 'exz-init)
-(require 'exz-util)
 (if (file-exists-p user-info-file)
     (load-file user-info-file))
 (require 'exz-package)
@@ -27,7 +26,7 @@
 (require 'exz-python)
 (require 'exz-appearance)
 (require 'exz-dired)
-(require 'exz-ecb)
+;; (require 'exz-ecb)
 (require 'exz-mail)
 (require 'exz-org)
 (require 'exz-templates)
@@ -41,10 +40,7 @@
   (server-start))
 ;; }}
 
-;; (ysl/setup-motd)
-
 (if (file-exists-p user-local-file) (load-file user-local-file))
-
 
 (if (file-exists-p "~/.emacs.d/emacs.el")
     (load "~/.emacs.d/emacs.el"))
