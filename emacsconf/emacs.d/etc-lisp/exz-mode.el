@@ -91,12 +91,10 @@
 
 
 ;; web mode
-(exz-add-search-path "site-lisp/web-mode")
 (setq web-mode-indent-style 1)
 (setq web-mode-code-indent-offset 4)
 (setq web-mode-markup-indent-offset 4)
 (setq web-mode-css-indent-offset 4)
-(exz-load-file "site-lisp/web-mode/web-mode-autoloads.el")
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
@@ -183,29 +181,6 @@
               (local-set-key (kbd "C-z TAB") 'yas-expand))))
 
 (exz-load-yasnippet)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; tabbar
-;; (defun exz-load-tabbar ()
-;;   "DOCSTRING"
-;;   (interactive)
-;;   (exz-add-search-path "site-lisp/tabbar")
-;;   (exz-add-search-path "site-lisp/tabbar-ruler")
-;;   (setq tabbar-ruller-global-tabbar t)
-;;   (require 'tabbar-ruler)
-;;   (defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
-;;     "Returns the name of the tab group names the current buffer belongs to.
-;;            There are two groups: Emacs buffers (those whose name starts with '*', plus
-;;            dired buffers), and the rest.  This works at least with Emacs v24.2 using
-;;            tabbar.el v1.7."
-;;     (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
-;;                 ((eq major-mode 'dired-mode) "emacs")
-;;                 (t "user"))))
-;;   (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
-;;   )
-;; (exz-load-tabbar)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; anything
