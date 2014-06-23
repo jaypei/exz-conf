@@ -1,7 +1,6 @@
-# name: python shebang qunar version
+# name: python shebang for qunar
 # key: qunar
 # --
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # Copyright @ 2014 OPS, Qunar Inc. (qunar.com)

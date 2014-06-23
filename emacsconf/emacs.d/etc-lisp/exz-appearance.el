@@ -5,44 +5,45 @@
 
 
 ;; color theme
-(if (display-graphic-p)
-    (progn
-      (if (boundp 'aquamacs-version)
-          (progn
-            (custom-set-variables
-             '(aquamacs-customization-version-id 0 t)
-             '(cursor-type (quote box))
-             '(indicate-empty-lines nil)
-             '(default-frame-alist
-                (quote
-                 ((foreground-color . "White")
-                  (background-color . "Black")
-                  (cursor-color . "White")
-                  (cursor-type (quote box))
-                  ))))
-            (custom-set-faces
-             '(aquamacs-variable-width ((t nil)))
-             '(echo-area ((t nil)))
-             '(mode-line-inactive ((t (:inherit aquamacs-variable-width :background "#2a2a2a" :foreground "#eaeaea"))))
-             '(org-mode-default ((t (:inherit autoface-default))))
-             '(tabbar-default ((t (:inherit nil :stipple nil :background "gray80" :foreground "black"))))
-             '(text-mode-default ((t (:inherit autoface-default))))
-             '(variable-pitch ((t nil))))
-            (set-fringe-mode '(10 . 10))
-            (exz-add-search-path "site-lisp/color-theme-tomorrow")
-            (require 'color-theme-tomorrow)
-            (color-theme-tomorrow-night-bright))
-        (progn
-          (exz-add-search-path "site-lisp/color-theme-tomorrow")
-          (require 'color-theme-tomorrow)
-          (color-theme-tomorrow-night-bright)
-          )))
-  (progn
-    (exz-add-search-path "site-lisp/color-theme")
-    (require 'color-theme)
-    (exz-add-search-path "site-lisp/color-theme-tomorrow")
-    (require 'color-theme-tomorrow)
-    (color-theme-tomorrow-night)))
+(exz/when-gui
+ (exz-add-search-path "site-lisp/color-theme-tomorrow")
+ (require 'color-theme-tomorrow)
+ (color-theme-tomorrow-night))
+
+(exz/when-aquamacs
+ (custom-set-variables
+  '(aquamacs-customization-version-id 0 t)
+  '(cursor-type (quote box))
+  '(indicate-empty-lines nil)
+  '(default-frame-alist
+     (quote
+      ((foreground-color . "White")
+       (background-color . "Black")
+       (cursor-color . "White")
+       (cursor-type (quote box))
+       ))))
+ (custom-set-faces
+  '(aquamacs-variable-width ((t nil)))
+  '(echo-area ((t nil)))
+  '(mode-line-inactive ((t (:inherit aquamacs-variable-width :background "#2a2a2a" :foreground "#eaeaea"))))
+  '(org-mode-default ((t (:inherit autoface-default))))
+  '(tabbar-default ((t (:inherit nil :stipple nil :background "gray80" :foreground "black"))))
+  '(text-mode-default ((t (:inherit autoface-default))))
+  '(variable-pitch ((t nil))))
+ (set-fringe-mode '(10 . 10))
+ (exz-add-search-path "site-lisp/color-theme-tomorrow")
+ (color-theme-tomorrow-night-bright))
+
+(exz/when-console
+ (exz-add-search-path "site-lisp/color-theme")
+ (require 'color-theme)
+ (exz-add-search-path "site-lisp/color-theme-tomorrow")
+ (require 'color-theme-tomorrow)
+ (color-theme-tomorrow-night))
+
+(exz/when-osx
+ (custom-set-faces
+  '(default ((t (:inherit nil :stipple nil :background "#1d1f21" :foreground "White" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "apple" :family "Fantasque_Sans_Mono"))))))
 
 
 ;; font

@@ -3,18 +3,11 @@
 
 ;;; Code:
 
-(exz-add-search-path "site-lisp/s")
-(exz-add-search-path "site-lisp/dash")
-(exz-add-search-path "site-lisp/f")
-(exz-add-search-path "site-lisp/popup")
-
 ;; default mode
-(setq default-major-mode 'fundamental-mode)
-(setq
- aquamacs-scratch-file "/tmp/aquamacs-scratch-file"
- initial-major-mode 'lisp-interaction-mode
- initial-scratch-message ";; *scratch*\n\n"
- )
+(setq default-major-mode 'fundamental-mode
+      aquamacs-scratch-file "/tmp/aquamacs-scratch-file"
+      initial-major-mode 'lisp-interaction-mode
+      initial-scratch-message ";; *scratch*\n\n")
 
 ;; disable menubar / scrollbar
 (if (display-graphic-p)
@@ -31,47 +24,34 @@
 (exz-load-file "site-lisp/highlight-80+/highlight-80+-autoloads.el")
 (add-hook 'lisp-interaction-mode-hook
           (lambda()
-            (highlight-80+-mode)
-            ))
+            (highlight-80+-mode)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; git
-(exz-add-search-path "site-lisp/git-gutter") ; git-gutter
-(exz-load-file "site-lisp/git-gutter/git-gutter-autoloads.el")
+;; git-gutter
+(global-git-gutter-mode +1)
 
-(exz-add-search-path "site-lisp/git-modes")
-(exz-load-file "site-lisp/git-modes/git-modes-autoloads.el")
+(exz/when-gui
+  (exz-add-search-path "site-lisp/fringe-helper")
+  (exz-add-search-path "site-lisp/git-gutter-fringe")
+  (require 'git-gutter-fringe)
+  (set-face-foreground 'git-gutter-fr:modified "red")
+  (set-face-foreground 'git-gutter-fr:added "red")
+  (set-face-foreground 'git-gutter-fr:deleted "red"))
 
-(if (display-graphic-p)
-    (progn
-      (exz-add-search-path "site-lisp/fringe-helper")
-      (exz-add-search-path "site-lisp/git-gutter-fringe")
-      (require 'git-gutter-fringe)
-      (set-face-foreground 'git-gutter-fr:modified "red")
-      (set-face-foreground 'git-gutter-fr:added "red")
-      (set-face-foreground 'git-gutter-fr:deleted "red")
-      ))
-(global-git-gutter-mode 1)
+;; inactivate git-gutter-mode in asm-mode and image-mode
+;; (custom-set-variables
+;;  '(git-gutter:disabled-modes '(org-mode image-mode)))
 
-(exz-add-search-path "site-lisp/magit") ; magit
-(defconst magit-log-header-end "-- End of Magit header --\n")
-(exz-load-file "site-lisp/magit/magit-autoloads.el")
 
 ;; graphviz-dot-mode
 (exz-add-search-path "site-lisp/graphviz-dot-mode")
 (exz-load-file "site-lisp/graphviz-dot-mode/graphviz-dot-mode-autoloads.el")
-
-;; git-commit-mode
-(exz-add-search-path "site-lisp/git-commit-mode")
-(exz-load-file "site-lisp/git-commit-mode/git-commit-mode-autoloads.el")
 
 ;; go-mode
 (exz-add-search-path "site-lisp/go-mode")
 (exz-load-file "site-lisp/go-mode/go-mode-autoloads.el")
 (add-hook 'go-mode-hook
           (lambda()
-            (highlight-80+-mode)
-            ))
+            (highlight-80+-mode)))
 
 ;; markdown-mode
 (exz-add-search-path "site-lisp/markdown-mode")
@@ -79,20 +59,20 @@
 (add-to-list 'auto-mode-alist (cons "\\.md\\'" 'markdown-mode))
 (add-hook 'markdown-mode-hook
           (lambda()
-            (highlight-80+-mode)
-            ))
+            (highlight-80+-mode)))
+
+;; lua-mode
+(exz-add-search-path "site-lisp/lua-mode")
+(exz-load-file "site-lisp/lua-mode/lua-mode-autoloads.el")
 
 (setq abbrev-file-name
       "~/.emacs.d/abbrev_defs")
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; auto-complete
 (defun exz-load-auto-complete ()
-  (interactive)
-  (exz-add-search-path "site-lisp/auto-complete")
-  (exz-load-file "site-lisp/auto-complete/auto-complete-autoloads.el")
   (setq ac-auto-start t)
   (setq ac-show-menu-immediately-on-auto-complete t)
-  (setq ac-auto-show-menu 1)
+  (setq ac-auto-show-menu t)
   (setq ac-use-menu-map t)
   ;;(require 'go-autocomplete)
   (require 'auto-complete-config)
@@ -100,61 +80,21 @@
                (concat conf-root-dir "auto-complete/dict"))
   (ac-config-default)
   (setq global-auto-complete-mode 1)
-  )
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; company-mode
-(defun company-my-backend (command &optional arg &rest ignored)
-  (case concat      (prefix (when (looking-back "foo\\>")
-                              (match-string 0)))
-        (candidates (when (equal arg "foo")
-                      (list "foobar" "foobaz" "foobarbaz")))
-        (meta (format "This value is named %s" arg))))
-
-(defun exz-load-company ()
-  (interactive)
-  (exz-add-search-path "site-lisp/company")
-  (exz-load-file "site-lisp/company/company-autoloads.el")
-  (exz-add-search-path "site-lisp/company-go")
-  (setq company-begin-commands '(self-insert-command))
-  (setq company-minimum-prefix-length 1)
-  (setq company-tooltip-limit 20)
-  (setq company-echo-delay 0)
-  (setq company-idle-delay t)
-  (add-hook 'after-init-hook 'global-company-mode)
-  (add-hook 'go-mode-hook
-            (lambda ()
-              (require 'company-go)
-              (setq company-minimum-prefix-length 0)
-              (set (make-local-variable 'company-backends) '(company-go))))
-  (add-hook 'company-mode-hook
-            (lambda ()
-              (local-set-key (kbd "M-?") 'company-dabbrev-code)
-              (local-set-key (kbd "M-/") 'company-complete))))
-
-(exz-load-company)
-
+  (add-hook 'python-mode-hook 'jedi:setup)
+  (setq jedi:complete-on-dot t))
+(exz-load-auto-complete)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck
-(defun exz-load-flycheck ()
-  (interactive)
-  (exz-add-search-path "site-lisp/flycheck")
-  (setq flycheck-check-syntax-automatically '(mode-enabled save))
-  (setq flycheck-idle-change-delay 0)
-  (exz-load-file "site-lisp/flycheck/flycheck-autoloads.el")
-  )
+(setq flycheck-check-syntax-automatically '(mode-enabled save))
+(setq flycheck-idle-change-delay 0)
 
-(exz-load-flycheck)
 
 ;; web mode
-(exz-add-search-path "site-lisp/web-mode")
 (setq web-mode-indent-style 1)
 (setq web-mode-code-indent-offset 4)
 (setq web-mode-markup-indent-offset 4)
 (setq web-mode-css-indent-offset 4)
-(exz-load-file "site-lisp/web-mode/web-mode-autoloads.el")
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
@@ -169,6 +109,7 @@
 ;; ido
 (require 'ido)                          ; ido-mode
 (ido-mode t)
+(ido-vertical-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; tab
@@ -187,14 +128,11 @@
       (require 'window-numbering)
       (setq window-numbering-assign-func
             (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
-      (window-numbering-mode)
-      )
+      (window-numbering-mode))
   (progn
     (exz-add-search-path "site-lisp/window-number")
     (require 'window-number)
-    (window-number-meta-mode)
-    )
-  )
+    (window-number-meta-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; show-paren-mode 括号匹配
@@ -226,8 +164,7 @@
   (setq sr-speedbar-right-side nil)
   ;; don't refresh on buffer changes
   (setq sr-speedbar-auto-refresh nil)
-  (require 'sr-speedbar)
-  )
+  (require 'sr-speedbar))
 
 (exz-load-sr-speedbar)
 
@@ -236,42 +173,14 @@
 ;; yasnippet
 (defun exz-load-yasnippet ()
   (interactive)
-  (exz-add-search-path "site-lisp/yasnippet")
-  (exz-load-file "site-lisp/yasnippet/yasnippet-autoloads.el")
   (setq yas/snippet-dirs '("~/.emacs.d/snippets"
                            "~/.emacs.d/site-lisp/yasnippet/snippets"))
   (yas-global-mode 1)
-
   (add-hook 'yas-minor-mode-hook
             (lambda ()
-              (local-set-key (kbd "C-z TAB") 'yas-expand)
-              ))
-  )
+              (local-set-key (kbd "C-z TAB") 'yas-expand))))
 
 (exz-load-yasnippet)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; tabbar
-;; (defun exz-load-tabbar ()
-;;   "DOCSTRING"
-;;   (interactive)
-;;   (exz-add-search-path "site-lisp/tabbar")
-;;   (exz-add-search-path "site-lisp/tabbar-ruler")
-;;   (setq tabbar-ruller-global-tabbar t)
-;;   (require 'tabbar-ruler)
-;;   (defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
-;;     "Returns the name of the tab group names the current buffer belongs to.
-;;            There are two groups: Emacs buffers (those whose name starts with '*', plus
-;;            dired buffers), and the rest.  This works at least with Emacs v24.2 using
-;;            tabbar.el v1.7."
-;;     (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
-;;                 ((eq major-mode 'dired-mode) "emacs")
-;;                 (t "user"))))
-;;   (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
-;;   )
-;; (exz-load-tabbar)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; anything
@@ -285,6 +194,27 @@
 
 ;; ztree-dir
 (exz-add-search-path "site-lisp/ztree")
+
+;; multi-term-mode
+(add-hook 'term-mode-hook
+          (lambda ()
+            (yas-minor-mode -1)))
+
+(defun exz/term-switch-line-char-mode ()
+  (interactive)
+  (if (term-in-line-mode)
+      (term-char-mode)
+    (term-line-mode)))
+
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; EasyPG
+(setq epa-file-cache-passphrase-for-symmetric-encryption t)
+(setq epa-file-inhibit-auto-save nil)
+
+;; tramp
+(setq tramp-chunksize 500)
 
 ;;; exz-mode.el ends here
 (provide 'exz-mode)

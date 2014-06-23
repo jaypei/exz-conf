@@ -25,21 +25,69 @@
 (exz-add-search-path "site-lisp")
 (exz-add-search-path "site-lisp/extra")
 
-(if (equal (system-name) "jaypei-home")
-    (setenv "GOPATH" "/home/jaypei/gocode"))
+(when (equal (system-name) "jaypei-home")
+  (setenv "GOPATH" "/home/jaypei/gocode")
+  (setenv "PATH" (concat "/home/jaypei/bin:" (getenv "PATH")))
+  (add-to-list 'exec-path "/home/jaypei/bin"))
 
-(if (equal (system-name) "jaypei-mbp.local")
-    (progn
-      (setq exec-path (append exec-path '("/usr/local/bin")))
-      (setq exec-path (append exec-path '("/Users/jaypei/gocode/bin")))
-      (setenv "PATH"
-              (concat (getenv "PATH") ":"
-                      "/usr/local/bin"))
-      (setenv "GOPATH" "/Users/jaypei/gocode")
-      (setenv "PYMACS_PYTHON" "/usr/local/bin/python")
-      (if (file-executable-p "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
-        (setq magit-emacsclient-executable "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"))
-      ))
+(when (equal (system-name) "jaypei-mbp.local")
+  (setenv "PATH" (concat "/Users/jaypei/bin:"
+                         "/usr/local/bin:"
+                         "/Users/jaypei/gocode/bin:"
+                         (getenv "PATH")))
+  (setenv "LC_ALL" "en_US.UTF-8")
+  (setenv "GOPATH" "/Users/jaypei/gocode")
+  (setenv "PYMACS_PYTHON" "/usr/local/bin/python")
+  (if (file-executable-p "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
+      (setq magit-emacsclient-executable "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"))
+  (if (file-executable-p "/usr/local/Cellar/emacs/bin/emacsclient")
+      (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/bin/emacsclient"))
+  (if (file-executable-p "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
+      (setq magit-emacsclient-executable "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")))
+
+;; utils
+(defun exz/debug (&rest args)
+  (let ((format-string (car args))
+        (other-args (cdr args)))
+    (setf format-string (concat "[DEBUG] " format-string))
+    (push format-string other-args)
+    (apply 'message other-args)))
+
+(defmacro exz/when-aquamacs (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (boundp 'aquamacs-version)
+     ,@body))
+
+(defmacro exz/when-gui (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (display-graphic-p)
+     ,@body))
+
+(defmacro exz/when-console (&rest body)
+  (declare (indent 0) (debug t))
+  `(unless (display-graphic-p)
+     ,@body))
+
+(defmacro exz/when-gnu-emacs (&rest body)
+  (declare (indent 0) (debug t))
+  `(unless (display-graphic-p)
+     ,@body))
+
+(defmacro exz/when-osx (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (eq system-type 'darwin)
+     ,@body))
+
+(defmacro exz/when-my-mbp (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (equal (system-name) "jaypei-mbp.local")
+     ,@body))
+
+(defmacro exz/when-my-dell-bjhome (&rest body)
+  (declare (indent 0) (debug t))
+  `(when (equal (system-name) "jaypei-home")
+     ,@body))
+
 
 ;;; exz-init.el ends here
 (provide 'exz-init)

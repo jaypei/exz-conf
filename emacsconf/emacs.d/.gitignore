@@ -2,6 +2,8 @@
 bookmarks
 eshell/*
 auto-save-list
-elpa/*
 ac-comphist.dat
 url/*
+.python-environments/*
+session.*
+.yas-compiled-snippets.el

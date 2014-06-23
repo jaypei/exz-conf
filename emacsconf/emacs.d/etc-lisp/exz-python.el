@@ -7,25 +7,17 @@
 
 ;;; Code:
 
-;; python-mode
-(setq py-install-directory "~/.emacs.d/site-lisp/python-mode")
-(exz-add-search-path "site-lisp/python-mode")
-
-;; pymacs
-(exz-add-search-path "site-lisp/pymacs")
-(exz-load-file "site-lisp/pymacs/pymacs-autoloads.el")
-
-;; Initialize Rope                                                                                             
-;;(pymacs-load "ropemacs" "rope-")
-;;(setq ropemacs-enable-autoimport t)
+(exz/when-my-dell-bjhome
+ (custom-set-variables
+  '(python-environment-virtualenv
+    (list "virtualenv2" "--system-site-packages" "--quiet"))
+  '(python-shell-interpreter "python2")))
 
 (defun exz/eval-buffer-as-python ()
   "Run buffer content as python program."
   (interactive)
   (save-buffer t)
   (shell-command (concat python-shell-interpreter " " (buffer-file-name))))
-
-(setq py-load-pymacs-p t)
 
 (defun prefix-list-elements (list prefix)
   (let (value)
@@ -97,8 +89,50 @@
               'exz/eval-buffer-as-python)
             (highlight-80+-mode)
             (if (functionp 'flycheck-mode)
-                (flycheck-mode)))
-          )
+                (flycheck-mode))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Jedi-Helpers: Enable virtualenv based on project root directory
+;; Copied from: https://github.com/tkf/emacs-jedi/issues/123
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun exz/python-project-directory (buffer-name)
+  "Returns the root directory of the project that contains the
+given buffer. Any directory with a .git or .jedi file/directory
+is considered to be a project root."
+  (interactive)
+  (let ((root-dir (file-name-directory buffer-name)))
+    (while (and root-dir
+                (not (file-exists-p (concat root-dir ".git")))
+                (not (file-exists-p (concat root-dir ".jedi"))))
+      (setq root-dir
+            (if (equal root-dir "/")
+                nil
+              (file-name-directory (directory-file-name root-dir)))))
+    root-dir))
+
+(defun exz/python-project-name (buffer-name)
+  "Returns the name of the project that contains the given buffer."
+  (let ((root-dir (exz/python-project-directory buffer-name)))
+    (if root-dir
+        (file-name-nondirectory
+         (directory-file-name root-dir))
+      nil)))
+
+(defun exz/jedi-setup-venv ()
+  "Activates the virtualenv of the current buffer."
+  (let ((project-name (exz/python-project-name buffer-file-name)))
+    (when project-name
+      (progn
+        (message (concat
+                  "use virtualenv: "
+                  project-name))
+        (venv-workon project-name)))))
+
+(add-hook 'python-mode-hook 'exz/jedi-setup-venv)
 
 ;;; exz-python.el ends here
 (provide 'exz-python)

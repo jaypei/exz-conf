@@ -38,8 +38,7 @@
          :publishing-function org-publish-attachment)
         ("note"
          :components ("note-org" "note-static")
-         :author "jaypei <jaypei97159@gmail.com>"
-         )))
+         :author "jaypei <jaypei97159@gmail.com>")))
 
 (add-hook 'org-mode-hook
           (lambda ()
@@ -54,8 +53,7 @@
                (octave . t)
                (sqlite . t)
                (perl . t)
-               (plantuml . t)
-               ))))
+               (plantuml . t)))))
 
 (setq org-plantuml-jar-path
       (expand-file-name "/usr/local/Cellar/plantuml/7987/plantuml.7987.jar"))
@@ -114,8 +112,7 @@
 (defun exz/org-compile-and-open-html ()
   (interactive)
   (org-export-to-file 'html "/tmp/abc.html")
-  (browse-url "/tmp/abc.html")
-  )
+  (browse-url "/tmp/abc.html"))
 
 (defun exz/make-org-scratch ()
   (interactive)

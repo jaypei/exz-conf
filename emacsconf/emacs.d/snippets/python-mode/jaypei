@@ -1,0 +1,11 @@
+# name: python shebang for jaypei
+# key: jaypei
+# --
+# -*- coding: utf-8 -*-
+#
+# Copyright 2014, jaypei
+#
+# Author: jaypei <jaypei97159@gmail.com>
+#
+
+$0
