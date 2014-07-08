@@ -4,8 +4,8 @@
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-git-gutter
-;; Version: 20140601.113
-;; X-Original-Version: 0.60
+;; Version: 20140705.14
+;; X-Original-Version: 0.65
 ;; Package-Requires: ((cl-lib "0.5") (emacs "24"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -47,10 +47,10 @@ character for signs of changes"
   :group 'git-gutter)
 
 (defcustom git-gutter:update-commands
-  '(ido-switch-buffer helm-buffer-list kill-buffer ido-kill-buffer)
-  "Update command when command in this list is executed"
-  :type '(list (hook :tag "Update command")
-               (repeat :inline t (hook :tag "Update command")))
+  '(ido-switch-buffer helm-buffers-list kill-buffer ido-kill-buffer)
+  "Each command of this list is executed, gutter information is updated."
+  :type '(list (function :tag "Update command")
+               (repeat :inline t (function :tag "Update command")))
   :group 'git-gutter)
 
 (defcustom git-gutter:update-hooks
@@ -156,11 +156,14 @@ character for signs of changes"
 (defvar git-gutter:diffinfos nil)
 (defvar git-gutter:has-indirect-buffers nil)
 (defvar git-gutter:real-this-command nil)
+(defvar git-gutter:linum-enabled nil)
 
 (defvar git-gutter:popup-buffer "*git-gutter:diff*")
 (defvar git-gutter:ignore-commands
   '(minibuffer-complete-and-exit
+    exit-minibuffer
     ido-exit-minibuffer
+    helm-maybe-exit-minibuffer
     helm-confirm-and-exit-minibuffer))
 
 (defmacro git-gutter:awhen (test &rest body)
@@ -201,31 +204,33 @@ character for signs of changes"
       (buffer-substring curpoint (point)))))
 
 (defun git-gutter:process-diff-output (proc)
-  (let ((regexp "^@@ -\\(?:[0-9]+\\),?\\([0-9]*\\) \\+\\([0-9]+\\),?\\([0-9]*\\) @@"))
-    (with-current-buffer (process-buffer proc)
-      (goto-char (point-min))
-      (cl-loop while (re-search-forward regexp nil t)
-               for new-line  = (string-to-number (match-string 2))
-               for orig-changes = (git-gutter:changes-to-number (match-string 1))
-               for new-changes = (git-gutter:changes-to-number (match-string 3))
-               for type = (cond ((zerop orig-changes) 'added)
-                                ((zerop new-changes) 'deleted)
-                                (t 'modified))
-               for end-line = (if (eq type 'deleted)
-                                  new-line
-                                (1- (+ new-line new-changes)))
-               for content = (git-gutter:diff-content)
-               collect
-               (let ((start (if (zerop new-line) 1 new-line))
-                     (end (if (zerop end-line) 1 end-line)))
-                 (git-gutter:make-diffinfo type content start end))))))
+  (when (buffer-live-p (process-buffer proc))
+    (let ((regexp "^@@ -\\(?:[0-9]+\\),?\\([0-9]*\\) \\+\\([0-9]+\\),?\\([0-9]*\\) @@"))
+      (with-current-buffer (process-buffer proc)
+        (goto-char (point-min))
+        (cl-loop while (re-search-forward regexp nil t)
+                 for new-line  = (string-to-number (match-string 2))
+                 for orig-changes = (git-gutter:changes-to-number (match-string 1))
+                 for new-changes = (git-gutter:changes-to-number (match-string 3))
+                 for type = (cond ((zerop orig-changes) 'added)
+                                  ((zerop new-changes) 'deleted)
+                                  (t 'modified))
+                 for end-line = (if (eq type 'deleted)
+                                    new-line
+                                  (1- (+ new-line new-changes)))
+                 for content = (git-gutter:diff-content)
+                 collect
+                 (let ((start (if (zerop new-line) 1 new-line))
+                       (end (if (zerop end-line) 1 end-line)))
+                   (git-gutter:make-diffinfo type content start end)))))))
 
 (defsubst git-gutter:window-margin ()
   (or git-gutter:window-width (git-gutter:longest-sign-width)))
 
 (defun git-gutter:set-window-margin (width)
-  (let ((curwin (get-buffer-window)))
-    (set-window-margins curwin width (cdr (window-margins curwin)))))
+  (unless git-gutter:linum-enabled
+    (let ((curwin (get-buffer-window)))
+      (set-window-margins curwin width (cdr (window-margins curwin))))))
 
 (defun git-gutter:start-git-diff-process (file proc-buf)
   (let ((args (list "--no-color" "--no-ext-diff" "--relative" "-U0" file)))
@@ -254,12 +259,6 @@ character for signs of changes"
                (setq git-gutter:enabled t)))
            (kill-buffer proc-buf)))))))
 
-(defun git-gutter:line-to-pos (line)
-  (save-excursion
-    (goto-char (point-min))
-    (forward-line (1- line))
-    (point)))
-
 (defsubst git-gutter:gutter-sperator ()
   (when git-gutter:separator-sign
     (propertize git-gutter:separator-sign 'face 'git-gutter:separator)))
@@ -285,27 +284,25 @@ character for signs of changes"
         (face (git-gutter:select-face type)))
     (propertize sign 'face face)))
 
-(defun git-gutter:view-region (sign start-line end-line)
-  (let ((beg (git-gutter:line-to-pos start-line)))
-    (goto-char beg)
-    (while (and (<= (line-number-at-pos) end-line) (not (eobp)))
-      (git-gutter:view-at-pos sign (point))
-      (forward-line 1))))
+(defsubst git-gutter:linum-get-overlay (pos)
+  (cl-loop for ov in (overlays-in pos pos)
+           when (overlay-get ov 'linum-str)
+           return ov))
+
+(defun git-gutter:view-at-pos-linum (sign pos)
+  (git-gutter:awhen (git-gutter:linum-get-overlay pos)
+    (overlay-put it 'before-string
+                 (propertize " "
+                             'display
+                             `((margin left-margin)
+                               ,(concat sign (overlay-get it 'linum-str)))))))
 
 (defun git-gutter:view-at-pos (sign pos)
-  (let ((ov (make-overlay pos pos)))
-    (overlay-put ov 'before-string (git-gutter:before-string sign))
-    (overlay-put ov 'git-gutter t)))
-
-(defun git-gutter:view-diff-info (diffinfo)
-  (let* ((start-line (plist-get diffinfo :start-line))
-         (end-line (plist-get diffinfo :end-line))
-         (type (plist-get diffinfo :type))
-         (sign (git-gutter:propertized-sign type)))
-    (cl-case type
-      ((modified added) (git-gutter:view-region sign start-line end-line))
-      (deleted (git-gutter:view-at-pos
-                sign (git-gutter:line-to-pos start-line))))))
+  (if git-gutter:linum-enabled
+      (git-gutter:view-at-pos-linum sign pos)
+    (let ((ov (make-overlay pos pos)))
+      (overlay-put ov 'before-string (git-gutter:before-string sign))
+      (overlay-put ov 'git-gutter t))))
 
 (defsubst git-gutter:sign-width (sign)
   (cl-loop for s across sign
@@ -350,6 +347,39 @@ character for signs of changes"
   (let ((buf (git-gutter:diff-process-buffer (git-gutter:base-file))))
     (git-gutter:awhen (get-buffer buf)
       (kill-buffer it))))
+
+(defsubst git-gutter:linum-padding ()
+  (cl-loop repeat (git-gutter:window-margin)
+           collect " " into paddings
+           finally return (apply 'concat paddings)))
+
+(defun git-gutter:linum-prepend-spaces ()
+  (save-excursion
+    (goto-char (point-min))
+    (let ((padding (git-gutter:linum-padding)))
+      (while (not (eobp))
+        (git-gutter:view-at-pos-linum padding (point))
+        (forward-line 1)))))
+
+(defun git-gutter:linum-update (diffinfos)
+  (git-gutter:linum-prepend-spaces)
+  (git-gutter:view-set-overlays diffinfos)
+  (let ((linum-width (car (window-margins)))
+        (curwin (get-buffer-window)))
+    (set-window-margins curwin (+ linum-width (git-gutter:window-margin))
+                        (cdr (window-margins curwin)))))
+
+(defun git-gutter:linum-init ()
+  (set (make-local-variable 'git-gutter:linum-enabled) t))
+
+;;;###autoload
+(defun git-gutter:linum-setup ()
+  "Setup for linum-mode."
+  (setq git-gutter:init-function 'git-gutter:linum-init
+        git-gutter:view-diff-function nil)
+  (defadvice linum-update-window (after git-gutter:linum-update-window activate)
+    (when (and git-gutter-mode git-gutter:diffinfos)
+      (git-gutter:linum-update git-gutter:diffinfos))))
 
 ;;;###autoload
 (define-minor-mode git-gutter-mode
@@ -400,17 +430,37 @@ character for signs of changes"
 
 (defun git-gutter:show-gutter (diffinfos)
   (when (git-gutter:show-gutter-p diffinfos)
-    (let ((win-width (or git-gutter:window-width
-                         (git-gutter:longest-sign-width))))
-      (git-gutter:set-window-margin win-width))))
+    (git-gutter:set-window-margin (git-gutter:window-margin))))
+
+(defun git-gutter:view-set-overlays (diffinfos)
+  (save-excursion
+    (goto-char (point-min))
+    (cl-loop with curline = 1
+             for info in diffinfos
+             for start-line = (plist-get info :start-line)
+             for end-line = (plist-get info :end-line)
+             for type = (plist-get info :type)
+             for sign = (git-gutter:propertized-sign type)
+             do
+             (progn
+               (forward-line (- start-line curline))
+               (cl-case type
+                 ((modified added)
+                  (setq curline start-line)
+                  (while (and (<= curline end-line) (not (eobp)))
+                    (git-gutter:view-at-pos sign (point))
+                    (cl-incf curline)
+                    (forward-line 1)))
+                 (deleted
+                  (git-gutter:view-at-pos sign (point))
+                  (forward-line 1)
+                  (setq curline (1+ end-line))))))))
 
 (defun git-gutter:view-diff-infos (diffinfos)
-  (when (or git-gutter:unchanged-sign
-            git-gutter:separator-sign)
-    (git-gutter:view-for-unchanged))
   (when diffinfos
-    (save-excursion
-      (mapc 'git-gutter:view-diff-info diffinfos)))
+    (when (or git-gutter:unchanged-sign git-gutter:separator-sign)
+      (git-gutter:view-for-unchanged))
+    (git-gutter:view-set-overlays diffinfos))
   (git-gutter:show-gutter diffinfos))
 
 (defsubst git-gutter:reset-window-margin-p ()
@@ -432,7 +482,8 @@ character for signs of changes"
     (widen)
     (git-gutter:clear-gutter)
     (setq git-gutter:diffinfos diffinfos)
-    (funcall git-gutter:view-diff-function diffinfos)))
+    (when git-gutter:view-diff-function
+      (funcall git-gutter:view-diff-function diffinfos))))
 
 (defun git-gutter:search-near-diff-index (diffinfos is-reverse)
   (cl-loop with current-line = (line-number-at-pos)
@@ -621,6 +672,12 @@ character for signs of changes"
   (when (and git-gutter-mode (not (buffer-base-buffer)))
     (setq git-gutter:has-indirect-buffers t)))
 
+(defadvice vc-revert (after git-gutter:vc-revert activate)
+  (when git-gutter-mode
+    (run-with-idle-timer 0.1 nil 'git-gutter)))
+
+;; `quit-window' and `switch-to-buffer' are called from other
+;; commands. So we should use `defadvice' instead of `post-command-hook'.
 (defadvice quit-window (after git-gutter:quit-window activate)
   (when git-gutter-mode
     (git-gutter)))
@@ -653,6 +710,10 @@ character for signs of changes"
       (setq git-gutter-mode t
             git-gutter:toggle-flag t))
     (force-mode-line-update)))
+
+;; for linum-user
+(when global-linum-mode
+  (git-gutter:linum-setup))
 
 (provide 'git-gutter)
 
