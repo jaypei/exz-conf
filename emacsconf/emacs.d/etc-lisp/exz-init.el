@@ -15,6 +15,11 @@
   "Load lib file in PATH."
   (load-file (concat conf-root-dir "/" path)))
 
+(defun exz-add-exec-path (path)
+  "Add PATH to os environ and exec-path."
+  (add-to-list 'exec-path path)
+  (setenv "PATH" (concat path ":" (getenv "PATH"))))
+
 ; reload dotemacs
 (defun exz-reload()
   (interactive)
@@ -27,14 +32,14 @@
 
 (when (equal (system-name) "jaypei-home")
   (setenv "GOPATH" "/home/jaypei/gocode")
-  (setenv "PATH" (concat "/home/jaypei/bin:" (getenv "PATH")))
-  (add-to-list 'exec-path "/home/jaypei/bin"))
+  (exz-add-exec-path "/home/jaypei/bin"))
 
 (when (equal (system-name) "jaypei-mbp.local")
-  (setenv "PATH" (concat "/Users/jaypei/bin:"
-                         "/usr/local/bin:"
-                         "/Users/jaypei/gocode/bin:"
-                         (getenv "PATH")))
+  (exz-add-exec-path "/Users/jaypei/bin")
+  (exz-add-exec-path "/Users/jaypei/gocode/bin")
+  (exz-add-exec-path "/usr/local/bin")
+  (exz-add-exec-path "/Users/jaypei/gocode/bin")
+  (exz-add-exec-path "/Users/jaypei/gocode/bin")
   (setenv "LC_ALL" "en_US.UTF-8")
   (setenv "GOPATH" "/Users/jaypei/gocode")
   (setenv "PYMACS_PYTHON" "/usr/local/bin/python")

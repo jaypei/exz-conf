@@ -47,8 +47,6 @@
 (exz-load-file "site-lisp/graphviz-dot-mode/graphviz-dot-mode-autoloads.el")
 
 ;; go-mode
-(exz-add-search-path "site-lisp/go-mode")
-(exz-load-file "site-lisp/go-mode/go-mode-autoloads.el")
 (add-hook 'go-mode-hook
           (lambda()
             (highlight-80+-mode)))

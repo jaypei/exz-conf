@@ -1,7 +1,7 @@
 mkdir -p /tmp/ssh
 mkdir -p /tmp/homebrew
 export GOPATH="/Users/jaypei/gocode"
-export PATH=/Users/jaypei/bin:/usr/local/sbin:/usr/local/bin:$PATH:/Users/jaypei/work/vimwiki/bin
+export PATH=/Users/jaypei/bin:%GOPATH/bin:/usr/local/sbin:/usr/local/bin:$PATH:/Users/jaypei/work/vimwiki/bin
 export HOMEBREW_TEMP=/tmp/homebrew
 export ANDROID_SDK_ROOT=/usr/local/opt/android-sdk
 export EDITOR=emacs
