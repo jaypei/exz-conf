@@ -694,11 +694,8 @@
 (require 'grep)
 (require 'url)
 (require 'xml)
-(if (not (equal system-type 'darwin))
-    (progn
-      (eval-when-compile (require 'org)) ; Shut up byte compiler about org-directory.
-      (eval-when-compile (require 'semantic nil t))
-      ))
+(eval-when-compile (require 'org)) ; Shut up byte compiler about org-directory.
+(eval-when-compile (require 'semantic nil t))
 (require 'anything-match-plugin)
 
 

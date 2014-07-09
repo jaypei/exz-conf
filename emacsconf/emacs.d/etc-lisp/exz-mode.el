@@ -173,7 +173,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; anything
-(exz-add-search-path "site-lisp/anything")
 (require 'anything-match-plugin)
 (require 'anything-config)
 

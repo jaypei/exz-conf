@@ -7,6 +7,8 @@
 
 ;;; Code:
 
+(require 'ipython)
+
 (exz/when-my-dell-bjhome
  (custom-set-variables
   '(python-environment-virtualenv
