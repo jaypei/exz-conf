@@ -2603,7 +2603,7 @@ MATCH match only filenames matching regexp MATCH."
                (relative 'file-relative-name)
                (full     'identity)
                (t        'file-name-nondirectory))))
-     (labels ((ls-R (dir)
+     (cl-labels ((ls-R (dir)
                 (loop with ls = (directory-files dir t directory-files-no-dot-files-regexp)
                       for f in ls
                       if (file-directory-p f)
@@ -3459,7 +3459,7 @@ See `anything-find-files-eshell-command-on-file-1' for more info."
 
 (defun anything-ff-switch-to-eshell (candidate)
   "Switch to eshell and cd to `anything-ff-default-directory'."
-  (flet ((cd-eshell ()
+  (cl-flet ((cd-eshell ()
            (goto-char (point-max))
            (insert
             (format "cd '%s'" anything-ff-default-directory))
@@ -3524,7 +3524,7 @@ will be treated with METHOD.
 Default METHOD is rename."
   ;; Maybe remove directories selected by error in collection.
   (setq collection (remove-if 'file-directory-p collection))
-  (flet ((symlink-file (file dest)
+  (cl-flet ((symlink-file (file dest)
            (let ((flist (list file)))
              (anything-dired-action
               dest :action 'symlink :files flist))))
@@ -4542,7 +4542,7 @@ If a prefix arg is given or `anything-follow-mode' is on open file."
         (new-pattern   (anything-get-selection))
         (num-lines-buf (with-current-buffer anything-buffer
                          (count-lines (point-min) (point-max)))))
-    (flet ((insert-in-minibuffer (fname)
+    (cl-flet ((insert-in-minibuffer (fname)
              (with-selected-window (minibuffer-window)
                (unless follow
                  (delete-minibuffer-contents)
@@ -5043,7 +5043,7 @@ Keys description:
   (when (eq must-match 'confirm-after-completion)
     (setq must-match 'confirm))
 
-  (flet ((action-fn (candidate)
+  (cl-flet ((action-fn (candidate)
            (if marked-candidates
                (anything-marked-candidates)
                (identity candidate))))
@@ -5845,7 +5845,7 @@ If a prefix arg is given run grep on all buffers ignoring non--file-buffers."
   "Yank text at point in minibuffer."
   (interactive)
   (let (input)
-    (flet ((insert-in-minibuffer (word)
+    (cl-flet ((insert-in-minibuffer (word)
              (with-selected-window (minibuffer-window)
                (let ((str anything-pattern))
                  (delete-minibuffer-contents)
@@ -7122,7 +7122,7 @@ http://ctags.sourceforge.net/")
 (defun anything-c-etags-find-tag-file-directory (current-dir)
   "Try to find the directory containing tag file.
 If not found in CURRENT-DIR search in upper directory."
-  (flet ((file-exists? (dir)
+  (cl-flet ((file-exists? (dir)
            (let ((tag-path (expand-file-name
                             anything-c-etags-tag-file-name dir)))
              (and (stringp tag-path)
@@ -7607,7 +7607,7 @@ replace with STR as yanked string."
 ;; `anything-all-mark-rings' instead.
 
 (defun anything-c-source-mark-ring-candidates ()
-  (flet ((get-marks (pos)
+  (cl-flet ((get-marks (pos)
            (save-excursion
              (goto-char pos)
              (beginning-of-line)
@@ -7660,7 +7660,7 @@ replace with STR as yanked string."
     (persistent-help . "Show this line")))
 
 (defun anything-c-source-global-mark-ring-candidates ()
-  (flet ((buf-fn (m)
+  (cl-flet ((buf-fn (m)
            (with-current-buffer (marker-buffer m)
              (goto-char m)
              (beginning-of-line)
@@ -8320,7 +8320,7 @@ Return an alist with elements like (data . number_results)."
         anything-ggs-max-length-num-flag 0)
   (let ((request (concat anything-c-google-suggest-url
                          (url-hexify-string input))))
-    (flet ((fetch ()
+    (cl-flet ((fetch ()
              (loop
                    with result-alist = (xml-get-children
                                         (car (xml-parse-region
@@ -8443,7 +8443,7 @@ See `anything-browse-url-default-browser-alist'.")
 Return an alist with elements like (data . number_results)."
   (let ((request (concat anything-c-yahoo-suggest-url
                          (url-hexify-string input))))
-    (flet ((fetch ()
+    (cl-flet ((fetch ()
              (loop
                    with result-alist = (xml-get-children
                                         (car (xml-parse-region
@@ -9703,7 +9703,7 @@ That's mean you can pass prefix args before or after calling a command
 that use `anything-comp-read' See `anything-M-x' for example."
   (when (get-buffer anything-action-buffer)
     (kill-buffer anything-action-buffer))
-  (flet ((action-fn (candidate)
+  (cl-flet ((action-fn (candidate)
            (if marked-candidates
                (anything-marked-candidates)
                (identity candidate))))
@@ -11458,7 +11458,7 @@ If optional 2nd argument is non-nil, the file opened with `auto-revert-mode'.")
       (goto-char (point-min))
       (if (functionp regexp) (setq regexp (funcall regexp)))
       (let (hierarchy curhead)
-        (flet ((matched ()
+        (cl-flet ((matched ()
                  (if (numberp subexp)
                      (cons (match-string-no-properties subexp) (match-beginning subexp))
                      (cons (buffer-substring (point-at-bol) (point-at-eol))
@@ -12259,7 +12259,7 @@ It is `anything' replacement of regular `M-x' `execute-extended-command'."
                         for com = (intern i)
                         when (fboundp com)
                         collect i into hist finally return hist)))
-    (flet ((pers-help (candidate)
+    (cl-flet ((pers-help (candidate)
              (let ((hbuf (get-buffer (help-buffer))))
                (if (and in-help (string= candidate help-cand))
                    (progn

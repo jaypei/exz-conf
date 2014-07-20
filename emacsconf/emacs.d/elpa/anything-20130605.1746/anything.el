@@ -470,7 +470,7 @@
 ;;   (anything-interpret-value
 ;;    (lambda () anything-source-name)
 ;;    source))                             ; => "lambda with source name"
-;; (flet ((f () "function symbol"))
+;; (cl-flet ((f () "function symbol"))
 ;;   (anything-interpret-value 'f))        ; => "function symbol"
 ;; (let ((v "variable symbol"))
 ;;   (anything-interpret-value 'v))        ; => "variable symbol"
@@ -3517,7 +3517,7 @@ Acceptable values of CREATE-OR-BUFFER:
          (local-bname (format " *anything candidates:%s*%s"
                               anything-source-name
                               (buffer-name anything-current-buffer))))
-    (flet ((register-func ()
+    (cl-flet ((register-func ()
              (setq anything-candidate-buffer-alist
                    (cons (cons anything-source-name create-or-buffer)
                          (delete (assoc anything-source-name
