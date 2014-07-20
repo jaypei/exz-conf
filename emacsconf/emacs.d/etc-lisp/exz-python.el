@@ -7,7 +7,8 @@
 
 ;;; Code:
 
-(require 'ipython)
+(exz/when-osx
+ (require 'ipython))
 
 (exz/when-my-dell-bjhome
  (custom-set-variables
