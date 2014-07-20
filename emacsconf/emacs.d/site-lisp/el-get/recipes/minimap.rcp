@@ -1,3 +1,0 @@
-(:name minimap
-       :description "Minimap sidebar for Emacs"
-       :type elpa)

@@ -1,5 +1,0 @@
-(:name helm-cmd-t
-       :description "Cmd-t style completion of files in repository."
-       :type github
-       :pkgname "lewang/helm-cmd-t"
-       :depends (helm))

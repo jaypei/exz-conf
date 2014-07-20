@@ -1,4 +1,0 @@
-(:name flycheck-color-mode-line
-       :type github
-       :pkgname "flycheck/flycheck-color-mode-line"
-       :depends (flycheck))

@@ -1,4 +1,0 @@
-(:name hi2
-       :description "Indentation module for Haskell mode"
-       :type github
-       :pkgname "errge/hi2")
