@@ -5,11 +5,6 @@
 
 
 ;; color theme
-(exz/when-gui
- (exz-add-search-path "site-lisp/color-theme-tomorrow")
- (require 'color-theme-tomorrow)
- (color-theme-tomorrow-night))
-
 (exz/when-aquamacs
  (custom-set-variables
   '(aquamacs-customization-version-id 0 t)
@@ -30,16 +25,10 @@
   '(tabbar-default ((t (:inherit nil :stipple nil :background "gray80" :foreground "black"))))
   '(text-mode-default ((t (:inherit autoface-default))))
   '(variable-pitch ((t nil))))
- (set-fringe-mode '(10 . 10))
- (exz-add-search-path "site-lisp/color-theme-tomorrow")
- (color-theme-tomorrow-night-bright))
+ (set-fringe-mode '(10 . 10)))
 
-(exz/when-console
- (exz-add-search-path "site-lisp/color-theme")
- (require 'color-theme)
- (exz-add-search-path "site-lisp/color-theme-tomorrow")
- (require 'color-theme-tomorrow)
- (color-theme-tomorrow-night))
+(require 'color-theme-sanityinc-tomorrow)
+(load-theme 'sanityinc-tomorrow-night t)
 
 (exz/when-osx
  (custom-set-faces
