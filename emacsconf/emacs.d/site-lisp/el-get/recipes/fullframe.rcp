@@ -1,4 +1,0 @@
-(:name fullframe
-       :description "Generalized automatic execution in a single frame"
-       :type github
-       :pkgname "tomterl/fullframe")

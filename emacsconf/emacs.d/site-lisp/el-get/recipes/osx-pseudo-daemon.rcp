@@ -1,5 +1,0 @@
-(:name osx-pseudo-daemon
-       :website "https://github.com/DarwinAwardWinner/osx-pseudo-daemon"
-       :description "Daemon mode that plays nice with OSX."
-       :type github
-       :pkgname "DarwinAwardWinner/osx-pseudo-daemon")

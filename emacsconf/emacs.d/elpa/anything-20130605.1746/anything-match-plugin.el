@@ -546,7 +546,7 @@ i.e anything-match-plugin."
   (let ((anything-match-plugin-enabled
          (member 'anything-compile-source--match-plugin
                  anything-compile-source-functions)))
-    (flet ((disable-match-plugin ()
+    (cl-flet ((disable-match-plugin ()
              (setq anything-compile-source-functions
                    (delq 'anything-compile-source--match-plugin
                          anything-compile-source-functions))

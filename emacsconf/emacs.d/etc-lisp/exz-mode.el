@@ -41,27 +41,16 @@
 ;; (custom-set-variables
 ;;  '(git-gutter:disabled-modes '(org-mode image-mode)))
 
-
-;; graphviz-dot-mode
-(exz-add-search-path "site-lisp/graphviz-dot-mode")
-(exz-load-file "site-lisp/graphviz-dot-mode/graphviz-dot-mode-autoloads.el")
-
 ;; go-mode
 (add-hook 'go-mode-hook
           (lambda()
             (highlight-80+-mode)))
 
 ;; markdown-mode
-(exz-add-search-path "site-lisp/markdown-mode")
-(exz-load-file "site-lisp/markdown-mode/markdown-mode-autoloads.el")
 (add-to-list 'auto-mode-alist (cons "\\.md\\'" 'markdown-mode))
 (add-hook 'markdown-mode-hook
           (lambda()
             (highlight-80+-mode)))
-
-;; lua-mode
-(exz-add-search-path "site-lisp/lua-mode")
-(exz-load-file "site-lisp/lua-mode/lua-mode-autoloads.el")
 
 (setq abbrev-file-name
       "~/.emacs.d/abbrev_defs")
@@ -136,27 +125,6 @@
 ;; linum-mode 行号
 ;; (setq linum-format 'dynamic)
 ;; (global-linum-mode 1)
-
-;; (add-hook 'speedbar-mode-hook (lambda () (linum-mode -1)))
-;; (add-hook 'sr-speedbar-mode-hook '(lambda () (linum-mode -1)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; speedbar
-(defun exz-load-sr-speedbar ()
-  (interactive)
-  (exz-add-search-path "site-lisp/sr-speedbar")
-  ;; show all files
-  (setq speedbar-show-unknown-files t)
-  ;; turn off the ugly icons
-  ;;(setq speedbar-use-images nil)
-  ;; left-side pane
-  (setq sr-speedbar-right-side nil)
-  ;; don't refresh on buffer changes
-  (setq sr-speedbar-auto-refresh nil)
-  (require 'sr-speedbar))
-
-(exz-load-sr-speedbar)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; yasnippet
