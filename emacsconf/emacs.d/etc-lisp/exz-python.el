@@ -7,8 +7,6 @@
 
 ;;; Code:
 
-(require 'ipython)
-
 (exz/when-my-dell-bjhome
  (custom-set-variables
   '(python-environment-virtualenv
@@ -126,13 +124,16 @@ is considered to be a project root."
 
 (defun exz/jedi-setup-venv ()
   "Activates the virtualenv of the current buffer."
-  (let ((project-name (exz/python-project-name buffer-file-name)))
-    (when project-name
-      (progn
-        (message (concat
-                  "use virtualenv: "
-                  project-name))
-        (venv-workon project-name)))))
+  (let ((file-name (buffer-file-name))
+        project-name)
+    (when (not (null file-name))
+      (setq project-name (exz/python-project-name buffer-file-name))
+      (when project-name
+        (progn
+          (message (concat
+                    "use virtualenv: "
+                    project-name))
+          (venv-workon project-name))))))
 
 (add-hook 'python-mode-hook 'exz/jedi-setup-venv)
 
