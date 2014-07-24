@@ -137,5 +137,8 @@
 
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 
+(exz-add-search-path "site-lisp/org-reveal")
+(require 'ox-reveal)
+
 ;;; exz-org.el ends here
 (provide 'exz-org)

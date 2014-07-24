@@ -28,7 +28,7 @@
  (set-fringe-mode '(10 . 10)))
 
 (require 'color-theme-sanityinc-tomorrow)
-(load-theme 'sanityinc-tomorrow-night t)
+(load-theme 'sanityinc-tomorrow-bright t)
 
 (exz/when-osx
  (custom-set-faces

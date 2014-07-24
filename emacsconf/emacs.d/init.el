@@ -22,6 +22,7 @@
     (load-file user-info-file))
 (require 'exz-package)
 (require 'exz-mode)
+(require 'exz-jabber)
 (require 'exz-edit-server)
 (require 'exz-python)
 (require 'exz-appearance)
