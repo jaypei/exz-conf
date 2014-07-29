@@ -292,7 +292,7 @@ used to limit the exported source code blocks by language.
 ;;;;;;  org-search-view org-agenda-list org-batch-store-agenda-views
 ;;;;;;  org-store-agenda-views org-batch-agenda-csv org-batch-agenda
 ;;;;;;  org-agenda org-toggle-sticky-agenda) "org-agenda" "org-agenda.el"
-;;;;;;  (21442 5335))
+;;;;;;  (21451 20317))
 ;;; Generated autoloads from org-agenda.el
 
 (autoload 'org-toggle-sticky-agenda "org-agenda" "\
@@ -644,8 +644,8 @@ Extract anniversaries from BBDB for display in the agenda.
 ;;;***
 
 ;;;### (autoloads (org-capture-import-remember-templates org-capture
-;;;;;;  org-capture-string) "org-capture" "org-capture.el" (21442
-;;;;;;  5335))
+;;;;;;  org-capture-string) "org-capture" "org-capture.el" (21451
+;;;;;;  20317))
 ;;; Generated autoloads from org-capture.el
 
 (autoload 'org-capture-string "org-capture" "\
@@ -692,7 +692,7 @@ Set `org-capture-templates' to be similar to `org-remember-templates'.
 ;;;;;;  org-clock-remove-overlays org-clock-display org-clock-sum
 ;;;;;;  org-clock-goto org-clock-cancel org-clock-out org-clock-in-last
 ;;;;;;  org-clock-in org-resolve-clocks) "org-clock" "org-clock.el"
-;;;;;;  "8cb7816ca211cf756760f102ad60de84")
+;;;;;;  "6ae449662a35e619f6e6a13fa193d5dd")
 ;;; Generated autoloads from org-clock.el
 
 (autoload 'org-resolve-clocks "org-clock" "\
@@ -821,7 +821,7 @@ Otherwise, return nil.
 ;;;### (autoloads (org-agenda-columns org-insert-columns-dblock org-dblock-write:columnview
 ;;;;;;  org-columns-number-to-string org-columns-compute org-columns
 ;;;;;;  org-columns-get-format-and-top-level org-columns-remove-overlays)
-;;;;;;  "org-colview" "org-colview.el" (21442 5335))
+;;;;;;  "org-colview" "org-colview.el" (21451 20317))
 ;;; Generated autoloads from org-colview.el
 
 (autoload 'org-columns-remove-overlays "org-colview" "\
@@ -885,7 +885,7 @@ Turn on or update column view in the agenda.
 ;;;***
 
 ;;;### (autoloads (org-check-version) "org-compat" "org-compat.el"
-;;;;;;  (21442 5335))
+;;;;;;  (21451 20317))
 ;;; Generated autoloads from org-compat.el
 
 (autoload 'org-check-version "org-compat" "\
@@ -1219,7 +1219,7 @@ line directly before or after the table.
 ;;;;;;  org-table-begin org-table-align org-table-export org-table-import
 ;;;;;;  org-table-convert-region org-table-create org-table-create-or-convert-from-region
 ;;;;;;  org-table-create-with-table\.el) "org-table" "org-table.el"
-;;;;;;  "01951e73ebf6c1b8f499bd5bd6222b1b")
+;;;;;;  "6a4cbd374d1fabd9ad1b503b1cdcf6d1")
 ;;; Generated autoloads from org-table.el
 
 (autoload 'org-table-create-with-table\.el "org-table" "\
@@ -1891,7 +1891,7 @@ replace any running timer.
 ;;;***
 
 ;;;### (autoloads (org-git-version org-release) "org-version" "org-version.el"
-;;;;;;  (21443 25586))
+;;;;;;  (21452 40566))
 ;;; Generated autoloads from org-version.el
 
 (autoload 'org-release "org-version" "\
@@ -1917,7 +1917,7 @@ The location of ODT styles.")
 ;;;;;;  org-run-like-in-org-mode turn-on-orgstruct++ turn-on-orgstruct
 ;;;;;;  orgstruct-mode org-global-cycle org-cycle org-mode org-clock-persistence-insinuate
 ;;;;;;  turn-on-orgtbl org-version org-babel-load-file org-babel-do-load-languages)
-;;;;;;  "org" "org.el" (21442 5336))
+;;;;;;  "org" "org.el" (21451 20317))
 ;;; Generated autoloads from org.el
 
 (autoload 'org-babel-do-load-languages "org" "\
@@ -2140,7 +2140,7 @@ Call the customize function with org as argument.
 
 ;;;### (autoloads (org-export-dispatch org-export-to-file org-export-to-buffer
 ;;;;;;  org-export-insert-default-template org-export-replace-region-by
-;;;;;;  org-export-string-as org-export-as) "ox" "ox.el" "920f49b61eaa4fd7246add35cfc0dc75")
+;;;;;;  org-export-string-as org-export-as) "ox" "ox.el" "829116ef2e793a50081ae7245ef6c047")
 ;;; Generated autoloads from ox.el
 
 (autoload 'org-export-as "ox" "\
@@ -2310,7 +2310,7 @@ When ARG is \\[universal-argument] \\[universal-argument], display the asynchron
 
 ;;;### (autoloads (org-ascii-publish-to-utf8 org-ascii-publish-to-latin1
 ;;;;;;  org-ascii-publish-to-ascii org-ascii-export-to-ascii org-ascii-export-as-ascii)
-;;;;;;  "ox-ascii" "ox-ascii.el" "f48bc3b270f9e26b2cd5c52b48e828a8")
+;;;;;;  "ox-ascii" "ox-ascii.el" "b6167fea7127509f3138b6133b279333")
 ;;; Generated autoloads from ox-ascii.el
 
 (autoload 'org-ascii-export-as-ascii "ox-ascii" "\
