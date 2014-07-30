@@ -79,6 +79,14 @@
 ;; enable highlight current line
 (global-hl-line-mode 1)
 
+(require 'highlight-parentheses)
+
+(exz/exec-by-hooks 'highlight-parentheses-mode
+                   'emacs-lisp-mode-hook
+                   'lisp-interaction-mode-hook
+                   'python-mode-hook
+                   'go-mode-hook
+                   'c-mode-common-hook)
 
 ;;; exz-appearance.el ends here
 (provide 'exz-appearance)

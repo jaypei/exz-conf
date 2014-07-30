@@ -20,6 +20,11 @@
   (add-to-list 'exec-path path)
   (setenv "PATH" (concat path ":" (getenv "PATH"))))
 
+(defun exz/exec-by-hooks (fn &rest mode-hooks)
+  (mapcar (lambda (x)
+            (add-hook x fn))
+          mode-hooks))
+
 ; reload dotemacs
 (defun exz-reload()
   (interactive)
