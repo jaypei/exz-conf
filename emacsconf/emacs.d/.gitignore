@@ -7,3 +7,5 @@ url/*
 .python-environments/*
 session.*
 .yas-compiled-snippets.el
+elpa/archives/gnu/archive-contents
+elpa/archives/marmalade/archive-contents
