@@ -8318,7 +8318,7 @@ the inserted text when done."
 				   (string-match
 				    "^\\*+$" (buffer-substring
 					      (point-at-bol) (point))))
-			      (- (match-end 1) (match-beginning 1)))
+			      (- (match-end 0) (match-beginning 0)))
 			     ((and (bolp)
 				   (looking-at org-outline-regexp))
 			      (- (match-end 0) (point) 1))))
@@ -17764,9 +17764,9 @@ This requires Emacs >= 24.1, build with imagemagick support."
 
 (defcustom org-agenda-inhibit-startup nil
   "Inhibit startup when preparing agenda buffers.
-When this variable is `t' (the default), the initialization of
-the Org agenda buffers is inhibited: e.g. the visibility state
-is not set, the tables are not re-aligned, etc."
+When this variable is `t', the initialization of the Org agenda
+buffers is inhibited: e.g. the visibility state is not set, the
+tables are not re-aligned, etc."
   :type 'boolean
   :version "24.3"
   :group 'org-agenda)

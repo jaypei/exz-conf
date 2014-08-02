@@ -360,11 +360,6 @@ still has an entry since one of its properties (`:title') does.")
     (footnote-reference . :inline-definition))
   "Alist between element types and location of secondary value.")
 
-(defconst org-element-object-variables '(org-link-abbrev-alist-local)
-  "List of buffer-local variables used when parsing objects.
-These variables are copied to the temporary buffer created by
-`org-export-secondary-string'.")
-
 
 
 ;;; Accessors and Setters
@@ -3112,16 +3107,20 @@ Assume point is at the beginning of the link."
 	(cond
 	 ;; File type.
 	 ((or (file-name-absolute-p raw-link)
-	      (string-match "^\\.\\.?/" raw-link))
+	      (string-match "\\`\\.\\.?/" raw-link))
 	  (setq type "file" path raw-link))
 	 ;; Explicit type (http, irc, bbdb...).  See `org-link-types'.
-	 ((string-match org-link-re-with-space3 raw-link)
-	  (setq type (match-string 1 raw-link) path (match-string 2 raw-link)))
+	 ((string-match org-link-types-re raw-link)
+	  (setq type (match-string 1 raw-link)
+		;; According to RFC 3986, extra whitespace should be
+		;; ignored when a URI is extracted.
+		path (replace-regexp-in-string
+		      "[ \t]*\n[ \t]*" "" (substring raw-link (match-end 0)))))
 	 ;; Id type: PATH is the id.
-	 ((string-match "^id:\\([-a-f0-9]+\\)" raw-link)
+	 ((string-match "\\`id:\\([-a-f0-9]+\\)" raw-link)
 	  (setq type "id" path (match-string 1 raw-link)))
 	 ;; Code-ref type: PATH is the name of the reference.
-	 ((string-match "^(\\(.*\\))$" raw-link)
+	 ((string-match "\\`(\\(.*\\))\\'" raw-link)
 	  (setq type "coderef" path (match-string 1 raw-link)))
 	 ;; Custom-id type: PATH is the name of the custom id.
 	 ((= (aref raw-link 0) ?#)
@@ -3890,8 +3889,7 @@ element it has to parse."
 	      (goto-char (car affiliated))
 	      (org-element-keyword-parser limit nil))
 	     ;; LaTeX Environment.
-	     ((looking-at
-	       "[ \t]*\\\\begin{[A-Za-z0-9*]+}\\(\\[.*?\\]\\|{.*?}\\)*[ \t]*$")
+	     ((looking-at "[ \t]*\\\\begin{\\([A-Za-z0-9]+\\*?\\)}\\(\\[.*?\\]\\|{.*?}\\)*[ \t]*$")
 	      (org-element-latex-environment-parser limit affiliated))
 	     ;; Drawer and Property Drawer.
 	     ((looking-at org-drawer-regexp)
@@ -4090,21 +4088,18 @@ looked after.
 Optional argument PARENT, when non-nil, is the element or object
 containing the secondary string.  It is used to set correctly
 `:parent' property within the string."
-  ;; Copy buffer-local variables listed in
-  ;; `org-element-object-variables' into temporary buffer.  This is
-  ;; required since object parsing is dependent on these variables.
-  (let ((pairs (delq nil (mapcar (lambda (var)
-				   (when (boundp var)
-				     (cons var (symbol-value var))))
-				 org-element-object-variables))))
+  (let ((local-variables (buffer-local-variables)))
     (with-temp-buffer
-      (mapc (lambda (pair) (org-set-local (car pair) (cdr pair))) pairs)
+      (dolist (v local-variables)
+	(ignore-errors
+	  (if (symbolp v) (makunbound v)
+	    (org-set-local (car v) (cdr v)))))
       (insert string)
+      (restore-buffer-modified-p nil)
       (let ((secondary (org-element--parse-objects
 			(point-min) (point-max) nil restriction)))
 	(when parent
-	  (mapc (lambda (obj) (org-element-put-property obj :parent parent))
-		secondary))
+	  (dolist (o secondary) (org-element-put-property o :parent parent)))
 	secondary))))
 
 (defun org-element-map

@@ -3618,6 +3618,9 @@ FILTER-ALIST is an alist of filters we need to apply when
 				`(car . ,org-agenda-category-filter)))))
     (if (org-agenda-use-sticky-p)
 	(progn
+	  (put 'org-agenda-tag-filter :preset-filter nil)
+	  (put 'org-agenda-category-filter :preset-filter nil)
+	  (put 'org-agenda-regexp-filter :preset-filter nil)
 	  ;; Popup existing buffer
 	  (org-agenda-prepare-window (get-buffer org-agenda-buffer-name)
 				     filter-alist)
@@ -5677,7 +5680,7 @@ This function is invoked if `org-agenda-todo-ignore-deadlines',
 	    (setq txt (org-agenda-format-item extra txt level category tags 'time))
 	    (org-add-props txt props 'org-marker marker
 			   'org-category category 'date date 'todo-state todo-state
-			   'org-category-position category-pos 'tags tags
+			   'org-category-position category-pos
 			   'level level
 			   'type "sexp" 'warntime warntime)
 	    (push txt ee)))))
