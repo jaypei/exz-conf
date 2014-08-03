@@ -10,13 +10,13 @@
 (defvar exz/org-default-notes-file "~/work/org/refile.org")
 (defvar exz/org-agenda-files (quote ("~/work/org/todo")))
 
-(exz-add-search-path "site-lisp/org")
-
 ;; fontify code in code blocks
 (setq org-src-fontify-natively t)
 
 (setq org-publish-project-alist
-      '(("note-org"
+      '(
+        ;; My note
+        ("note-org"
          :base-directory exz/org-note-dir
          :publishing-directory exz/org-note-publish-dir
          :base-extension "org"
@@ -38,7 +38,26 @@
          :publishing-function org-publish-attachment)
         ("note"
          :components ("note-org" "note-static")
-         :author "jaypei <jaypei97159@gmail.com>")))
+         :author "jaypei <jaypei97159@gmail.com>")
+        ;; My blog
+        ("jaypei-blog-org"
+         ;; Path to your org files.
+         :base-directory "~/work/jaypei-blog/org/"
+         :base-extension "org"
+         ;; Path to your Jekyll project.
+         :publishing-directory "~/work/jaypei-blog/jekyll/"
+         :recursive t
+         :publishing-function org-publish-org-to-html
+         :headline-levels 4 
+         :html-extension "html"
+         :body-only t) ;; Only export section between <body> </body>
+        ("jaypei-blog-static"
+         :base-directory "~/work/jaypei-blog/org/"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
+         :publishing-directory "~/work/jaypei-blog/"
+         :recursive t
+         :publishing-function org-publish-attachment)
+        ("jaypei-blog" :components ("jaypei-blog-org" "jaypei-blog-static"))))
 
 (add-hook 'org-mode-hook
           (lambda ()
@@ -104,25 +123,6 @@
 (setq org-default-notes-file exz/org-default-notes-file)
 (setq org-agenda-files exz/org-agenda-files)
 
-(defun exz/org-publish ()
-  "Auto generate web-site."
-  (interactive)
-  (org-publish "note"))
-
-(defun exz/org-compile-and-open-html ()
-  (interactive)
-  (org-export-to-file 'html "/tmp/abc.html")
-  (browse-url "/tmp/abc.html"))
-
-(defun exz/make-org-scratch ()
-  (interactive)
-  (find-file "/tmp/publish/scratch.org")
-  (gnus-make-directory "/tmp/publish"))
-
-(defun exz/switch-to-scratch ()
-  (interactive)
-  (switch-to-buffer "*scratch*"))
-
 ;; I use C-c c to start capture mode
 (global-set-key (kbd "C-c c")
                 (lambda ()
@@ -131,14 +131,13 @@
 ;; org
 (add-hook 'org-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-z o p") 'exz-org-publish)
-            (local-set-key (kbd "C-z c") 'exz/org-compile-and-open-html)
             (org-display-inline-images t)))
 
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 
 (exz-add-search-path "site-lisp/org-reveal")
 (require 'ox-reveal)
+(require 'org-publish)
 
 ;;; exz-org.el ends here
 (provide 'exz-org)
