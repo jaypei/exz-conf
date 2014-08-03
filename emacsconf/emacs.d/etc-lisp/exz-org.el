@@ -47,7 +47,7 @@
          ;; Path to your Jekyll project.
          :publishing-directory "~/work/jaypei-blog/jekyll/"
          :recursive t
-         :publishing-function org-publish-org-to-html
+         :publishing-function org-html-publish-to-html
          :headline-levels 4 
          :html-extension "html"
          :body-only t) ;; Only export section between <body> </body>
@@ -137,7 +137,8 @@
 
 (exz-add-search-path "site-lisp/org-reveal")
 (require 'ox-reveal)
-(require 'org-publish)
+(require 'ox-publish)
+(require 'ox-html)
 
 ;;; exz-org.el ends here
 (provide 'exz-org)
