@@ -147,6 +147,7 @@
 ;; neotree
 (exz-add-search-path "site-lisp/neotree")
 (exz-load-file "site-lisp/neotree/neotree-autoloads.el")
+(require 'neotree)
 
 ;; multi-term-mode
 (add-hook 'term-mode-hook
