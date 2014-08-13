@@ -131,6 +131,7 @@
 ;; org
 (add-hook 'org-mode-hook
           (lambda ()
+            (org-indent-mode)
             (org-display-inline-images t)))
 
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
