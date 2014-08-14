@@ -6,7 +6,7 @@
 ;;;### (autoloads (color-theme-sanityinc-tomorrow-blue color-theme-sanityinc-tomorrow-eighties
 ;;;;;;  color-theme-sanityinc-tomorrow-bright color-theme-sanityinc-tomorrow-day
 ;;;;;;  color-theme-sanityinc-tomorrow-night) "color-theme-sanityinc-tomorrow"
-;;;;;;  "color-theme-sanityinc-tomorrow.el" (21481 32986 0 0))
+;;;;;;  "color-theme-sanityinc-tomorrow.el" (21484 4934 371373 484000))
 ;;; Generated autoloads from color-theme-sanityinc-tomorrow.el
 
 (when (boundp 'custom-theme-load-path) (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
@@ -41,8 +41,7 @@ Apply the tomorrow blue theme.
 ;;;### (autoloads nil nil ("color-theme-sanityinc-tomorrow-pkg.el"
 ;;;;;;  "sanityinc-tomorrow-blue-theme.el" "sanityinc-tomorrow-bright-theme.el"
 ;;;;;;  "sanityinc-tomorrow-day-theme.el" "sanityinc-tomorrow-eighties-theme.el"
-;;;;;;  "sanityinc-tomorrow-night-theme.el") (21481 32986 754911
-;;;;;;  0))
+;;;;;;  "sanityinc-tomorrow-night-theme.el") (21484 4934 381639 838000))
 
 ;;;***
 

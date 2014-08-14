@@ -1,5 +1,6 @@
-This is /tmp/jabber562855W/jabber-20140811.228/jabber.info, produced by
-makeinfo version 4.13 from /home/melpa/melpa/working/jabber/jabber.texi.
+This is /tmp/jabber14671o5_/jabber-20140812.1417/jabber.info, produced
+by makeinfo version 4.13 from
+/home/melpa/melpa/working/jabber/jabber.texi.
 
 INFO-DIR-SECTION Emacs
 START-INFO-DIR-ENTRY
@@ -3257,131 +3258,131 @@ Variable index
 
 
 Tag Table:
-Node: Top594
-Node: Introduction1433
-Node: Contacts2289
-Node: Basic operation2960
-Node: Do you have a Jabber account?3855
-Node: Registering an account4450
-Node: Connecting5147
-Node: Chatting6222
-Node: Presence7641
-Node: Resources and priority9799
-Node: Directed presence11512
-Node: Presence subscription12052
-Ref: Presence subscription-Footnote-113615
-Node: Roster buffer13710
-Ref: Roster buffer-Footnote-115443
-Node: Groupchat15524
-Node: Configuration18296
-Node: Invitations19703
-Node: Private messages20381
-Node: MUC Administration21004
-Node: Composing messages22607
-Node: File transfer23232
-Ref: File transfer-Footnote-123986
-Node: Receiving files24152
-Node: Sending files25494
-Ref: Sending files-Footnote-127120
-Node: Services27280
-Node: Commands28184
-Node: Registration28759
-Node: Search29362
-Node: Ad-Hoc Commands29717
-Ref: Ad-Hoc Commands-Footnote-131213
-Ref: Ad-Hoc Commands-Footnote-231320
-Node: Service discovery31456
-Node: Browsing32657
-Node: Your home server33017
-Node: Transports33375
-Ref: Transports-Footnote-135777
-Node: User directories35853
-Node: MUC services36256
-Node: Personal information36685
-Ref: Personal information-Footnote-137606
-Node: Avatars37632
-Ref: Avatars-Footnote-139232
-Node: Time queries39346
-Node: Useful features40213
-Node: Autoaway40643
-Ref: Autoaway-Footnote-142558
-Node: Modeline status42625
-Node: Keepalive43337
-Node: Reconnecting45560
-Node: Tracking activity46269
-Node: Watch buddies47949
-Node: Spell checking48646
-Node: Gmail notifications49158
-Node: Saving groups roll state50974
-Node: Message history51689
-Ref: Message history-Footnote-154306
-Node: Typing notifications54516
-Node: Roster import and export56362
-Node: XMPP URIs57312
-Node: Customization59671
-Node: Account settings60126
-Ref: Account settings-Footnote-162143
-Node: Menu62200
-Node: Customizing the roster buffer62813
-Node: Customizing the chat buffer65001
-Node: Customizing alerts67809
-Node: Standard alerts69993
-Ref: Standard alerts-Footnote-173873
-Ref: Standard alerts-Footnote-273924
-Ref: Standard alerts-Footnote-373968
-Ref: Standard alerts-Footnote-474017
-Ref: Standard alerts-Footnote-574156
-Node: Presence alerts74215
-Node: Message alerts75617
-Ref: Message alerts-Footnote-176730
-Node: MUC alerts76833
-Node: Info alerts77713
-Node: Hooks78243
-Node: Debug options79571
-Node: Hacking and extending80659
-Node: Connection object81259
-Ref: Connection object-Footnote-182550
-Node: XML representation82682
-Node: JID symbols84193
-Node: Listening for new requests85608
-Node: Sending new requests86860
-Node: Extending service discovery89140
-Node: Providing info89590
-Node: Requesting info91047
-Node: Chat printers93547
-Node: Stanza chains94970
-Node: Protocol support95594
-Node: RFC 392097301
-Node: RFC 392197991
-Node: XEP-000498543
-Node: XEP-001299292
-Node: XEP-002099565
-Node: XEP-002299792
-Node: XEP-0030100163
-Node: XEP-0045100460
-Node: XEP-0049100921
-Node: XEP-0050101202
-Node: XEP-0054101567
-Node: XEP-0055101866
-Node: XEP-0065102269
-Node: XEP-0066102803
-Node: XEP-0068103196
-Node: XEP-0077103526
-Node: XEP-0078104087
-Node: XEP-0082104421
-Node: XEP-0085104705
-Node: XEP-0086105028
-Node: XEP-0090105340
-Node: XEP-0091105590
-Node: XEP-0092105876
-Node: XEP-0095106191
-Node: XEP-0096106513
-Node: XEP-0146106973
-Node: XEP-0153107207
-Node: XEP-0199107495
-Node: XEP-0245107673
-Node: Concept index107860
-Node: Function index120117
-Node: Variable index126368
+Node: Top596
+Node: Introduction1435
+Node: Contacts2291
+Node: Basic operation2962
+Node: Do you have a Jabber account?3857
+Node: Registering an account4452
+Node: Connecting5149
+Node: Chatting6224
+Node: Presence7643
+Node: Resources and priority9801
+Node: Directed presence11514
+Node: Presence subscription12054
+Ref: Presence subscription-Footnote-113617
+Node: Roster buffer13712
+Ref: Roster buffer-Footnote-115445
+Node: Groupchat15526
+Node: Configuration18298
+Node: Invitations19705
+Node: Private messages20383
+Node: MUC Administration21006
+Node: Composing messages22609
+Node: File transfer23234
+Ref: File transfer-Footnote-123988
+Node: Receiving files24154
+Node: Sending files25496
+Ref: Sending files-Footnote-127122
+Node: Services27282
+Node: Commands28186
+Node: Registration28761
+Node: Search29364
+Node: Ad-Hoc Commands29719
+Ref: Ad-Hoc Commands-Footnote-131215
+Ref: Ad-Hoc Commands-Footnote-231322
+Node: Service discovery31458
+Node: Browsing32659
+Node: Your home server33019
+Node: Transports33377
+Ref: Transports-Footnote-135779
+Node: User directories35855
+Node: MUC services36258
+Node: Personal information36687
+Ref: Personal information-Footnote-137608
+Node: Avatars37634
+Ref: Avatars-Footnote-139234
+Node: Time queries39348
+Node: Useful features40215
+Node: Autoaway40645
+Ref: Autoaway-Footnote-142560
+Node: Modeline status42627
+Node: Keepalive43339
+Node: Reconnecting45562
+Node: Tracking activity46271
+Node: Watch buddies47951
+Node: Spell checking48648
+Node: Gmail notifications49160
+Node: Saving groups roll state50976
+Node: Message history51691
+Ref: Message history-Footnote-154308
+Node: Typing notifications54518
+Node: Roster import and export56364
+Node: XMPP URIs57314
+Node: Customization59673
+Node: Account settings60128
+Ref: Account settings-Footnote-162145
+Node: Menu62202
+Node: Customizing the roster buffer62815
+Node: Customizing the chat buffer65003
+Node: Customizing alerts67811
+Node: Standard alerts69995
+Ref: Standard alerts-Footnote-173875
+Ref: Standard alerts-Footnote-273926
+Ref: Standard alerts-Footnote-373970
+Ref: Standard alerts-Footnote-474019
+Ref: Standard alerts-Footnote-574158
+Node: Presence alerts74217
+Node: Message alerts75619
+Ref: Message alerts-Footnote-176732
+Node: MUC alerts76835
+Node: Info alerts77715
+Node: Hooks78245
+Node: Debug options79573
+Node: Hacking and extending80661
+Node: Connection object81261
+Ref: Connection object-Footnote-182552
+Node: XML representation82684
+Node: JID symbols84195
+Node: Listening for new requests85610
+Node: Sending new requests86862
+Node: Extending service discovery89142
+Node: Providing info89592
+Node: Requesting info91049
+Node: Chat printers93549
+Node: Stanza chains94972
+Node: Protocol support95596
+Node: RFC 392097303
+Node: RFC 392197993
+Node: XEP-000498545
+Node: XEP-001299294
+Node: XEP-002099567
+Node: XEP-002299794
+Node: XEP-0030100165
+Node: XEP-0045100462
+Node: XEP-0049100923
+Node: XEP-0050101204
+Node: XEP-0054101569
+Node: XEP-0055101868
+Node: XEP-0065102271
+Node: XEP-0066102805
+Node: XEP-0068103198
+Node: XEP-0077103528
+Node: XEP-0078104089
+Node: XEP-0082104423
+Node: XEP-0085104707
+Node: XEP-0086105030
+Node: XEP-0090105342
+Node: XEP-0091105592
+Node: XEP-0092105878
+Node: XEP-0095106193
+Node: XEP-0096106515
+Node: XEP-0146106975
+Node: XEP-0153107209
+Node: XEP-0199107497
+Node: XEP-0245107675
+Node: Concept index107862
+Node: Function index120119
+Node: Variable index126370
 
 End Tag Table
