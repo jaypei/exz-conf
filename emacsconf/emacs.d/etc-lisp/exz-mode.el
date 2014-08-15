@@ -75,6 +75,7 @@
 ;; flycheck
 (setq flycheck-check-syntax-automatically '(mode-enabled save))
 (setq flycheck-idle-change-delay 0)
+(global-flycheck-mode 1)
 
 
 ;; web mode

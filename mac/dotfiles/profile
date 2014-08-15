@@ -1,8 +1,8 @@
 mkdir -p /tmp/ssh
-mkdir -p /tmp/homebrew
+mkdir -p /Users/jaypei/tmp/homebrew
 export GOPATH="/Users/jaypei/gocode"
 export PATH=/Users/jaypei/bin:/usr/local/sbin:/usr/local/bin:$GOPATH/bin:$PATH
-export HOMEBREW_TEMP=/tmp/homebrew
+export HOMEBREW_TEMP=/Users/jaypei/tmp/homebrew
 export ANDROID_SDK_ROOT=/usr/local/opt/android-sdk
 export EDITOR=emacs
 export PIP_DOWNLOAD_CACHE=$HOME/Library/Caches/pip-downloads
