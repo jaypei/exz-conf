@@ -27,8 +27,10 @@
   '(variable-pitch ((t nil))))
  (set-fringe-mode '(10 . 10)))
 
-(require 'color-theme-sanityinc-tomorrow)
-(load-theme 'sanityinc-tomorrow-bright t)
+;; (require 'color-theme-sanityinc-tomorrow)
+;; (load-theme 'sanityinc-tomorrow-bright t)
+(require 'color-theme-tangotango)
+(color-theme-tangotango)
 
 (exz/when-osx
  (custom-set-faces
