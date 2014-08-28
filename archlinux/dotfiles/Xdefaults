@@ -14,8 +14,9 @@ URxvt*iso14755_52: false
 URxvt.url-launcher: chromium
 URxvt.matcher.button: 1
 ! clipboard
-URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+!URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 URxvt.keysym.Shift-Control-C: perl:clipboard:copy
+URxvt*keysym.Mod4-v: perl:clipboard:paste
 ! tabs
 URxvt.tabbed.tabbar-fg: 2
 URxvt.tabbed.tabbar-bg: 0
