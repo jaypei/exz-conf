@@ -171,5 +171,11 @@
 ;; tramp
 (setq tramp-chunksize 500)
 
+;; slime
+(setq inferior-lisp-program "clisp")
+(slime-setup '(slime-fancy))
+(slime-setup '(slime-repl))
+
+
 ;;; exz-mode.el ends here
 (provide 'exz-mode)
