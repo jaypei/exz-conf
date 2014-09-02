@@ -18,13 +18,15 @@
      (xterm-mouse-mode t))))
 (menu-bar-mode -1)                      ; menu-bar-mode
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; highlight-80+
 (exz-add-search-path "site-lisp/highlight-80+")
 (exz-load-file "site-lisp/highlight-80+/highlight-80+-autoloads.el")
 (add-hook 'lisp-interaction-mode-hook
           (lambda()
             (highlight-80+-mode)))
+
+;; fringe
+(set-fringe-style '(4 . 4))
 
 ;; git-gutter
 (global-git-gutter-mode +1)
@@ -40,6 +42,8 @@
 ;; inactivate git-gutter-mode in asm-mode and image-mode
 ;; (custom-set-variables
 ;;  '(git-gutter:disabled-modes '(org-mode image-mode)))
+
+(setq git-gutter-fr:side 'right-fringe)
 
 ;; go-mode
 (add-hook 'go-mode-hook
@@ -108,12 +112,21 @@
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; enable paredit
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+(add-hook 'python-mode-hook           #'enable-paredit-mode)
+
+
 ;; window-number
 (require 'window-number)
 (window-number-meta-mode)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; show-paren-mode 括号匹配
 (setq show-paren-style 'parentheses)
 (show-paren-mode t)
