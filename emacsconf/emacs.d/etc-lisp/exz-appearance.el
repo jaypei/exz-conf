@@ -47,36 +47,32 @@
     (set-fontset-font (frame-parameter nil 'font) charset 
                       (font-spec :family chinese :size chinese-size)))) 
 
-(if (display-graphic-p)
-    (ecase system-type 
-      (gnu/linux
-       ;; (exz/set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
-       (exz/set-font "Fantasque Sans Mono" "文泉驿等宽微米黑" 16 16))
-      (darwin
-       (if (boundp 'aquamacs-version)
-           (progn
-             ;; (exz/set-font "Monaco" "Hannotate SC" 14 14)
-             (exz/set-font "Fantasque Sans Mono" "Hannotate SC" 16 16))
-         (progn
-           (create-fontset-from-fontset-spec
-            "-apple-Hannotate ST-medium-r-normal-*-16-*-*-*-*-*-fontset-mymonaco,
-             ascii:-outline-Fantasque Sans Mono-medium-normal-normal-regular-16-*-*-*-m-0-iso10646-1,
-             chinese-utf8:-apple-Hannotate SC-medium-normal-normal-*-16-*-*-*-p-0-iso10646-1,
-             chinese-gb2312:-apple-Hannotate SC-medium-normal-normal-*-16-*-*-*-p-0-iso10646-1,
-             latin-iso8859-1:-apple-Hannotate SC-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1,
-             mule-unicode-0100-24ff:-apple-Hannotate SC-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-           (setq default-frame-alist (append '((font . "fontset-mymonaco")) default-frame-alist))
-           (set-default-font "fontset-mymonaco"))))))
-
-
+(exz/when-gui
+  (exz/when-osx
+    (if (boundp 'aquamacs-version)
+        (exz/set-font "Fantasque Sans Mono" "Hannotate SC" 16 16)
+      (progn
+        (create-fontset-from-fontset-spec
+         "-apple-Hannotate ST-medium-r-normal-*-16-*-*-*-*-*-fontset-mymonaco,
+          ascii:-outline-Fantasque Sans Mono-medium-normal-normal-regular-16-*-*-*-m-0-iso10646-1,
+          chinese-utf8:-apple-Hannotate SC-medium-normal-normal-*-16-*-*-*-p-0-iso10646-1,
+          chinese-gb2312:-apple-Hannotate SC-medium-normal-normal-*-16-*-*-*-p-0-iso10646-1,
+          latin-iso8859-1:-apple-Hannotate SC-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1,
+          mule-unicode-0100-24ff:-apple-Hannotate SC-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+        (setq default-frame-alist (append '((font . "fontset-mymonaco")) default-frame-alist))
+        (set-default-font "fontset-mymonaco"))))
+  (exz/when-gnu-emacs
+    (exz/set-font "Fantasque Sans Mono" "文泉驿等宽微米黑" 16 16)))
+;; (exz/set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
+    
+    
 ;; powerline
-(if (display-graphic-p)
-    (progn
-      (exz-add-search-path "site-lisp/powerline")
-      (require 'powerline)
-      (powerline-default-theme)
-      (add-hook 'shell-mode-hook
-                'ansi-color-for-comint-mode-on)))
+(exz/when-gui 
+  (setq powerline-default-separator 'wave)
+  (powerline-default-theme))
+
+;; (add-hook 'shell-mode-hook
+;;           'ansi-color-for-comint-mode-on)
 
 ;; enable highlight current line
 (global-hl-line-mode 1)

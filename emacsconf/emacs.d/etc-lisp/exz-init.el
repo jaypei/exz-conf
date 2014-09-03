@@ -80,12 +80,12 @@
 
 (defmacro exz/when-gnu-emacs (&rest body)
   (declare (indent 0) (debug t))
-  `(unless (display-graphic-p)
+  `(when (string= system-type "gnu/linux")
      ,@body))
 
 (defmacro exz/when-osx (&rest body)
   (declare (indent 0) (debug t))
-  `(when (eq system-type 'darwin)
+  `(when (string= system-type "darwin")
      ,@body))
 
 (defmacro exz/when-my-mbp (&rest body)
