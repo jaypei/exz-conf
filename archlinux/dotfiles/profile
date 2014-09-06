@@ -1,0 +1,32 @@
+#!/bin/bash
+
+mkdir -p /tmp/ssh
+
+autoload -Uz compinit
+compinit
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export PATH=~/bin:~/gocode/bin:~/work/vimwiki/bin:$PATH
+export GOPATH=/home/jaypei/gocode
+export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
+
+alias ls='ls --color'
+alias ack='/usr/bin/vendor_perl/ack'
+alias ack-grep='ack'
+alias gd='git diff --color'
+
+export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python2"
+export VIRTUALENVWRAPPER_VIRTUALENV="/usr/bin/virtualenv2"
+. /usr/bin/virtualenvwrapper.sh
+
+if [[ $EMACS = t ]]; then       # in emacs
+    export LS_COLORS='no=00:fi=00:di=5;34;42:ln=00;04;31:pi=00;37:so=01;31:bd=37:cd=37:or=01;31:ex=01;31:*.o=01:*.gz=00;35:*.tar=00;35:*.Z=00;35:*.tgz=00;35:*.mpg=36:*.mpeg=36:*.dat=35:*.mov=35:*.pm=35:*.jpg=36:*.JPG=36:*.gif=36:*.GIF=36:*.ps=01;33:*.pdf=01;35:*.fm=01;35:*.htm=01;34:*.html=01;34:*.HTM=01;34:*.HTML=01;34:*.c=00;31:*.cpp=00;31:*.pl=00;31:*.my=01;04;35:*.man=01;04;07;30:*.ppt=35:*.DOC=35:*.doc=35:*.cmd=04;35:*.tcl=04;36:*.tclscript=04;36:*.log=04;35'
+    export EDITOR="emacsclient"
+    export TERM="linux"
+    unsetopt zle
+    [[ `type precmd` == *' function' ]] && unfunction precmd
+    [[ `type preexec` == *' function' ]] && unfunction preexec
+else
+    export EDITOR=e
+fi

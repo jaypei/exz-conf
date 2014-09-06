@@ -165,19 +165,12 @@
 (require 'neotree)
 
 ;; multi-term-mode
-(add-hook 'term-mode-hook
-          (lambda ()
-            (yas-minor-mode -1)))
-
+(add-hook 'term-mode-hook (lambda () (yas-minor-mode -1)))
 (setq shell-file-name "/bin/zsh")
-
 (custom-set-variables '(comint-prompt-read-only t))
 (autoload 'ansi-color-for-comint-mode-on "ansi-color"
   "Set `ansi-color-for-comint-mode' to t." t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on t)
-
-;; (setq ansi-color-names-vector
-;;       ["black" "red" "green" "yellow" "PaleBlue" "magenta" "cyan" "white"])
 
 ;; EasyPG
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
