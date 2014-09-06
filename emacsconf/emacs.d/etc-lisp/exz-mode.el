@@ -65,7 +65,8 @@
   (setq ac-show-menu-immediately-on-auto-complete t)
   (setq ac-auto-show-menu t)
   (setq ac-use-menu-map t)
-  ;;(require 'go-autocomplete)
+  (require 'auto-complete)
+  (require 'go-autocomplete)
   (require 'auto-complete-config)
   (add-to-list 'ac-dictionary-directories
                (concat conf-root-dir "auto-complete/dict"))
@@ -168,14 +169,15 @@
           (lambda ()
             (yas-minor-mode -1)))
 
-(defun exz/term-switch-line-char-mode ()
-  (interactive)
-  (if (term-in-line-mode)
-      (term-char-mode)
-    (term-line-mode)))
+(setq shell-file-name "/bin/zsh")
 
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(custom-set-variables '(comint-prompt-read-only t))
+(autoload 'ansi-color-for-comint-mode-on "ansi-color"
+  "Set `ansi-color-for-comint-mode' to t." t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on t)
+
+;; (setq ansi-color-names-vector
+;;       ["black" "red" "green" "yellow" "PaleBlue" "magenta" "cyan" "white"])
 
 ;; EasyPG
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)

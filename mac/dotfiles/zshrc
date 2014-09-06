@@ -51,14 +51,15 @@ source $ZSH/oh-my-zsh.sh
 
 [[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
 
-# if [[ "$TERM" == "dumb" ]]
-# then
-#     unsetopt zle
-#     unsetopt prompt_cr
-#     unsetopt prompt_subst
-#     unfunction precmd
-#     unfunction preexec
-#     PS1='$ '
-# fi
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+if [[ $EMACS = t ]]; then       # in emacs
+    PS1='%n@%m:%~ $ '
+    export TERM="xterm-256color"
+    export EDITOR="emacsclient"
+    # for tramp to not hang, need the following. cf:
+    # http://www.emacswiki.org/emacs/TrampMode
+    unsetopt zle
+    unsetopt prompt_cr
+    unsetopt prompt_subst
+    [[ `type precmd` == *' function' ]] && unfunction precmd
+    [[ `type preexec` == *' function' ]] && unfunction preexec
+fi

@@ -10,8 +10,10 @@ export PIP_DOWNLOAD_CACHE=$HOME/Library/Caches/pip-downloads
 source /usr/local/bin/virtualenvwrapper.sh
 
 LANG=en_US.UTF-8
-alias ls="ls -G"
+alias ls="ls --color=auto"
 alias tree="tree -C"
 alias e="emacs"
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
