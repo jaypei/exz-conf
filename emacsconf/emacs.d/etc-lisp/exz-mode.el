@@ -160,9 +160,12 @@
 (require 'anything-config)
 
 ;; neotree
-(exz-add-search-path "site-lisp/neotree")
-(exz-load-file "site-lisp/neotree/neotree-autoloads.el")
-(require 'neotree)
+(unless (package-installed-p 'neotree)
+  (exz-add-search-path "site-lisp/neotree")
+  (exz-load-file "site-lisp/neotree/neotree-autoloads.el")
+  (exz/debug "[NeoTree] Load local version."))
+
+
 
 ;; multi-term-mode
 (add-hook 'term-mode-hook (lambda () (yas-minor-mode -1)))
