@@ -4,8 +4,8 @@
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-git-gutter
-;; Version: 20140804.224
-;; X-Original-Version: 0.72
+;; Version: 20140905.853
+;; X-Original-Version: 0.74
 ;; Package-Requires: ((cl-lib "0.5") (emacs "24"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -109,7 +109,7 @@ gutter information of other windows."
   :type 'string
   :group 'git-gutter)
 
-(defcustom git-gutter:verbosity 4
+(defcustom git-gutter:verbosity 0
   "Log/message level. 4 means all, 0 nothing."
   :type 'integer
   :group 'git-gutter)
@@ -269,7 +269,7 @@ gutter information of other windows."
   (or git-gutter:window-width (git-gutter:longest-sign-width)))
 
 (defun git-gutter:set-window-margin (width)
-  (unless git-gutter:linum-enabled
+  (when (and (not git-gutter:linum-enabled) (>= width 0))
     (let ((curwin (get-buffer-window)))
       (set-window-margins curwin width (cdr (window-margins curwin))))))
 

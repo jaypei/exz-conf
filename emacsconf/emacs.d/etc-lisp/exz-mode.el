@@ -25,25 +25,13 @@
           (lambda()
             (highlight-80+-mode)))
 
-;; fringe
-(set-fringe-style '(4 . 4))
-
 ;; git-gutter
+(require 'git-gutter-fringe)
 (global-git-gutter-mode +1)
 
-(exz/when-gui
-  (exz-add-search-path "site-lisp/fringe-helper")
-  (exz-add-search-path "site-lisp/git-gutter-fringe")
-  (require 'git-gutter-fringe)
-  (set-face-foreground 'git-gutter-fr:modified "red")
-  (set-face-foreground 'git-gutter-fr:added "red")
-  (set-face-foreground 'git-gutter-fr:deleted "red"))
-
 ;; inactivate git-gutter-mode in asm-mode and image-mode
-;; (custom-set-variables
-;;  '(git-gutter:disabled-modes '(org-mode image-mode)))
-
-(setq git-gutter-fr:side 'right-fringe)
+(custom-set-variables
+ '(git-gutter:disabled-modes '(org-mode image-mode)))
 
 ;; go-mode
 (add-hook 'go-mode-hook
