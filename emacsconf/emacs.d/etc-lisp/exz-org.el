@@ -136,7 +136,6 @@
 
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 
-(exz-add-search-path "site-lisp/org-reveal")
 (require 'ox-reveal)
 (require 'ox-publish)
 (require 'ox-html)
