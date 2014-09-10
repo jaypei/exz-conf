@@ -4,6 +4,11 @@
 ;;; Code:
 
 
+;; font
+(eval-when-compile
+  (require 'cl)) 
+
+
 ;; color theme
 (exz/when-aquamacs
  (custom-set-variables
@@ -32,14 +37,6 @@
 (require 'color-theme-tangotango)
 (color-theme-tangotango)
 
-(exz/when-osx
- (custom-set-faces
-  '(default ((t (:inherit nil :stipple nil :background "#1d1f21" :foreground "White" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "apple" :family "Fantasque_Sans_Mono"))))))
-
-
-;; font
-(eval-when-compile (require 'cl)) 
-
 (defun exz/set-font (english chinese english-size chinese-size)
   (set-face-attribute 'default nil
                       :font (format "%s:pixelsize=%d" english english-size)) 
@@ -61,30 +58,13 @@
           mule-unicode-0100-24ff:-apple-Hannotate SC-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
         (setq default-frame-alist (append '((font . "fontset-mymonaco")) default-frame-alist))
         (set-default-font "fontset-mymonaco"))))
-  (exz/when-gnu-emacs
+  (exz/when-my-dell-bjhome
     (exz/set-font "Fantasque Sans Mono" "文泉驿等宽微米黑" 16 16)))
-;; (exz/set-font "Inconsolata-dz for Powerline" "文泉驿等宽微米黑" 15 18))
-    
     
 ;; powerline
 (exz/when-gui 
   (setq powerline-default-separator 'wave)
   (powerline-default-theme))
-
-;; (add-hook 'shell-mode-hook
-;;           'ansi-color-for-comint-mode-on)
-
-;; enable highlight current line
-(global-hl-line-mode 1)
-
-(require 'highlight-parentheses)
-
-(exz/exec-by-hooks 'highlight-parentheses-mode
-                   'emacs-lisp-mode-hook
-                   'lisp-interaction-mode-hook
-                   'python-mode-hook
-                   'go-mode-hook
-                   'c-mode-common-hook)
 
 ;;; exz-appearance.el ends here
 (provide 'exz-appearance)

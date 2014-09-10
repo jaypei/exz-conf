@@ -59,7 +59,7 @@
 (global-set-key (kbd "C-z <down>") 'tabbar-ruler-up)
 
 ;; anything
-(global-set-key (kbd "C-x b") 'anything-buffers+)
+(global-set-key (kbd "C-x b") 'anything-buffers-list)
 
 ;; window size
 (global-set-key (kbd "M--") 'shrink-window-horizontally)
