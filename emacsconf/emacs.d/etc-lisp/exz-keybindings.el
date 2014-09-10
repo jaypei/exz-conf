@@ -8,9 +8,8 @@
 (global-set-key (kbd "M-p") 'window-move-down)
 (global-set-key (kbd "M-N") 'other-window-move-up)
 (global-set-key (kbd "M-P") 'other-window-move-down)
-;;(global-set-key (kbd "RET") 'newline-and-indent)
-(global-set-key (kbd "C-x C-m") 'execute-extended-command)
-(global-set-key (kbd "C-c C-m") 'execute-extended-command)
+(global-set-key (kbd "C-x SPC") 'goto-last-change)
+
 
 ;; prefix definition
 (define-prefix-command 'exz-z-map)
@@ -29,7 +28,7 @@
 (define-key global-map (kbd "C-S-o") 'exz-new-line-previous)
 
 (global-set-key (kbd "<f7>")   'cua-mode)
-(global-set-key (kbd "<f8>")   'neotree-toggle)
+(global-set-key (kbd "<f8>")   'neotree-find)
 (global-set-key (kbd "<f9>")   'multi-eshell)
 (global-set-key (kbd "<f10>")  'menu-bar-mode)
 (global-set-key (kbd "<f11>")  'fullscreen)
@@ -51,12 +50,6 @@
 (add-hook 'auto-complete-mode-hook
           (lambda()
             (local-set-key (kbd "M-/") 'auto-complete)))
-
-;; tabbar
-(global-set-key (kbd "C-z <left>") 'tabbar-ruler-tabbar-backward-tab)
-(global-set-key (kbd "C-z <right>") 'tabbar-ruler-tabbar-forward-tab)
-(global-set-key (kbd "C-z <up>") 'tabbar-ruler-up)
-(global-set-key (kbd "C-z <down>") 'tabbar-ruler-up)
 
 ;; anything
 (global-set-key (kbd "C-x b") 'anything-buffers-list)
