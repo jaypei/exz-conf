@@ -5,6 +5,9 @@
 
 (require 'redo "redo.el")
 
+(exz/when-osx
+  (setq use-dialog-box nil))
+
 (put 'downcase-region 'disabled nil)
 (setq default-truncate-lines t)
 (setq auto-save-default nil)
