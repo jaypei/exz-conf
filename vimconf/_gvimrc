@@ -16,23 +16,21 @@ endif
 "    behave mswin
 "endif
 
- 
+
 " color
 color candycode
- 
+
 " Toolbars
 set guioptions=
 "set guioptions+=mrb
- 
+
 " font
 if has("win32")
     set guifont=Inconsolata\ for\ Powerline:w7:h12
 elseif has("gui_macvim")
     set guifont=Monaco:h14
 elseif has("unix")
-    "set guifont=Monaco\ for\ Powerline\ 13
-    "set guifont=Consolas\ 14
-    set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 13
+    set guifont=monofur\ for\ Powerline\ 12
 endif
 
 
@@ -86,7 +84,7 @@ if has('gui_running') && has('gui_win32') && has('libcall')
     autocmd GUIEnter * call libcallnr(g:MyVimLib, 'SetAlpha', g:VimAlpha)
 endif
 
- 
+
 """""""""""""""""""""""""""""""
 " Visual
 """""""""""""""""""""""""""""""
@@ -104,11 +102,11 @@ function! VisualSearch(direction) range
   let @/ = l:pattern
   let @" = l:saved_reg
 endfunction
- 
+
 "Basically you press * or # to search for the current selection !! Really useful
 vnoremap <silent> * :call VisualSearch('f')<CR>
 vnoremap <silent> # :call VisualSearch('b')<CR>
- 
+
 
 """""""""""""""""""""""""""""""
 " output HTML config

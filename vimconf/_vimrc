@@ -235,8 +235,12 @@ set laststatus=2
 
 " set powerline
 let g:Powerline_cache_enabled = 0
-let g:Powerline_symbols = 'fancy'
-if has('win32')
+if has("gui_running")
+    let g:Powerline_symbols = 'fancy'
+    if has('win32')
+        let g:Powerline_symbols = 'compatible'
+    endif
+else
     let g:Powerline_symbols = 'compatible'
 endif
 
